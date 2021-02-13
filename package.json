@@ -1,7 +1,7 @@
 {
 	"name": "bolt_backend",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Bolt",
 	"main": "index.js",
 	"scripts": {
 		"dev": " nodemon src/index.ts ",

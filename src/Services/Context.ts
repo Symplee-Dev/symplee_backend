@@ -35,7 +35,7 @@ export class Context {
 	}
 
 	async validateAndDecodeJWT(): Promise<Authentication.DecodedResult> {
-		if (!this.token) 
+		if (!this.token) {
 			logger.err('Error with token!');
 			throw new AuthenticationError('Error With Token!');
 		}

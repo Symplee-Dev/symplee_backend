@@ -25,5 +25,7 @@ jobs:
         if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
         runs-on: ubuntu-latest
         steps:
+            - with:
+                  node-version: 14
             - name: typecheck
               run: npm run typecheck

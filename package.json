@@ -9,7 +9,8 @@
 		"build-ts": "tsc",
 		"postinstall": "npm run build-ts",
 		"start": "NODE_ENV=production node dist/index.js",
-		"typecheck": "tsc -p . --noEmit true"
+		"typecheck": "tsc -p . --noEmit true",
+		"huskyinstall": "husky install"
 	},
 	"husky": {
 		"hooks": {

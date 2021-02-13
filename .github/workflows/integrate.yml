@@ -1,18 +1,10 @@
 name: Typecheck, and Lint
 
-on:
-    push:
-        branches:
-            - '**'
-    workflow_dispatch:
-
+on: [push]
 jobs:
     main:
-        needs: pre_job
-        if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
         runs-on: ubuntu-latest
         steps:
             - name: typecheck
+              working-directory: ${{ github.workspace }}
               run: npm run typecheck
-              with:
-                  node-version: 14

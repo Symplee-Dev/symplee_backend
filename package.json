@@ -7,10 +7,10 @@
 		"dev": " nodemon src/index.ts ",
 		"generate-types": "graphql-codegen --config codegen.yml",
 		"build-ts": "tsc",
-		"postinstall": "npm run build-ts && husky install",
+		"postinstall": "npm run build-ts && npm run huskyinstall",
 		"start": "NODE_ENV=production node dist/index.js",
 		"typecheck": "tsc -p . --noEmit true",
-		"huskyinstall": "husky install"
+		"huskyinstall": "npx husky install"
 	},
 	"husky": {
 		"hooks": {

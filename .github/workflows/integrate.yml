@@ -6,7 +6,8 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: npm install
+            - name: install
+              run: npm install
             - name: typecheck
               working-directory: ${{ github.workspace }}
               run: npm run typecheck

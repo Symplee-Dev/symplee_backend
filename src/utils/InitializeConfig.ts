@@ -4,7 +4,7 @@ import { logger } from './logger';
 export const initializeConfig = (): Utilities.Config.ENV => {
 	dotenv.config();
 
-	logger.info('Initializing Config');
+	console.log('Initializing Config');
 
 	const config: Utilities.Config.ENV = {
 		PORT: String(process.env.PORT) ?? '',

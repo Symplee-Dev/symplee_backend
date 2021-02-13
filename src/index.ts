@@ -8,7 +8,6 @@ import initializeMiddleware from './utils/InitializeMiddleware';
 import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './resolvers/index';
 import dotenv from 'dotenv';
-import { IResolvers } from '../@types/resolvers';
 
 // Init Config Variables
 dotenv.config();
@@ -20,7 +19,7 @@ console.log('Starting Server....');
 
 const server = new ApolloServer({
 	typeDefs: typeDefs,
-	resolvers: resolvers as IResolvers,
+	resolvers: resolvers as any,
 	context: async ({ req, res }: { req: e.Request; res: e.Response }) => {
 		logger.info('Running Context');
 		return await createContext(req, res);

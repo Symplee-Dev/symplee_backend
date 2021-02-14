@@ -15,11 +15,43 @@ interface Scalars {
 interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
+  user?: Maybe<User>;
+}
+
+
+interface QueryUserArgs {
+  id: Scalars['Int'];
+}
+
+interface Mutation {
+  __typename?: 'Mutation';
+  signup: User;
+}
+
+
+interface MutationSignupArgs {
+  user: UserInput;
+}
+
+interface UserInput {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
 }
 
 interface Schema {
   __typename?: 'schema';
   query?: Maybe<Query>;
+}
+
+interface User {
+  __typename?: 'User';
+  id: Scalars['Int'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  username: Scalars['String'];
+  key: Scalars['String'];
 }
 
 } } export {};

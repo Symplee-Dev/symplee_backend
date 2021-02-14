@@ -36,6 +36,11 @@ declare global {
 			token?: string;
 			session?: Session;
 		};
+
+		type ServerContext = SerializedContext & {
+			logger: debugsx.IDefaultLogger & { err?: any };
+			authenticated: boolean;
+		};
 	}
 
 	type Session = {

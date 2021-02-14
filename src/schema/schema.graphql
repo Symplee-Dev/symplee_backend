@@ -5,6 +5,18 @@ type Query {
 
 type Mutation {
 	signup(user: UserInput!): User!
+	login(credentials: LoginInput!): LoginReturn
+}
+
+input LoginInput {
+	username: String
+	email: String
+	password: String!
+}
+
+type LoginReturn {
+	authenticated: Boolean!
+	token: String!
 }
 
 input UserInput {

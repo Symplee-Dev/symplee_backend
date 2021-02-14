@@ -26,11 +26,29 @@ interface QueryUserArgs {
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
+  login?: Maybe<LoginReturn>;
 }
 
 
 interface MutationSignupArgs {
   user: UserInput;
+}
+
+
+interface MutationLoginArgs {
+  credentials: LoginInput;
+}
+
+interface LoginInput {
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+}
+
+interface LoginReturn {
+  __typename?: 'LoginReturn';
+  authenticated: Scalars['Boolean'];
+  token: Scalars['String'];
 }
 
 interface UserInput {

@@ -29,11 +29,29 @@ interface QueryUserArgs {
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
+  login?: Maybe<LoginReturn>;
 }
 
 
 interface MutationSignupArgs {
   user: UserInput;
+}
+
+
+interface MutationLoginArgs {
+  credentials: LoginInput;
+}
+
+interface LoginInput {
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+}
+
+interface LoginReturn {
+  __typename?: 'LoginReturn';
+  authenticated: Scalars['Boolean'];
+  token: Scalars['String'];
 }
 
 interface UserInput {
@@ -139,10 +157,12 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
+  LoginInput: LoginInput;
+  LoginReturn: ResolverTypeWrapper<LoginReturn>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   UserInput: UserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -151,10 +171,12 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Int: Scalars['Int'];
   Mutation: {};
+  LoginInput: LoginInput;
+  LoginReturn: LoginReturn;
+  Boolean: Scalars['Boolean'];
   UserInput: UserInput;
   schema: Schema;
   User: User;
-  Boolean: Scalars['Boolean'];
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -164,6 +186,13 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
+  login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
+};
+
+export type LoginReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoginReturn'] = ResolversParentTypes['LoginReturn']> = {
+  authenticated?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type SchemaResolvers<ContextType = any, ParentType extends ResolversParentTypes['schema'] = ResolversParentTypes['schema']> = {
@@ -183,6 +212,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };

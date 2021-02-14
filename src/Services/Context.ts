@@ -64,7 +64,10 @@ export class Context {
 	}
 }
 
-export const createContext = async (req: e.Request, res: e.Response) => {
+export const createContext = async (
+	req: e.Request,
+	res: e.Response
+): Promise<Services.ServerContext> => {
 	const context = await new Context(req, res).Initialize();
 
 	return {

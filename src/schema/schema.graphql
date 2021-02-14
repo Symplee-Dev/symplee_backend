@@ -1,7 +1,27 @@
 type Query {
 	test: String!
+	user(id: Int!): User
+}
+
+type Mutation {
+	signup(user: UserInput!): User!
+}
+
+input UserInput {
+	email: String!
+	name: String!
+	username: String!
+	password: String!
 }
 
 type schema {
 	query: Query
+}
+
+type User {
+	id: Int!
+	email: String!
+	name: String!
+	username: String!
+	key: String!
 }

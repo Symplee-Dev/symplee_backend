@@ -2,8 +2,12 @@ import User from '../models/User';
 import { AuthenticationError } from 'apollo-server';
 
 export const userResolvers = {
-	chatGroups: async (parent: any, context: Services.ServerContext) => {
-		context.logger.info('User Resolvers: Chat Group resolver');
+	chatGroups: async (
+		parent: any,
+		args: any,
+		context: Services.ServerContext
+	) => {
+		context.logger.info('Query user args');
 
 		if (!context.session?.userId || !context.authenticated) {
 			throw new AuthenticationError('Not authenticated');
@@ -11,11 +15,23 @@ export const userResolvers = {
 
 		const { chatGroups } = await User.query()
 			.where({
-				id: context.session?.userId
+				id: parent.id
 			})
 			.withGraphFetched({ chatGroups: true })
 			.first();
 
 		return chatGroups;
 	}
+};
+
+export const user = async (
+	parent: any,
+	args: Resolvers.QueryUserArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.User> => {
+	const { id } = args;
+
+	const user = await User.query().where({ id }).first();
+
+	return user;
 };

@@ -70,7 +70,7 @@ interface User {
   name: Scalars['String'];
   username: Scalars['String'];
   key: Scalars['String'];
-  chatGroups: ChatGroup;
+  chatGroups: Array<Maybe<ChatGroup>>;
 }
 
 interface ChatGroup {
@@ -95,8 +95,8 @@ interface Message {
   __typename?: 'Message';
   id: Scalars['Int'];
   body: Scalars['String'];
-  authorId: Scalars['String'];
-  chatId: Scalars['String'];
+  authorId: Scalars['Int'];
+  chatId: Scalars['Int'];
   createdAt: Scalars['String'];
 }
 

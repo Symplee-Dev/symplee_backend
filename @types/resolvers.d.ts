@@ -73,7 +73,7 @@ interface User {
   name: Scalars['String'];
   username: Scalars['String'];
   key: Scalars['String'];
-  chatGroups: ChatGroup;
+  chatGroups: Array<Maybe<ChatGroup>>;
 }
 
 interface ChatGroup {
@@ -98,8 +98,8 @@ interface Message {
   __typename?: 'Message';
   id: Scalars['Int'];
   body: Scalars['String'];
-  authorId: Scalars['String'];
-  chatId: Scalars['String'];
+  authorId: Scalars['Int'];
+  chatId: Scalars['Int'];
   createdAt: Scalars['String'];
 }
 
@@ -240,7 +240,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  chatGroups?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType>;
+  chatGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -265,8 +265,8 @@ export type ChatResolvers<ContextType = any, ParentType extends ResolversParentT
 export type MessageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  authorId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  chatId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  authorId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  chatId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

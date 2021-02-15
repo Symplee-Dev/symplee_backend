@@ -36,7 +36,7 @@ type User {
 	name: String!
 	username: String!
 	key: String!
-	chatGroups: ChatGroup!
+	chatGroups: [ChatGroup]!
 }
 
 type ChatGroup {
@@ -58,7 +58,7 @@ type Chat {
 type Message {
 	id: Int!
 	body: String!
-	authorId: String!
-	chatId: String!
+	authorId: Int!
+	chatId: Int!
 	createdAt: String!
 }

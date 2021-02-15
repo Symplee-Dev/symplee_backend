@@ -1,11 +1,12 @@
 import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
-import { userResolvers } from './user';
+import { userResolvers, user } from './user';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
-		test
+		test,
+		user
 	},
 	Mutation: {
 		signup,

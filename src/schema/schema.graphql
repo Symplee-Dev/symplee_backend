@@ -36,4 +36,29 @@ type User {
 	name: String!
 	username: String!
 	key: String!
+	chatGroups: ChatGroup!
+}
+
+type ChatGroup {
+	id: Int!
+	name: String!
+	isPublic: Boolean!
+	createdAt: String!
+	chats: [Chat]!
+}
+
+type Chat {
+	id: Int!
+	name: String!
+	isPublic: Boolean!
+	createdById: Int!
+	messages: [Message]!
+}
+
+type Message {
+	id: Int!
+	body: String!
+	authorId: String!
+	chatId: String!
+	createdAt: String!
 }

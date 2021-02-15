@@ -1,27 +1,27 @@
 import BaseModel from './BaseModel';
-import Message from './Message';
+import Chat from './Chat';
 
-class Chat extends BaseModel {
+class ChatGroup extends BaseModel {
 	id!: number;
 	name!: string;
 	isPublic!: boolean;
-	createdById!: number;
-	messages!: Message[];
+	createdAt!: string;
+	chats!: Chat[];
 
 	static get tableName() {
-		return 'chats';
+		return 'chat_groups';
 	}
 
 	static relationMappings = {
 		messages: {
 			relation: BaseModel.HasManyRelation,
-			modelClass: Message,
+			modelClass: Chat,
 			join: {
-				from: 'chats.id',
-				to: 'messages.chatGroupId'
+				from: 'chat_groups.id',
+				to: 'chats.chatGroupId'
 			}
 		}
 	};
 }
 
-export default Chat;
+export default ChatGroup;

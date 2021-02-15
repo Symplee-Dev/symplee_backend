@@ -76,6 +76,8 @@ export const login = async (
 		throw new AuthenticationError('Could not create JWT!');
 	}
 
+	context.response.setHeader('Authorization', jwt);
+
 	return {
 		authenticated: true,
 		token: jwt

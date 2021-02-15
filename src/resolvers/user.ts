@@ -9,10 +9,6 @@ export const userResolvers = {
 	) => {
 		context.logger.info('Query user args');
 
-		if (!context.session?.userId || !context.authenticated) {
-			throw new AuthenticationError('Not authenticated');
-		}
-
 		const { chatGroups } = await User.query()
 			.where({
 				id: parent.id

@@ -23,6 +23,9 @@ export class Context {
 	}
 
 	async checkHeaders(): Promise<Session | undefined> {
+		logger.info(
+			'Headers: Authorization: ' + this.request.headers.authorization
+		);
 		if (
 			this.request.headers.authorization &&
 			this.request.headers.authorization.length > 0

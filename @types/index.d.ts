@@ -45,7 +45,7 @@ declare global {
 
 	type Session = {
 		username: string;
-		userId: string;
+		userId: number;
 	};
 }
 

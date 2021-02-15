@@ -66,6 +66,10 @@ export const login = async (
 		);
 	}
 
+	context.session = {
+		userId: userToLogin.id,
+		username: userToLogin.username
+	};
 	const jwt = await signJWT(context);
 
 	if (!jwt) {

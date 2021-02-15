@@ -29,6 +29,8 @@ export const signJWT = async (
 
 	console.info('Creating JWT');
 
+	console.log(session.session);
+
 	const signed = await jwt.sign(
 		{ ...session.session },
 		Config.SESSION_SECRET,

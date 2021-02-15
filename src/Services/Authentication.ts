@@ -27,9 +27,15 @@ export const signJWT = async (
 		expiresIn: '30d'
 	};
 
-	const signed = await jwt.sign(session, Config.SESSION_SECRET, JWTOptions);
+	console.info('Creating JWT');
 
-	session.logger.info('JWT Created', signed);
+	const signed = await jwt.sign(
+		{ ...session.session },
+		Config.SESSION_SECRET,
+		JWTOptions
+	);
+
+	session.logger.info('JWT Created', signed.toString());
 
 	return signed;
 };

@@ -15,8 +15,13 @@ export const login = async (
 
 	const { email, username, password } = args.credentials;
 
+	console.info(args.credentials);
+
 	context.logger.warn(
 		'Resolvers: Mutation: login: trying to login user with username: ' +
+			'Email: ' +
+			email +
+			' Username: ' +
 			username
 	);
 
@@ -30,7 +35,7 @@ export const login = async (
 	let userToLogin: User | undefined = undefined;
 
 	if (primaryCredential.type === 'EMAIL') {
-		context.logger.info('Attempting to Logging user in by email');
+		context.logger.info('Attempting to Login user in by email');
 		userToLogin = await User.query().where({ email }).first();
 	}
 
@@ -64,7 +69,7 @@ export const login = async (
 	const jwt = await signJWT(context);
 
 	if (!jwt) {
-		throw new Authentication('Could not create JWT!');
+		throw new AuthenticationError('Could not create JWT!');
 	}
 
 	return {

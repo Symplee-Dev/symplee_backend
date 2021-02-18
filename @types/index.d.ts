@@ -17,6 +17,8 @@ declare global {
 				DB_NAME: string;
 				LOG_LEVEL: string;
 				SESSION_SECRET: string;
+				SENDGRID_TOKEN: string;
+				DB_URL: string;
 			};
 		}
 	}

@@ -1,6 +1,12 @@
 import { v4 } from 'uuid';
 import User from '../models/User';
 import { Authentication } from '../Services/Authentication';
+import { EmailService } from '../Services/Email';
+
+const LINK_TO =
+	process.env.NODE_ENV === 'production'
+		? 'https://google.com/'
+		: 'http://localhost:3000/verify/';
 
 export const signup = async (
 	parent: any,
@@ -38,6 +44,19 @@ export const signup = async (
 		key,
 		createdAt: new Date().toString()
 	});
+
+	const sender = new EmailService(context);
+
+	const token = sender.generateEmailJWT(user.id);
+
+	const sent = await sender.sendPlainEmail(
+		user.email,
+		'Thank you for signing up!',
+		'',
+		'<h3>Please Verify Your Email.</h3><br><a>' + LINK_TO + token + '</a>'
+	);
+
+	if (!sent) throw new Error('Error signing up user.');
 
 	// Todo: Needs auth token
 

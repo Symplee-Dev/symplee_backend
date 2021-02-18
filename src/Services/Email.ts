@@ -37,7 +37,7 @@ export class EmailService {
 				return true;
 			})
 			.catch(error => {
-				logger.err('Email could not be sent', error);
+				logger.err('Email could not be sent', error.toString());
 				return false;
 			});
 

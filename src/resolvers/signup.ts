@@ -47,13 +47,13 @@ export const signup = async (
 
 	const sender = new EmailService(context);
 
-	const token = sender.generateEmailJWT(user.id);
+	const token = await sender.generateEmailJWT(user.id);
 
 	const sent = await sender.sendPlainEmail(
 		user.email,
 		'Thank you for signing up!',
-		'',
-		'<h3>Please Verify Your Email.</h3><br><a>' + LINK_TO + token + '</a>'
+		'Please Verify Your Email.',
+		'<h3>Please Verify Your Email</h3><br><a>' + LINK_TO + token + '</a>'
 	);
 
 	if (!sent) throw new Error('Error signing up user.');

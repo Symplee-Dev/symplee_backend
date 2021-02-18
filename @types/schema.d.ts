@@ -27,6 +27,7 @@ interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
+  verifyEmail: Scalars['Boolean'];
 }
 
 
@@ -37,6 +38,11 @@ interface MutationSignupArgs {
 
 interface MutationLoginArgs {
   credentials: LoginInput;
+}
+
+
+interface MutationVerifyEmailArgs {
+  token: Scalars['String'];
 }
 
 interface LoginInput {
@@ -71,6 +77,8 @@ interface User {
   username: Scalars['String'];
   key: Scalars['String'];
   chatGroups: Array<Maybe<ChatGroup>>;
+  createdAt: Scalars['String'];
+  verified: Scalars['Boolean'];
 }
 
 interface ChatGroup {

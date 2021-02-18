@@ -6,6 +6,7 @@ type Query {
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
+	verifyEmail(token: String!): Boolean!
 }
 
 input LoginInput {
@@ -37,6 +38,8 @@ type User {
 	username: String!
 	key: String!
 	chatGroups: [ChatGroup]!
+	createdAt: String!
+	verified: Boolean!
 }
 
 type ChatGroup {

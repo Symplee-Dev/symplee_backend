@@ -30,6 +30,7 @@ interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
+  verifyEmail: Scalars['Boolean'];
 }
 
 
@@ -40,6 +41,11 @@ interface MutationSignupArgs {
 
 interface MutationLoginArgs {
   credentials: LoginInput;
+}
+
+
+interface MutationVerifyEmailArgs {
+  token: Scalars['String'];
 }
 
 interface LoginInput {
@@ -74,6 +80,8 @@ interface User {
   username: Scalars['String'];
   key: Scalars['String'];
   chatGroups: Array<Maybe<ChatGroup>>;
+  createdAt: Scalars['String'];
+  verified: Scalars['Boolean'];
 }
 
 interface ChatGroup {
@@ -185,9 +193,9 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   LoginInput: LoginInput;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   UserInput: UserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
@@ -202,9 +210,9 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Int: Scalars['Int'];
   Mutation: {};
+  Boolean: Scalars['Boolean'];
   LoginInput: LoginInput;
   LoginReturn: LoginReturn;
-  Boolean: Scalars['Boolean'];
   UserInput: UserInput;
   schema: Schema;
   User: User;
@@ -221,6 +229,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
+  verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
 };
 
 export type LoginReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoginReturn'] = ResolversParentTypes['LoginReturn']> = {
@@ -241,6 +250,8 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   chatGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

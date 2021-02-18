@@ -10,6 +10,8 @@ class User extends BaseModel {
 	username!: string;
 	key!: string;
 	chatGroups!: ChatGroup[];
+	createdAt!: string;
+	verified!: boolean;
 
 	static get tableName() {
 		return 'users';

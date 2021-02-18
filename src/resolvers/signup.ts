@@ -35,7 +35,8 @@ export const signup = async (
 		name,
 		username,
 		password: await new Authentication(password).hashPassword(),
-		key
+		key,
+		createdAt: new Date().toString()
 	});
 
 	// Todo: Needs auth token

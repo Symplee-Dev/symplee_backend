@@ -19,6 +19,7 @@ declare global {
 				SESSION_SECRET: string;
 				SENDGRID_TOKEN: string;
 				DB_URL: string;
+				SENTRY_DSN: string;
 			};
 		}
 	}

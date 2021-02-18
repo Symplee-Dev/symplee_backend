@@ -15,7 +15,8 @@ export const initializeConfig = (): Utilities.Config.ENV => {
 		LOG_LEVEL: process.env.LOG_LEVEL ?? '',
 		SESSION_SECRET: process.env.SESSION_SECRET ?? '',
 		SENDGRID_TOKEN: process.env.SENDGRID_TOKEN ?? '',
-		DB_URL: process.env.DB_URL ?? ''
+		DB_URL: process.env.DB_URL ?? '',
+		SENTRY_DSN: process.env.SENTRY_DSN ?? ''
 	};
 
 	return config;

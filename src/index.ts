@@ -8,6 +8,7 @@ import initializeMiddleware from './utils/InitializeMiddleware';
 import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './resolvers/index';
 import dotenv from 'dotenv';
+import { initSentry } from './Services/Sentry';
 
 // Init Config Variables
 dotenv.config();
@@ -33,6 +34,8 @@ initializeMiddleware(app);
 console.log(Config);
 
 server.applyMiddleware({ app });
+
+initSentry();
 
 app.listen({ port: Config.PORT }, () =>
 	console.info(

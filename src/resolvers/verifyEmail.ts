@@ -17,6 +17,8 @@ export const verifyEmail = async (
 
 	const user = await User.query().where({ id: decoded.userId }).first();
 
+	context.logger.info(user.id, decoded.userId);
+
 	if (!user) throw new Error('User does not exist');
 
 	await User.query()

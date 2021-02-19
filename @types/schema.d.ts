@@ -15,7 +15,7 @@ interface Scalars {
 interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
-  user?: Maybe<User>;
+  user: User;
 }
 
 
@@ -76,7 +76,7 @@ interface User {
   name: Scalars['String'];
   username: Scalars['String'];
   key: Scalars['String'];
-  chatGroups: Array<Maybe<ChatGroup>>;
+  chatGroups: Array<ChatGroup>;
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
 }

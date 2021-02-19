@@ -50,7 +50,7 @@ export class EmailService {
 		};
 
 		const token = await jwt.sign(
-			{ userId: 1, secret: Config.SESSION_SECRET },
+			{ userId: userId, secret: Config.SESSION_SECRET },
 			Config.SESSION_SECRET,
 			JWTOptions
 		);

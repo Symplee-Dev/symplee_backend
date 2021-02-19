@@ -18,7 +18,7 @@ interface Scalars {
 interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
-  user?: Maybe<User>;
+  user: User;
 }
 
 
@@ -79,7 +79,7 @@ interface User {
   name: Scalars['String'];
   username: Scalars['String'];
   key: Scalars['String'];
-  chatGroups: Array<Maybe<ChatGroup>>;
+  chatGroups: Array<ChatGroup>;
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
 }
@@ -223,7 +223,7 @@ export type ResolversParentTypes = {
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -249,7 +249,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  chatGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType>;
+  chatGroups?: Resolver<Array<ResolversTypes['ChatGroup']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

@@ -6,7 +6,7 @@ import { EmailService } from '../Services/Email';
 const LINK_TO =
 	process.env.NODE_ENV === 'production'
 		? 'https://google.com/'
-		: 'http://localhost:3000/verify/';
+		: 'http://localhost:3000/auth/verify/';
 
 export const signup = async (
 	parent: any,
@@ -53,7 +53,10 @@ export const signup = async (
 		user.email,
 		'Thank you for signing up!',
 		'Please Verify Your Email.',
-		'<h3>Please Verify Your Email</h3><br><a>' + LINK_TO + token + '</a>'
+		'<h3>Please Verify Your Email</h3> <br> <a href="' +
+			LINK_TO +
+			token +
+			'">Verify Email</a>'
 	);
 
 	if (!sent) throw new Error('Error signing up user.');

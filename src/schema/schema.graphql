@@ -10,14 +10,14 @@ type Mutation {
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
+	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
+	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
 }
 
 input CreateChatGroupInput {
 	name: String!
 	isPublic: Boolean!
 	userId: Int!
-	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
-	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
 }
 
 input LoginInput {

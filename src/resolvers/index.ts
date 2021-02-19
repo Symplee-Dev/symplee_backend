@@ -23,7 +23,7 @@ export const resolvers: Resolvers.Resolvers = {
 		signup,
 		login,
 		verifyEmail,
-		createChatGroup
+		createChatGroup,
 		editChangeLog
 	},
 	User: {

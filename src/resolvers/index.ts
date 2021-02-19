@@ -25,7 +25,6 @@ export const resolvers: Resolvers.Resolvers = {
 		verifyEmail,
 		createChatGroup,
 		editChangeLog
-		verifyEmail
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

@@ -3,13 +3,14 @@ import { signup } from './signup';
 import { login } from './login';
 import { userResolvers, user } from './user';
 import { verifyEmail } from './verifyEmail';
-
+import { addNewChangeLog } from './addNewChangeLog';
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
 		test,
 		user
 	},
 	Mutation: {
+		addNewChangeLog,
 		signup,
 		login,
 		verifyEmail

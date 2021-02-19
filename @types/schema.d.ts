@@ -35,6 +35,7 @@ interface Mutation {
   signup: User;
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
+  createChatGroup: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
 }
@@ -55,6 +56,11 @@ interface MutationVerifyEmailArgs {
 }
 
 
+interface MutationCreateChatGroupArgs {
+  chatGroup: CreateChatGroupInput;
+}
+
+
 interface MutationAddNewChangeLogArgs {
   newChangeLog: NewChangeLog;
 }
@@ -63,6 +69,12 @@ interface MutationAddNewChangeLogArgs {
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
   editChangeLog?: Maybe<NewChangeLog>;
+}
+
+interface CreateChatGroupInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
 }
 
 interface LoginInput {
@@ -124,6 +136,7 @@ interface ChatGroup {
   isPublic: Scalars['Boolean'];
   createdAt: Scalars['String'];
   chats: Array<Maybe<Chat>>;
+  createdBy: Scalars['Int'];
 }
 
 interface Chat {

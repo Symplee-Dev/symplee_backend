@@ -3,6 +3,7 @@ import { signup } from './signup';
 import { login } from './login';
 import { userResolvers, user } from './user';
 import { verifyEmail } from './verifyEmail';
+import { createChatGroup } from './createChatGroup';
 import {
 	changeLogById,
 	changeLogs,
@@ -22,6 +23,7 @@ export const resolvers: Resolvers.Resolvers = {
 		signup,
 		login,
 		verifyEmail,
+		createChatGroup,
 		editChangeLog
 	},
 	User: {

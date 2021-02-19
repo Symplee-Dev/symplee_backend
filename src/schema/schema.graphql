@@ -7,6 +7,13 @@ type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
+	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
+}
+
+input CreateChatGroupInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
 }
 
 input LoginInput {
@@ -48,6 +55,7 @@ type ChatGroup {
 	isPublic: Boolean!
 	createdAt: String!
 	chats: [Chat]!
+	createdBy: Int!
 }
 
 type Chat {

@@ -7,13 +7,14 @@ class ChatGroup extends BaseModel {
 	isPublic!: boolean;
 	createdAt!: string;
 	chats!: Chat[];
+	createdBy!: number;
 
 	static get tableName() {
 		return 'chat_groups';
 	}
 
 	static relationMappings = {
-		messages: {
+		chats: {
 			relation: BaseModel.HasManyRelation,
 			modelClass: Chat,
 			join: {

@@ -1,12 +1,16 @@
 type Query {
 	test: String!
 	user(id: Int!): User!
+	changeLogById(id: Int!): ChangeLog!
+	changeLogs: [ChangeLog]!
 }
 
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
+	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
+	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
 }
 
 input LoginInput {
@@ -15,9 +19,24 @@ input LoginInput {
 	password: String!
 }
 
+type ChangeLog {
+	id: Int!
+	body: String!
+	changes: [String!]!
+	created_at: String!
+	updated_at: String!
+	version: String!
+}
+
 type LoginReturn {
 	authenticated: Boolean!
 	token: String!
+}
+
+input newChangeLog {
+	body: String!
+	changes: [String!]!
+	version: String!
 }
 
 input UserInput {

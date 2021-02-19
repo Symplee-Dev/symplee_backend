@@ -13,7 +13,10 @@ export const initializeConfig = (): Utilities.Config.ENV => {
 		DB_PASSWORD: process.env.DB_PASSWORD ?? '',
 		DB_NAME: process.env.DB_NAME ?? '',
 		LOG_LEVEL: process.env.LOG_LEVEL ?? '',
-		SESSION_SECRET: process.env.SESSION_SECRET ?? ''
+		SESSION_SECRET: process.env.SESSION_SECRET ?? '',
+		SENDGRID_TOKEN: process.env.SENDGRID_TOKEN ?? '',
+		DB_URL: process.env.DB_URL ?? '',
+		SENTRY_DSN: process.env.SENTRY_DSN ?? ''
 	};
 
 	return config;

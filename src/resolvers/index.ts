@@ -2,6 +2,7 @@ import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
 import { userResolvers, user } from './user';
+import { verifyEmail } from './verifyEmail';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -10,7 +11,8 @@ export const resolvers: Resolvers.Resolvers = {
 	},
 	Mutation: {
 		signup,
-		login
+		login,
+		verifyEmail
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

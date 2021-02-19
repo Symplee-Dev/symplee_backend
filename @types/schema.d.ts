@@ -16,6 +16,11 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+<<<<<<< HEAD
+=======
+  changeLogById: ChangeLog;
+  changeLogs: Array<Maybe<ChangeLog>>;
+>>>>>>> dev
 }
 
 
@@ -23,12 +28,25 @@ interface QueryUserArgs {
   id: Scalars['Int'];
 }
 
+<<<<<<< HEAD
+=======
+
+interface QueryChangeLogByIdArgs {
+  id: Scalars['Int'];
+}
+
+>>>>>>> dev
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
+<<<<<<< HEAD
   createChatGroup: ChatGroup;
+=======
+  addNewChangeLog: ChangeLog;
+  editChangeLog?: Maybe<ChangeLog>;
+>>>>>>> dev
 }
 
 
@@ -47,6 +65,7 @@ interface MutationVerifyEmailArgs {
 }
 
 
+<<<<<<< HEAD
 interface MutationCreateChatGroupArgs {
   chatGroup: CreateChatGroupInput;
 }
@@ -55,6 +74,16 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+=======
+interface MutationAddNewChangeLogArgs {
+  newChangeLog: NewChangeLog;
+}
+
+
+interface MutationEditChangeLogArgs {
+  id: Scalars['Int'];
+  editChangeLog?: Maybe<NewChangeLog>;
+>>>>>>> dev
 }
 
 interface LoginInput {
@@ -63,12 +92,34 @@ interface LoginInput {
   password: Scalars['String'];
 }
 
+<<<<<<< HEAD
+=======
+interface ChangeLog {
+  __typename?: 'ChangeLog';
+  id: Scalars['Int'];
+  body: Scalars['String'];
+  changes: Array<Scalars['String']>;
+  created_at: Scalars['String'];
+  updated_at: Scalars['String'];
+  version: Scalars['String'];
+}
+
+>>>>>>> dev
 interface LoginReturn {
   __typename?: 'LoginReturn';
   authenticated: Scalars['Boolean'];
   token: Scalars['String'];
 }
 
+<<<<<<< HEAD
+=======
+interface NewChangeLog {
+  body: Scalars['String'];
+  changes: Array<Scalars['String']>;
+  version: Scalars['String'];
+}
+
+>>>>>>> dev
 interface UserInput {
   email: Scalars['String'];
   name: Scalars['String'];

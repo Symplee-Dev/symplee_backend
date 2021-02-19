@@ -61,6 +61,62 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+<<<<<<< HEAD
+=======
+          },
+          {
+            "name": "changeLogById",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ChangeLog",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "changeLogs",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ChangeLog",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+>>>>>>> dev
           }
         ],
         "inputFields": null,
@@ -189,18 +245,30 @@
             "deprecationReason": null
           },
           {
+<<<<<<< HEAD
             "name": "createChatGroup",
             "description": null,
             "args": [
               {
                 "name": "chatGroup",
+=======
+            "name": "addNewChangeLog",
+            "description": null,
+            "args": [
+              {
+                "name": "newChangeLog",
+>>>>>>> dev
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
+<<<<<<< HEAD
                     "name": "CreateChatGroupInput",
+=======
+                    "name": "newChangeLog",
+>>>>>>> dev
                     "ofType": null
                   }
                 },
@@ -214,12 +282,60 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
+<<<<<<< HEAD
                 "name": "ChatGroup",
+=======
+                "name": "ChangeLog",
+>>>>>>> dev
                 "ofType": null
               }
             },
             "isDeprecated": false,
             "deprecationReason": null
+<<<<<<< HEAD
+=======
+          },
+          {
+            "name": "editChangeLog",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "editChangeLog",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "newChangeLog",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "ChangeLog",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+>>>>>>> dev
           }
         ],
         "inputFields": null,
@@ -239,12 +355,44 @@
       },
       {
         "kind": "INPUT_OBJECT",
+<<<<<<< HEAD
         "name": "CreateChatGroupInput",
+=======
+        "name": "LoginInput",
+>>>>>>> dev
         "description": null,
         "fields": null,
         "inputFields": [
           {
+<<<<<<< HEAD
             "name": "name",
+=======
+            "name": "username",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "email",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "password",
+>>>>>>> dev
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -258,31 +406,63 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+<<<<<<< HEAD
           },
           {
             "name": "isPublic",
             "description": null,
+=======
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ChangeLog",
+        "description": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+>>>>>>> dev
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
+<<<<<<< HEAD
                 "name": "Boolean",
                 "ofType": null
               }
             },
             "defaultValue": null,
+=======
+                "name": "Int",
+                "ofType": null
+              }
+            },
+>>>>>>> dev
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
+<<<<<<< HEAD
             "name": "userId",
             "description": null,
+=======
+            "name": "body",
+            "description": null,
+            "args": [],
+>>>>>>> dev
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
+<<<<<<< HEAD
                 "name": "Int",
                 "ofType": null
               }
@@ -311,10 +491,41 @@
               "ofType": null
             },
             "defaultValue": null,
+=======
+                "name": "String",
+                "ofType": null
+              }
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
+            "name": "changes",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+>>>>>>> dev
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+<<<<<<< HEAD
             "name": "email",
             "description": null,
             "type": {
@@ -323,12 +534,10 @@
               "ofType": null
             },
             "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "password",
+=======
+            "name": "created_at",
             "description": null,
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -338,12 +547,58 @@
                 "ofType": null
               }
             },
+>>>>>>> dev
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+<<<<<<< HEAD
+            "name": "password",
+            "description": null,
+=======
+            "name": "updated_at",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": null,
+            "args": [],
+>>>>>>> dev
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+<<<<<<< HEAD
             "defaultValue": null,
+=======
+>>>>>>> dev
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
+<<<<<<< HEAD
         "interfaces": null,
+=======
+        "inputFields": null,
+        "interfaces": [],
+>>>>>>> dev
         "enumValues": null,
         "possibleTypes": null
       },
@@ -392,6 +647,76 @@
       },
       {
         "kind": "INPUT_OBJECT",
+<<<<<<< HEAD
+=======
+        "name": "newChangeLog",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "body",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "changes",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+>>>>>>> dev
         "name": "UserInput",
         "description": null,
         "fields": null,

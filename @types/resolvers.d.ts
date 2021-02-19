@@ -19,6 +19,11 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+<<<<<<< HEAD
+=======
+  changeLogById: ChangeLog;
+  changeLogs: Array<Maybe<ChangeLog>>;
+>>>>>>> dev
 }
 
 
@@ -26,12 +31,25 @@ interface QueryUserArgs {
   id: Scalars['Int'];
 }
 
+<<<<<<< HEAD
+=======
+
+interface QueryChangeLogByIdArgs {
+  id: Scalars['Int'];
+}
+
+>>>>>>> dev
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
+<<<<<<< HEAD
   createChatGroup: ChatGroup;
+=======
+  addNewChangeLog: ChangeLog;
+  editChangeLog?: Maybe<ChangeLog>;
+>>>>>>> dev
 }
 
 
@@ -50,6 +68,7 @@ interface MutationVerifyEmailArgs {
 }
 
 
+<<<<<<< HEAD
 interface MutationCreateChatGroupArgs {
   chatGroup: CreateChatGroupInput;
 }
@@ -58,6 +77,16 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+=======
+interface MutationAddNewChangeLogArgs {
+  newChangeLog: NewChangeLog;
+}
+
+
+interface MutationEditChangeLogArgs {
+  id: Scalars['Int'];
+  editChangeLog?: Maybe<NewChangeLog>;
+>>>>>>> dev
 }
 
 interface LoginInput {
@@ -66,12 +95,34 @@ interface LoginInput {
   password: Scalars['String'];
 }
 
+<<<<<<< HEAD
+=======
+interface ChangeLog {
+  __typename?: 'ChangeLog';
+  id: Scalars['Int'];
+  body: Scalars['String'];
+  changes: Array<Scalars['String']>;
+  created_at: Scalars['String'];
+  updated_at: Scalars['String'];
+  version: Scalars['String'];
+}
+
+>>>>>>> dev
 interface LoginReturn {
   __typename?: 'LoginReturn';
   authenticated: Scalars['Boolean'];
   token: Scalars['String'];
 }
 
+<<<<<<< HEAD
+=======
+interface NewChangeLog {
+  body: Scalars['String'];
+  changes: Array<Scalars['String']>;
+  version: Scalars['String'];
+}
+
+>>>>>>> dev
 interface UserInput {
   email: Scalars['String'];
   name: Scalars['String'];
@@ -206,9 +257,16 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+<<<<<<< HEAD
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
+=======
+  LoginInput: LoginInput;
+  ChangeLog: ResolverTypeWrapper<ChangeLog>;
+  LoginReturn: ResolverTypeWrapper<LoginReturn>;
+  newChangeLog: NewChangeLog;
+>>>>>>> dev
   UserInput: UserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
@@ -224,9 +282,16 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Mutation: {};
   Boolean: Scalars['Boolean'];
+<<<<<<< HEAD
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
   LoginReturn: LoginReturn;
+=======
+  LoginInput: LoginInput;
+  ChangeLog: ChangeLog;
+  LoginReturn: LoginReturn;
+  newChangeLog: NewChangeLog;
+>>>>>>> dev
   UserInput: UserInput;
   schema: Schema;
   User: User;
@@ -238,13 +303,33 @@ export type ResolversParentTypes = {
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+<<<<<<< HEAD
+=======
+  changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
+  changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
+>>>>>>> dev
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
+<<<<<<< HEAD
   createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
+=======
+  addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
+  editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id'>>;
+};
+
+export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['ChangeLog'] = ResolversParentTypes['ChangeLog']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  changes?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+>>>>>>> dev
 };
 
 export type LoginReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoginReturn'] = ResolversParentTypes['LoginReturn']> = {
@@ -300,6 +385,10 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+<<<<<<< HEAD
+=======
+  ChangeLog?: ChangeLogResolvers<ContextType>;
+>>>>>>> dev
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

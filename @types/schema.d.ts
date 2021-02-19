@@ -17,6 +17,7 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
+  changeLogs: Array<Maybe<ChangeLog>>;
 }
 
 
@@ -35,6 +36,7 @@ interface Mutation {
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
   addNewChangeLog: ChangeLog;
+  editChangeLog?: Maybe<ChangeLog>;
 }
 
 
@@ -57,6 +59,12 @@ interface MutationAddNewChangeLogArgs {
   newChangeLog: NewChangeLog;
 }
 
+
+interface MutationEditChangeLogArgs {
+  id: Scalars['Int'];
+  editChangeLog?: Maybe<NewChangeLog>;
+}
+
 interface LoginInput {
   username?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -68,7 +76,8 @@ interface ChangeLog {
   id: Scalars['Int'];
   body: Scalars['String'];
   changes: Array<Scalars['String']>;
-  createdAt: Scalars['String'];
+  created_at: Scalars['String'];
+  updated_at: Scalars['String'];
   version: Scalars['String'];
 }
 

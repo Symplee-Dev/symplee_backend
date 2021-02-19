@@ -2,6 +2,7 @@ type Query {
 	test: String!
 	user(id: Int!): User!
 	changeLogById(id: Int!): ChangeLog!
+	changeLogs: [ChangeLog]!
 }
 
 type Mutation {
@@ -9,6 +10,7 @@ type Mutation {
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
 	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
+	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
 }
 
 input LoginInput {
@@ -21,7 +23,8 @@ type ChangeLog {
 	id: Int!
 	body: String!
 	changes: [String!]!
-	createdAt: String!
+	created_at: String!
+	updated_at: String!
 	version: String!
 }
 

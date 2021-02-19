@@ -20,6 +20,7 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
+  changeLogs: Array<Maybe<ChangeLog>>;
 }
 
 
@@ -38,6 +39,7 @@ interface Mutation {
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
   addNewChangeLog: ChangeLog;
+  editChangeLog?: Maybe<ChangeLog>;
 }
 
 
@@ -60,6 +62,12 @@ interface MutationAddNewChangeLogArgs {
   newChangeLog: NewChangeLog;
 }
 
+
+interface MutationEditChangeLogArgs {
+  id: Scalars['Int'];
+  editChangeLog?: Maybe<NewChangeLog>;
+}
+
 interface LoginInput {
   username?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -71,7 +79,8 @@ interface ChangeLog {
   id: Scalars['Int'];
   body: Scalars['String'];
   changes: Array<Scalars['String']>;
-  createdAt: Scalars['String'];
+  created_at: Scalars['String'];
+  updated_at: Scalars['String'];
   version: Scalars['String'];
 }
 
@@ -256,6 +265,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
+  changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -263,13 +273,15 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
+  editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id'>>;
 };
 
 export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['ChangeLog'] = ResolversParentTypes['ChangeLog']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   changes?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   version?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

@@ -4,7 +4,8 @@ class ChangeLog extends BaseModel {
 	id!: number;
 	version!: string;
 	changes!: string[];
-	createdAt!: string;
+	created_at!: string;
+	updated_at!: string;
 	body!: string;
 
 	static get tableName() {

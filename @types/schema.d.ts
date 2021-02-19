@@ -16,10 +16,16 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+  changeLogById: ChangeLog;
 }
 
 
 interface QueryUserArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryChangeLogByIdArgs {
   id: Scalars['Int'];
 }
 

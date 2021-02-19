@@ -19,10 +19,16 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+  changeLogById: ChangeLog;
 }
 
 
 interface QueryUserArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryChangeLogByIdArgs {
   id: Scalars['Int'];
 }
 
@@ -249,6 +255,7 @@ export type ResolversParentTypes = {
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

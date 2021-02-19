@@ -1,6 +1,7 @@
 type Query {
 	test: String!
 	user(id: Int!): User!
+	changeLogById(id: Int!): ChangeLog!
 }
 
 type Mutation {

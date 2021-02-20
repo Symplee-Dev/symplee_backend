@@ -19,6 +19,8 @@ interface Query {
   changeLogById: ChangeLog;
   changeLogs: Array<Maybe<ChangeLog>>;
   serverStatus: Scalars['Boolean'];
+  chatGroup: ChatGroup;
+  hasChat: Scalars['Boolean'];
 }
 
 
@@ -31,6 +33,17 @@ interface QueryChangeLogByIdArgs {
   id: Scalars['Int'];
 }
 
+
+interface QueryChatGroupArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryHasChatArgs {
+  userId: Scalars['Int'];
+  chatId: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -38,6 +51,8 @@ interface Mutation {
   verifyEmail: Scalars['Boolean'];
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
+  createChat: Chat;
+  createChatGroup: ChatGroup;
 }
 
 
@@ -64,6 +79,30 @@ interface MutationAddNewChangeLogArgs {
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
   editChangeLog?: Maybe<NewChangeLog>;
+}
+
+
+interface MutationCreateChatArgs {
+  chat: CreateChatInput;
+}
+
+
+interface MutationCreateChatGroupArgs {
+  chatGroup: CreateChatGroupInput;
+}
+
+interface CreateChatInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
+  icon: Scalars['String'];
+  chatGroupId: Scalars['Int'];
+}
+
+interface CreateChatGroupInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
 }
 
 interface LoginInput {
@@ -125,6 +164,7 @@ interface ChatGroup {
   isPublic: Scalars['Boolean'];
   createdAt: Scalars['String'];
   chats: Array<Maybe<Chat>>;
+  createdBy: Scalars['Int'];
 }
 
 interface Chat {
@@ -134,6 +174,7 @@ interface Chat {
   isPublic: Scalars['Boolean'];
   createdById: Scalars['Int'];
   messages: Array<Maybe<Message>>;
+  icon: Scalars['String'];
 }
 
 interface Message {

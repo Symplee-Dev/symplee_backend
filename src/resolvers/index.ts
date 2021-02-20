@@ -3,6 +3,8 @@ import { signup } from './signup';
 import { login } from './login';
 import { userResolvers, user } from './user';
 import { verifyEmail } from './verifyEmail';
+import { createChatGroup } from './createChatGroup';
+import { chatGroup } from './chatGroup';
 import {
 	changeLogById,
 	changeLogs,
@@ -10,6 +12,8 @@ import {
 	editChangeLog
 } from './changeLog';
 import { serverStatus } from './serverStatus';
+import { createChat } from './createChat';
+import { hasChat } from './chat';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -17,14 +21,18 @@ export const resolvers: Resolvers.Resolvers = {
 		user,
 		changeLogById,
 		changeLogs,
-		serverStatus
+		serverStatus,
+		chatGroup,
+		hasChat
 	},
 	Mutation: {
 		addNewChangeLog,
 		signup,
 		login,
 		verifyEmail,
-		editChangeLog
+		editChangeLog,
+		createChatGroup,
+		createChat
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

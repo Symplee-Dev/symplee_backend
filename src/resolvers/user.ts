@@ -1,5 +1,4 @@
 import User from '../models/User';
-import { AuthenticationError } from 'apollo-server';
 
 export const userResolvers = {
 	chatGroups: async (

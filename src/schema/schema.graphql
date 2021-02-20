@@ -4,6 +4,8 @@ type Query {
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog]!
 	serverStatus: Boolean!
+	chatGroup(id: Int!): ChatGroup!
+	hasChat(userId: Int!, chatId: Int!): Boolean!
 }
 
 type Mutation {
@@ -12,6 +14,24 @@ type Mutation {
 	verifyEmail(token: String!): Boolean!
 	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
 	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
+	createChat(chat: CreateChatInput!): Chat!
+	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
+	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
+	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
+}
+
+input CreateChatInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
+	icon: String!
+	chatGroupId: Int!
+}
+
+input CreateChatGroupInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
 }
 
 input LoginInput {
@@ -68,6 +88,7 @@ type ChatGroup {
 	isPublic: Boolean!
 	createdAt: String!
 	chats: [Chat]!
+	createdBy: Int!
 }
 
 type Chat {
@@ -76,6 +97,7 @@ type Chat {
 	isPublic: Boolean!
 	createdById: Int!
 	messages: [Message]!
+	icon: String!
 }
 
 type Message {

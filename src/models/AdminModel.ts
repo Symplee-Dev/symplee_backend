@@ -14,3 +14,5 @@ class AdminModel extends BaseModel {
 		return 'admin_users';
 	}
 }
+
+export default AdminModel;

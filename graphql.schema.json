@@ -769,23 +769,7 @@
         "fields": null,
         "inputFields": [
           {
-            "name": "chatGroupId",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "icon",
+            "name": "name",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -817,7 +801,23 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "userId",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "icon",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -833,7 +833,7 @@
             "deprecationReason": null
           },
           {
-            "name": "userId",
+            "name": "chatGroupId",
             "description": null,
             "type": {
               "kind": "NON_NULL",

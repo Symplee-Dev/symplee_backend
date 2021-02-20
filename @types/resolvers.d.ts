@@ -123,11 +123,11 @@ interface SendAppFeedbackInput {
 }
 
 interface CreateChatInput {
-  chatGroupId: Scalars['Int'];
-  icon: Scalars['String'];
-  isPublic: Scalars['Boolean'];
   name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  icon: Scalars['String'];
+  chatGroupId: Scalars['Int'];
 }
 
 interface CreateChatGroupInput {

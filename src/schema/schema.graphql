@@ -47,14 +47,6 @@ input CreateChatInput {
 	chatGroupId: Int!
 }
 
-input CreateChatInput {
-	name: String!
-	isPublic: Boolean!
-	userId: Int!
-	icon: String!
-	chatGroupId: Int!
-}
-
 input CreateChatGroupInput {
 	name: String!
 	isPublic: Boolean!

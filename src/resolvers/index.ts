@@ -4,19 +4,24 @@ import { login } from './login';
 import { userResolvers, user } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
+import { chatGroup } from './chatGroup';
 import {
 	changeLogById,
 	changeLogs,
 	addNewChangeLog,
 	editChangeLog
 } from './changeLog';
+import { createChat } from './createChat';
+import { hasChat } from './chat';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
 		test,
 		user,
 		changeLogById,
-		changeLogs
+		changeLogs,
+		chatGroup,
+		hasChat
 	},
 	Mutation: {
 		addNewChangeLog,
@@ -24,7 +29,8 @@ export const resolvers: Resolvers.Resolvers = {
 		login,
 		verifyEmail,
 		createChatGroup,
-		editChangeLog
+		editChangeLog,
+		createChat
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

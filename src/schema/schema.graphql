@@ -3,15 +3,26 @@ type Query {
 	user(id: Int!): User!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog]!
+	chatGroup(id: Int!): ChatGroup!
+	hasChat(userId: Int!, chatId: Int!): Boolean!
 }
 
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
+	createChat(chat: CreateChatInput!): Chat!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
 	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
 	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
+}
+
+input CreateChatInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
+	icon: String!
+	chatGroupId: Int!
 }
 
 input CreateChatGroupInput {
@@ -83,6 +94,7 @@ type Chat {
 	isPublic: Boolean!
 	createdById: Int!
 	messages: [Message]!
+	icon: String!
 }
 
 type Message {

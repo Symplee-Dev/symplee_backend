@@ -3,6 +3,7 @@ type Query {
 	user(id: Int!): User!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog]!
+	serverStatus: Boolean!
 	chatGroup(id: Int!): ChatGroup!
 	hasChat(userId: Int!, chatId: Int!): Boolean!
 }
@@ -11,6 +12,8 @@ type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
+	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
+	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
 	createChat(chat: CreateChatInput!): Chat!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
 	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!

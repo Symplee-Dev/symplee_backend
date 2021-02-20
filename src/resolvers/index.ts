@@ -11,6 +11,7 @@ import {
 	addNewChangeLog,
 	editChangeLog
 } from './changeLog';
+import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
 
@@ -20,6 +21,7 @@ export const resolvers: Resolvers.Resolvers = {
 		user,
 		changeLogById,
 		changeLogs,
+		serverStatus,
 		chatGroup,
 		hasChat
 	},
@@ -28,8 +30,8 @@ export const resolvers: Resolvers.Resolvers = {
 		signup,
 		login,
 		verifyEmail,
-		createChatGroup,
 		editChangeLog,
+		createChatGroup,
 		createChat
 	},
 	User: {

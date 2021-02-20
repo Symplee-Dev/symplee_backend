@@ -21,6 +21,7 @@ interface Query {
   user: User;
   changeLogById: ChangeLog;
   changeLogs: Array<Maybe<ChangeLog>>;
+  serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
 }
@@ -51,10 +52,10 @@ interface Mutation {
   signup: User;
   login?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
-  createChat: Chat;
-  createChatGroup: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
+  createChat: Chat;
+  createChatGroup: ChatGroup;
 }
 
 
@@ -73,16 +74,6 @@ interface MutationVerifyEmailArgs {
 }
 
 
-interface MutationCreateChatArgs {
-  chat: CreateChatInput;
-}
-
-
-interface MutationCreateChatGroupArgs {
-  chatGroup: CreateChatGroupInput;
-}
-
-
 interface MutationAddNewChangeLogArgs {
   newChangeLog: NewChangeLog;
 }
@@ -91,6 +82,16 @@ interface MutationAddNewChangeLogArgs {
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
   editChangeLog?: Maybe<NewChangeLog>;
+}
+
+
+interface MutationCreateChatArgs {
+  chat: CreateChatInput;
+}
+
+
+interface MutationCreateChatGroupArgs {
+  chatGroup: CreateChatGroupInput;
 }
 
 interface CreateChatInput {
@@ -311,6 +312,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
   changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
+  serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   chatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<QueryChatGroupArgs, 'id'>>;
   hasChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasChatArgs, 'userId' | 'chatId'>>;
 };
@@ -319,10 +321,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
-  createChat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType, RequireFields<MutationCreateChatArgs, 'chat'>>;
-  createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id'>>;
+  createChat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType, RequireFields<MutationCreateChatArgs, 'chat'>>;
+  createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
 };
 
 export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['ChangeLog'] = ResolversParentTypes['ChangeLog']> = {

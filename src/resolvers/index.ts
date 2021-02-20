@@ -9,13 +9,15 @@ import {
 	addNewChangeLog,
 	editChangeLog
 } from './changeLog';
+import { serverStatus } from './serverStatus';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
 		test,
 		user,
 		changeLogById,
-		changeLogs
+		changeLogs,
+		serverStatus
 	},
 	Mutation: {
 		addNewChangeLog,

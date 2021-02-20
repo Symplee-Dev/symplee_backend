@@ -21,6 +21,7 @@ interface Query {
   user: User;
   changeLogById: ChangeLog;
   changeLogs: Array<Maybe<ChangeLog>>;
+  serverStatus: Scalars['Boolean'];
 }
 
 
@@ -228,8 +229,8 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Mutation: ResolverTypeWrapper<{}>;
   LoginInput: LoginInput;
   ChangeLog: ResolverTypeWrapper<ChangeLog>;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
@@ -247,8 +248,8 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String'];
   Int: Scalars['Int'];
-  Mutation: {};
   Boolean: Scalars['Boolean'];
+  Mutation: {};
   LoginInput: LoginInput;
   ChangeLog: ChangeLog;
   LoginReturn: LoginReturn;
@@ -266,6 +267,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
   changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
+  serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

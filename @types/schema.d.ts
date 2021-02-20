@@ -18,6 +18,7 @@ interface Query {
   user: User;
   changeLogById: ChangeLog;
   changeLogs: Array<Maybe<ChangeLog>>;
+  serverStatus: Scalars['Boolean'];
 }
 
 

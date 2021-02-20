@@ -56,6 +56,7 @@ interface Mutation {
   createChatGroup: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
+  sendFeedback: AppFeedback;
 }
 
 
@@ -94,12 +95,39 @@ interface MutationEditChangeLogArgs {
   changeLogEdit: NewChangeLogInput;
 }
 
+
+interface MutationSendFeedbackArgs {
+  feedback: SendAppFeedbackInput;
+}
+
+interface AppFeedback {
+  __typename?: 'AppFeedback';
+  id: Scalars['Int'];
+  createdAt: Scalars['String'];
+  userName?: Maybe<Scalars['String']>;
+  userEmail: Scalars['String'];
+  resolved: Scalars['Boolean'];
+  body: Scalars['String'];
+  error?: Maybe<Scalars['String']>;
+  sentryErrorUrl?: Maybe<Scalars['String']>;
+  logRocketErrorUrl?: Maybe<Scalars['String']>;
+}
+
+interface SendAppFeedbackInput {
+  userName?: Maybe<Scalars['String']>;
+  userEmail: Scalars['String'];
+  body: Scalars['String'];
+  error?: Maybe<Scalars['String']>;
+  sentryErrorUrl?: Maybe<Scalars['String']>;
+  logRocketErrorUrl?: Maybe<Scalars['String']>;
+}
+
 interface CreateChatInput {
-  chatGroupId: Scalars['Int'];
-  icon: Scalars['String'];
-  isPublic: Scalars['Boolean'];
   name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  icon: Scalars['String'];
+  chatGroupId: Scalars['Int'];
 }
 
 interface CreateChatGroupInput {
@@ -272,6 +300,8 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  AppFeedback: ResolverTypeWrapper<AppFeedback>;
+  SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
@@ -293,6 +323,8 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  AppFeedback: AppFeedback;
+  SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
@@ -325,6 +357,20 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
+  sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
+};
+
+export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userEmail?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  resolved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  error?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  sentryErrorUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  logRocketErrorUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['ChangeLog'] = ResolversParentTypes['ChangeLog']> = {
@@ -392,6 +438,7 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  AppFeedback?: AppFeedbackResolvers<ContextType>;
   ChangeLog?: ChangeLogResolvers<ContextType>;
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;

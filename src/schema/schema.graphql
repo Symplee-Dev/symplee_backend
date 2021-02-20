@@ -16,14 +16,27 @@ type Mutation {
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
 	addNewChangeLog(newChangeLog: NewChangeLogInput!): ChangeLog!
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
+	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
+}
+type AppFeedback {
+	id: Int!
+	createdAt: String!
+	userName: String
+	userEmail: String!
+	resolved: Boolean!
+	body: String!
+	error: String
+	sentryErrorUrl: String
+	logRocketErrorUrl: String
 }
 
-input CreateChatInput {
-	name: String!
-	isPublic: Boolean!
-	userId: Int!
-	icon: String!
-	chatGroupId: Int!
+input SendAppFeedbackInput {
+	userName: String
+	userEmail: String!
+	body: String!
+	error: String
+	sentryErrorUrl: String
+	logRocketErrorUrl: String
 }
 
 input CreateChatInput {

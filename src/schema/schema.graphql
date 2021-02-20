@@ -3,6 +3,7 @@ type Query {
 	user(id: Int!): User!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog]!
+	chatGroup(id: Int!): ChatGroup!
 }
 
 type Mutation {

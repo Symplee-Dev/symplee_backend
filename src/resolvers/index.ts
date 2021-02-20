@@ -4,6 +4,7 @@ import { login } from './login';
 import { userResolvers, user } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
+import { chatGroup } from './chatGroup';
 import {
 	changeLogById,
 	changeLogs,
@@ -16,7 +17,8 @@ export const resolvers: Resolvers.Resolvers = {
 		test,
 		user,
 		changeLogById,
-		changeLogs
+		changeLogs,
+		chatGroup
 	},
 	Mutation: {
 		addNewChangeLog,

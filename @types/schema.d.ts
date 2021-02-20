@@ -18,6 +18,7 @@ interface Query {
   user: User;
   changeLogById: ChangeLog;
   changeLogs: Array<Maybe<ChangeLog>>;
+  chatGroup: ChatGroup;
 }
 
 
@@ -27,6 +28,11 @@ interface QueryUserArgs {
 
 
 interface QueryChangeLogByIdArgs {
+  id: Scalars['Int'];
+}
+
+
+interface QueryChatGroupArgs {
   id: Scalars['Int'];
 }
 

@@ -53,6 +53,7 @@ interface Mutation {
   createChatGroup: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
+  sendFeedback: AppFeedback;
 }
 
 
@@ -89,6 +90,33 @@ interface MutationAddNewChangeLogArgs {
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
   changeLogEdit: NewChangeLogInput;
+}
+
+
+interface MutationSendFeedbackArgs {
+  feedback: SendAppFeedbackInput;
+}
+
+interface AppFeedback {
+  __typename?: 'AppFeedback';
+  id: Scalars['Int'];
+  createdAt: Scalars['String'];
+  userName?: Maybe<Scalars['String']>;
+  userEmail: Scalars['String'];
+  resolved: Scalars['Boolean'];
+  body: Scalars['String'];
+  error?: Maybe<Scalars['String']>;
+  sentryErrorUrl?: Maybe<Scalars['String']>;
+  logRocketErrorUrl?: Maybe<Scalars['String']>;
+}
+
+interface SendAppFeedbackInput {
+  userName?: Maybe<Scalars['String']>;
+  userEmail: Scalars['String'];
+  body: Scalars['String'];
+  error?: Maybe<Scalars['String']>;
+  sentryErrorUrl?: Maybe<Scalars['String']>;
+  logRocketErrorUrl?: Maybe<Scalars['String']>;
 }
 
 interface CreateChatInput {

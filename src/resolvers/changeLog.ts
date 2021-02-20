@@ -88,7 +88,7 @@ export const editChangeLog = async (
 	args: Resolvers.MutationEditChangeLogArgs,
 	context: Services.ServerContext
 ): Promise<Resolvers.ChangeLog> => {
-	const { id, editChangeLog } = args;
+	const { id, changeLogEdit } = args;
 
 	const query = ChangeLog.query().findById(id).first();
 	// Check if id returns Checklog
@@ -97,9 +97,9 @@ export const editChangeLog = async (
 	}
 
 	const updatedChangeLog = await ChangeLog.query().patchAndFetchById(id, {
-		version: editChangeLog?.version,
-		body: editChangeLog?.body,
-		changes: editChangeLog?.changes,
+		version: changeLogEdit?.version,
+		body: changeLogEdit?.body,
+		changes: changeLogEdit?.changes,
 		updated_at: new Date().toString()
 	});
 

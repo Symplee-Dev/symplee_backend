@@ -4,15 +4,23 @@ type Query {
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog]!
 	chatGroup(id: Int!): ChatGroup!
+	hasChat(userId: Int!, chatId: Int!): Boolean!
 }
 
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
+	createChat(chat: CreateChatInput!): Chat!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
 	addNewChangeLog(newChangeLog: newChangeLog!): ChangeLog!
 	editChangeLog(id: Int!, editChangeLog: newChangeLog): ChangeLog
+}
+
+input CreateChatInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
 }
 
 input CreateChatGroupInput {

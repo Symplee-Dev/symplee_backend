@@ -11,6 +11,8 @@ import {
 	addNewChangeLog,
 	editChangeLog
 } from './changeLog';
+import { createChat } from './createChat';
+import { hasChat } from './chat';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -18,7 +20,8 @@ export const resolvers: Resolvers.Resolvers = {
 		user,
 		changeLogById,
 		changeLogs,
-		chatGroup
+		chatGroup,
+		hasChat
 	},
 	Mutation: {
 		addNewChangeLog,
@@ -26,7 +29,8 @@ export const resolvers: Resolvers.Resolvers = {
 		login,
 		verifyEmail,
 		createChatGroup,
-		editChangeLog
+		editChangeLog,
+		createChat
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

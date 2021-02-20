@@ -21,6 +21,8 @@ input CreateChatInput {
 	name: String!
 	isPublic: Boolean!
 	userId: Int!
+	icon: String!
+	chatGroupId: Int!
 }
 
 input CreateChatGroupInput {
@@ -92,6 +94,7 @@ type Chat {
 	isPublic: Boolean!
 	createdById: Int!
 	messages: [Message]!
+	icon: String!
 }
 
 type Message {

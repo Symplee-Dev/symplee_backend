@@ -94,6 +94,8 @@ interface CreateChatInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  icon: Scalars['String'];
+  chatGroupId: Scalars['Int'];
 }
 
 interface CreateChatGroupInput {
@@ -171,6 +173,7 @@ interface Chat {
   isPublic: Scalars['Boolean'];
   createdById: Scalars['Int'];
   messages: Array<Maybe<Message>>;
+  icon: Scalars['String'];
 }
 
 interface Message {

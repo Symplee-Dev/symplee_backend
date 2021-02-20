@@ -97,9 +97,9 @@ export const editChangeLog = async (
 	}
 
 	const updatedChangeLog = await ChangeLog.query().patchAndFetchById(id, {
-		version: editChangeLog?.version,
-		body: editChangeLog?.body,
-		changes: editChangeLog?.changes,
+		version: changeLogEdit?.version,
+		body: changeLogEdit?.body,
+		changes: changeLogEdit?.changes,
 		updated_at: new Date().toString()
 	});
 

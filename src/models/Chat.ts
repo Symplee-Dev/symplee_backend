@@ -7,6 +7,8 @@ class Chat extends BaseModel {
 	isPublic!: boolean;
 	createdById!: number;
 	messages!: Message[];
+	icon!: string;
+	chatGroupId!: number;
 
 	static get tableName() {
 		return 'chats';

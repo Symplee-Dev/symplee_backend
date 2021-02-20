@@ -62,13 +62,13 @@ interface MutationCreateChatGroupArgs {
 
 
 interface MutationAddNewChangeLogArgs {
-  newChangeLog: NewChangeLog;
+  newChangeLog: NewChangeLogInput;
 }
 
 
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
-  editChangeLog?: Maybe<NewChangeLog>;
+  changeLogEdit: NewChangeLogInput;
 }
 
 interface CreateChatGroupInput {
@@ -99,7 +99,7 @@ interface LoginReturn {
   token: Scalars['String'];
 }
 
-interface NewChangeLog {
+interface NewChangeLogInput {
   body: Scalars['String'];
   changes: Array<Scalars['String']>;
   version: Scalars['String'];

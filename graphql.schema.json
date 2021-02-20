@@ -286,7 +286,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "newChangeLog",
+                    "name": "NewChangeLogInput",
                     "ofType": null
                   }
                 },
@@ -328,12 +328,16 @@
                 "deprecationReason": null
               },
               {
-                "name": "editChangeLog",
+                "name": "changeLogEdit",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "newChangeLog",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "NewChangeLogInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,
@@ -634,7 +638,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "newChangeLog",
+        "name": "NewChangeLogInput",
         "description": null,
         "fields": null,
         "inputFields": [

@@ -65,13 +65,13 @@ interface MutationCreateChatGroupArgs {
 
 
 interface MutationAddNewChangeLogArgs {
-  newChangeLog: NewChangeLog;
+  newChangeLog: NewChangeLogInput;
 }
 
 
 interface MutationEditChangeLogArgs {
   id: Scalars['Int'];
-  editChangeLog?: Maybe<NewChangeLog>;
+  changeLogEdit: NewChangeLogInput;
 }
 
 interface CreateChatGroupInput {
@@ -102,7 +102,7 @@ interface LoginReturn {
   token: Scalars['String'];
 }
 
-interface NewChangeLog {
+interface NewChangeLogInput {
   body: Scalars['String'];
   changes: Array<Scalars['String']>;
   version: Scalars['String'];
@@ -247,7 +247,7 @@ export type ResolversTypes = {
   LoginInput: LoginInput;
   ChangeLog: ResolverTypeWrapper<ChangeLog>;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
-  newChangeLog: NewChangeLog;
+  NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
@@ -267,7 +267,7 @@ export type ResolversParentTypes = {
   LoginInput: LoginInput;
   ChangeLog: ChangeLog;
   LoginReturn: LoginReturn;
-  newChangeLog: NewChangeLog;
+  NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
   schema: Schema;
   User: User;
@@ -289,7 +289,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
   createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
-  editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id'>>;
+  editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
 };
 
 export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversParentTypes['ChangeLog'] = ResolversParentTypes['ChangeLog']> = {

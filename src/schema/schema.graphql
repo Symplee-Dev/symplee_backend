@@ -18,7 +18,15 @@ type Mutation {
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
 	updateUser(user: UpdateUserInput!, userId: Int!): User!
+	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
 }
+
+input UpdateChatGroupInput {
+	name: String
+	isPublic: Boolean
+	avatar: String
+}
+
 type AppFeedback {
 	id: Int!
 	createdAt: String!
@@ -52,6 +60,7 @@ input CreateChatGroupInput {
 	name: String!
 	isPublic: Boolean!
 	userId: Int!
+	avatar: String
 }
 
 input LoginInput {

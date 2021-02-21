@@ -30,3 +30,20 @@ export const user = async (
 
 	return user;
 };
+
+export const updateUser = async (
+	parent: any,
+	args: Resolvers.MutationUpdateUserArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.User> => {
+	context.logger.info('Updating user');
+
+	const edited = await User.query().patchAndFetchById(args.userId, args.user);
+
+	if (!edited) {
+		context.logger.err('Error updating user with id of ' + args.userId);
+		throw new Error('Unable to update user. Try again later.');
+	}
+
+	return edited;
+};

@@ -54,6 +54,7 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  updateUser: User;
 }
 
 
@@ -95,6 +96,12 @@ interface MutationEditChangeLogArgs {
 
 interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
+}
+
+
+interface MutationUpdateUserArgs {
+  user: UpdateUserInput;
+  userId: Scalars['Int'];
 }
 
 interface AppFeedback {
@@ -166,6 +173,14 @@ interface UserInput {
   name: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+}
+
+interface UpdateUserInput {
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Schema {

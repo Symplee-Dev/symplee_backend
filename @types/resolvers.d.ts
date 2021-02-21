@@ -57,6 +57,7 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  updateUser: User;
 }
 
 
@@ -98,6 +99,12 @@ interface MutationEditChangeLogArgs {
 
 interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
+}
+
+
+interface MutationUpdateUserArgs {
+  user: UpdateUserInput;
+  userId: Scalars['Int'];
 }
 
 interface AppFeedback {
@@ -169,6 +176,14 @@ interface UserInput {
   name: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+}
+
+interface UpdateUserInput {
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Schema {
@@ -311,6 +326,7 @@ export type ResolversTypes = {
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
+  UpdateUserInput: UpdateUserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
   ChatGroup: ResolverTypeWrapper<ChatGroup>;
@@ -334,6 +350,7 @@ export type ResolversParentTypes = {
   LoginReturn: LoginReturn;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
+  UpdateUserInput: UpdateUserInput;
   schema: Schema;
   User: User;
   ChatGroup: ChatGroup;
@@ -360,6 +377,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user' | 'userId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

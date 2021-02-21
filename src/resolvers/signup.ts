@@ -5,7 +5,7 @@ import { EmailService } from '../Services/Email';
 
 const LINK_TO =
 	process.env.NODE_ENV === 'production'
-		? 'https://google.com/'
+		? 'https://boltchat.app/auth/verify'
 		: 'http://localhost:3000/auth/verify/';
 
 export const signup = async (

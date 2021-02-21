@@ -14,6 +14,7 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
+import { sendFeedback } from './feedback';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -32,7 +33,8 @@ export const resolvers: Resolvers.Resolvers = {
 		verifyEmail,
 		editChangeLog,
 		createChatGroup,
-		createChat
+		createChat,
+		sendFeedback
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

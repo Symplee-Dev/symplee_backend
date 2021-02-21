@@ -58,6 +58,7 @@ interface Mutation {
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
   updateUser: User;
+  updateChatGroup: ChatGroup;
 }
 
 
@@ -107,6 +108,18 @@ interface MutationUpdateUserArgs {
   userId: Scalars['Int'];
 }
 
+
+interface MutationUpdateChatGroupArgs {
+  group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+interface UpdateChatGroupInput {
+  name?: Maybe<Scalars['String']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<Scalars['String']>;
+}
+
 interface AppFeedback {
   __typename?: 'AppFeedback';
   id: Scalars['Int'];
@@ -141,6 +154,7 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface LoginInput {
@@ -317,6 +331,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: ResolverTypeWrapper<AppFeedback>;
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
@@ -341,6 +356,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: AppFeedback;
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
@@ -378,6 +394,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user' | 'userId'>>;
+  updateChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationUpdateChatGroupArgs, 'chatGroupId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

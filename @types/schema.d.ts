@@ -55,6 +55,7 @@ interface Mutation {
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
   updateUser: User;
+  updateChatGroup: ChatGroup;
 }
 
 
@@ -104,6 +105,18 @@ interface MutationUpdateUserArgs {
   userId: Scalars['Int'];
 }
 
+
+interface MutationUpdateChatGroupArgs {
+  group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+interface UpdateChatGroupInput {
+  name?: Maybe<Scalars['String']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<Scalars['String']>;
+}
+
 interface AppFeedback {
   __typename?: 'AppFeedback';
   id: Scalars['Int'];
@@ -138,6 +151,7 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface LoginInput {

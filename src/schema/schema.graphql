@@ -17,6 +17,7 @@ type Mutation {
 	addNewChangeLog(newChangeLog: NewChangeLogInput!): ChangeLog!
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
+	updateUser(user: UpdateUserInput!, userId: Int!): User!
 }
 type AppFeedback {
 	id: Int!
@@ -84,6 +85,14 @@ input UserInput {
 	name: String!
 	username: String!
 	password: String!
+	avatar: String
+}
+
+input UpdateUserInput {
+	email: String
+	name: String
+	username: String
+	avatar: String
 }
 
 type schema {
@@ -99,6 +108,7 @@ type User {
 	chatGroups: [ChatGroup!]!
 	createdAt: String!
 	verified: Boolean!
+	avatar: String
 }
 
 type ChatGroup {
@@ -108,6 +118,7 @@ type ChatGroup {
 	createdAt: String!
 	chats: [Chat]!
 	createdBy: Int!
+	avatar: String
 }
 
 type Chat {

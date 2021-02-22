@@ -62,6 +62,8 @@ interface Mutation {
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
   toggleFeedbackResolved: AppFeedback;
+  updateUser: User;
+  updateChatGroup: ChatGroup;
 }
 
 
@@ -111,6 +113,24 @@ interface MutationToggleFeedbackResolvedArgs {
   status: Scalars['Boolean'];
 }
 
+
+interface MutationUpdateUserArgs {
+  user: UpdateUserInput;
+  userId: Scalars['Int'];
+}
+
+
+interface MutationUpdateChatGroupArgs {
+  group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+interface UpdateChatGroupInput {
+  name?: Maybe<Scalars['String']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<Scalars['String']>;
+}
+
 interface AppFeedback {
   __typename?: 'AppFeedback';
   id: Scalars['Int'];
@@ -145,6 +165,7 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface LoginInput {
@@ -180,6 +201,14 @@ interface UserInput {
   name: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+}
+
+interface UpdateUserInput {
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Schema {
@@ -197,6 +226,7 @@ interface User {
   chatGroups: Array<ChatGroup>;
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface ChatGroup {
@@ -207,6 +237,7 @@ interface ChatGroup {
   createdAt: Scalars['String'];
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Chat {

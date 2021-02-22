@@ -20,10 +20,12 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
-  changeLogs: Array<Maybe<ChangeLog>>;
+  changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
+  getFeedback: Array<AppFeedback>;
+  feedbackById: AppFeedback;
 }
 
 
@@ -47,6 +49,11 @@ interface QueryHasChatArgs {
   chatId: Scalars['Int'];
 }
 
+
+interface QueryFeedbackByIdArgs {
+  id: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -57,6 +64,7 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  toggleFeedbackResolved: AppFeedback;
 }
 
 
@@ -98,6 +106,12 @@ interface MutationEditChangeLogArgs {
 
 interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
+}
+
+
+interface MutationToggleFeedbackResolvedArgs {
+  id: Scalars['Int'];
+  status: Scalars['Boolean'];
 }
 
 interface AppFeedback {
@@ -343,10 +357,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
-  changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
+  changeLogs?: Resolver<Array<ResolversTypes['ChangeLog']>, ParentType, ContextType>;
   serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   chatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<QueryChatGroupArgs, 'id'>>;
   hasChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasChatArgs, 'userId' | 'chatId'>>;
+  getFeedback?: Resolver<Array<ResolversTypes['AppFeedback']>, ParentType, ContextType>;
+  feedbackById?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<QueryFeedbackByIdArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -358,6 +374,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
+  toggleFeedbackResolved?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationToggleFeedbackResolvedArgs, 'id' | 'status'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

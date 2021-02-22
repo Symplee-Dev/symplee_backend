@@ -58,6 +58,8 @@ interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
+  createAdmin: Admin;
+  adminLogin?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
   createChat: Chat;
   createChatGroup: ChatGroup;
@@ -77,6 +79,16 @@ interface MutationSignupArgs {
 
 interface MutationLoginArgs {
   credentials: LoginInput;
+}
+
+
+interface MutationCreateAdminArgs {
+  admin: AdminInput;
+}
+
+
+interface MutationAdminLoginArgs {
+  credentials: AdminLoginInput;
 }
 
 
@@ -177,6 +189,26 @@ interface LoginInput {
   password: Scalars['String'];
 }
 
+interface AdminLoginInput {
+  username?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password: Scalars['String'];
+  pin: Scalars['Int'];
+}
+
+interface Admin {
+  __typename?: 'Admin';
+  id: Scalars['Int'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  pin: Scalars['Int'];
+  created_at: Scalars['String'];
+  verified: Scalars['Boolean'];
+  key: Scalars['String'];
+}
+
 interface ChangeLog {
   __typename?: 'ChangeLog';
   id: Scalars['Int'];
@@ -212,6 +244,14 @@ interface UpdateUserInput {
   name?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
+}
+
+interface AdminInput {
+  email: Scalars['String'];
+  name: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+  pin: Scalars['Int'];
 }
 
 interface Schema {
@@ -351,10 +391,13 @@ export type ResolversTypes = {
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
+  AdminLoginInput: AdminLoginInput;
+  Admin: ResolverTypeWrapper<Admin>;
   ChangeLog: ResolverTypeWrapper<ChangeLog>;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
+  AdminInput: AdminInput;
   UpdateUserInput: UpdateUserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
@@ -376,10 +419,13 @@ export type ResolversParentTypes = {
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
   LoginInput: LoginInput;
+  AdminLoginInput: AdminLoginInput;
+  Admin: Admin;
   ChangeLog: ChangeLog;
   LoginReturn: LoginReturn;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
+  AdminInput: AdminInput;
   UpdateUserInput: UpdateUserInput;
   schema: Schema;
   User: User;
@@ -403,6 +449,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
+  createAdmin?: Resolver<ResolversTypes['Admin'], ParentType, ContextType, RequireFields<MutationCreateAdminArgs, 'admin'>>;
+  adminLogin?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationAdminLoginArgs, 'credentials'>>;
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
   createChat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType, RequireFields<MutationCreateChatArgs, 'chat'>>;
   createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
@@ -424,6 +472,19 @@ export type AppFeedbackResolvers<ContextType = any, ParentType extends Resolvers
   error?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sentryErrorUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   logRocketErrorUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AdminResolvers<ContextType = any, ParentType extends ResolversParentTypes['Admin'] = ResolversParentTypes['Admin']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  pin?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -495,6 +556,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   AppFeedback?: AppFeedbackResolvers<ContextType>;
+  Admin?: AdminResolvers<ContextType>;
   ChangeLog?: ChangeLogResolvers<ContextType>;
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;

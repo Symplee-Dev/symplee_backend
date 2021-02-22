@@ -1,7 +1,7 @@
 import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
-import { userResolvers, user } from './user';
+import { userResolvers, user, updateUser } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
 import { chatGroup } from './chatGroup';
@@ -14,8 +14,13 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
-import { sendFeedback } from './feedback';
 import { adminLogin, createAdmin } from './admin';
+import {
+	getFeedback,
+	feedbackById,
+	sendFeedback,
+	toggleFeedbackResolved
+} from './feedback';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -25,7 +30,9 @@ export const resolvers: Resolvers.Resolvers = {
 		changeLogs,
 		serverStatus,
 		chatGroup,
-		hasChat
+		hasChat,
+		getFeedback,
+		feedbackById
 	},
 	Mutation: {
 		adminLogin,
@@ -37,7 +44,9 @@ export const resolvers: Resolvers.Resolvers = {
 		editChangeLog,
 		createChatGroup,
 		createChat,
-		sendFeedback
+		sendFeedback,
+		toggleFeedbackResolved,
+		updateUser
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

@@ -8,6 +8,7 @@ class ChatGroup extends BaseModel {
 	createdAt!: string;
 	chats!: Chat[];
 	createdBy!: number;
+	avatar?: string;
 
 	static get tableName() {
 		return 'chat_groups';

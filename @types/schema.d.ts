@@ -17,10 +17,12 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
-  changeLogs: Array<Maybe<ChangeLog>>;
+  changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
+  getFeedback: Array<AppFeedback>;
+  feedbackById: AppFeedback;
 }
 
 
@@ -44,6 +46,11 @@ interface QueryHasChatArgs {
   chatId: Scalars['Int'];
 }
 
+
+interface QueryFeedbackByIdArgs {
+  id: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -56,6 +63,9 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  toggleFeedbackResolved: AppFeedback;
+  updateUser: User;
+  updateChatGroup: ChatGroup;
 }
 
 
@@ -109,6 +119,30 @@ interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
 }
 
+
+interface MutationToggleFeedbackResolvedArgs {
+  id: Scalars['Int'];
+  status: Scalars['Boolean'];
+}
+
+
+interface MutationUpdateUserArgs {
+  user: UpdateUserInput;
+  userId: Scalars['Int'];
+}
+
+
+interface MutationUpdateChatGroupArgs {
+  group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+interface UpdateChatGroupInput {
+  name?: Maybe<Scalars['String']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<Scalars['String']>;
+}
+
 interface AppFeedback {
   __typename?: 'AppFeedback';
   id: Scalars['Int'];
@@ -143,6 +177,7 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface LoginInput {
@@ -198,6 +233,14 @@ interface UserInput {
   name: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+}
+
+interface UpdateUserInput {
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface AdminInput {
@@ -223,6 +266,7 @@ interface User {
   chatGroups: Array<ChatGroup>;
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface ChatGroup {
@@ -233,6 +277,7 @@ interface ChatGroup {
   createdAt: Scalars['String'];
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Chat {

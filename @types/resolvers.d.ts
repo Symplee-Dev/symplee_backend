@@ -20,10 +20,12 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
-  changeLogs: Array<Maybe<ChangeLog>>;
+  changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
+  getFeedback: Array<AppFeedback>;
+  feedbackById: AppFeedback;
 }
 
 
@@ -47,6 +49,11 @@ interface QueryHasChatArgs {
   chatId: Scalars['Int'];
 }
 
+
+interface QueryFeedbackByIdArgs {
+  id: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -59,6 +66,9 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  toggleFeedbackResolved: AppFeedback;
+  updateUser: User;
+  updateChatGroup: ChatGroup;
 }
 
 
@@ -112,6 +122,30 @@ interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
 }
 
+
+interface MutationToggleFeedbackResolvedArgs {
+  id: Scalars['Int'];
+  status: Scalars['Boolean'];
+}
+
+
+interface MutationUpdateUserArgs {
+  user: UpdateUserInput;
+  userId: Scalars['Int'];
+}
+
+
+interface MutationUpdateChatGroupArgs {
+  group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+interface UpdateChatGroupInput {
+  name?: Maybe<Scalars['String']>;
+  isPublic?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<Scalars['String']>;
+}
+
 interface AppFeedback {
   __typename?: 'AppFeedback';
   id: Scalars['Int'];
@@ -146,6 +180,7 @@ interface CreateChatGroupInput {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface LoginInput {
@@ -201,6 +236,14 @@ interface UserInput {
   name: Scalars['String'];
   username: Scalars['String'];
   password: Scalars['String'];
+  avatar?: Maybe<Scalars['String']>;
+}
+
+interface UpdateUserInput {
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface AdminInput {
@@ -226,6 +269,7 @@ interface User {
   chatGroups: Array<ChatGroup>;
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface ChatGroup {
@@ -236,6 +280,7 @@ interface ChatGroup {
   createdAt: Scalars['String'];
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
 }
 
 interface Chat {
@@ -340,6 +385,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: ResolverTypeWrapper<AppFeedback>;
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
@@ -352,6 +398,7 @@ export type ResolversTypes = {
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
   AdminInput: AdminInput;
+  UpdateUserInput: UpdateUserInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
   ChatGroup: ResolverTypeWrapper<ChatGroup>;
@@ -366,6 +413,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: AppFeedback;
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
@@ -378,6 +426,7 @@ export type ResolversParentTypes = {
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
   AdminInput: AdminInput;
+  UpdateUserInput: UpdateUserInput;
   schema: Schema;
   User: User;
   ChatGroup: ChatGroup;
@@ -389,10 +438,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
-  changeLogs?: Resolver<Array<Maybe<ResolversTypes['ChangeLog']>>, ParentType, ContextType>;
+  changeLogs?: Resolver<Array<ResolversTypes['ChangeLog']>, ParentType, ContextType>;
   serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   chatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<QueryChatGroupArgs, 'id'>>;
   hasChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasChatArgs, 'userId' | 'chatId'>>;
+  getFeedback?: Resolver<Array<ResolversTypes['AppFeedback']>, ParentType, ContextType>;
+  feedbackById?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<QueryFeedbackByIdArgs, 'id'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -406,6 +457,9 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
+  toggleFeedbackResolved?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationToggleFeedbackResolvedArgs, 'id' | 'status'>>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user' | 'userId'>>;
+  updateChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationUpdateChatGroupArgs, 'chatGroupId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
@@ -464,6 +518,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   chatGroups?: Resolver<Array<ResolversTypes['ChatGroup']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -474,6 +529,7 @@ export type ChatGroupResolvers<ContextType = any, ParentType extends ResolversPa
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   chats?: Resolver<Array<Maybe<ResolversTypes['Chat']>>, ParentType, ContextType>;
   createdBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

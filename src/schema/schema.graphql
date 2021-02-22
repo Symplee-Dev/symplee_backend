@@ -2,10 +2,12 @@ type Query {
 	test: String!
 	user(id: Int!): User!
 	changeLogById(id: Int!): ChangeLog!
-	changeLogs: [ChangeLog]!
+	changeLogs: [ChangeLog!]!
 	serverStatus: Boolean!
 	chatGroup(id: Int!): ChatGroup!
 	hasChat(userId: Int!, chatId: Int!): Boolean!
+	getFeedback: [AppFeedback!]!
+	feedbackById(id: Int!): AppFeedback!
 }
 
 type Mutation {
@@ -19,7 +21,17 @@ type Mutation {
 	addNewChangeLog(newChangeLog: NewChangeLogInput!): ChangeLog!
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
+	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
+	updateUser(user: UpdateUserInput!, userId: Int!): User!
+	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
 }
+
+input UpdateChatGroupInput {
+	name: String
+	isPublic: Boolean
+	avatar: String
+}
+
 type AppFeedback {
 	id: Int!
 	createdAt: String!
@@ -53,6 +65,7 @@ input CreateChatGroupInput {
 	name: String!
 	isPublic: Boolean!
 	userId: Int!
+	avatar: String
 }
 
 input LoginInput {
@@ -105,6 +118,14 @@ input UserInput {
 	name: String!
 	username: String!
 	password: String!
+	avatar: String
+}
+
+input UpdateUserInput {
+	email: String
+	name: String
+	username: String
+	avatar: String
 }
 input AdminInput {
 	email: String!
@@ -127,6 +148,7 @@ type User {
 	chatGroups: [ChatGroup!]!
 	createdAt: String!
 	verified: Boolean!
+	avatar: String
 }
 
 type ChatGroup {
@@ -136,6 +158,7 @@ type ChatGroup {
 	createdAt: String!
 	chats: [Chat]!
 	createdBy: Int!
+	avatar: String
 }
 
 type Chat {

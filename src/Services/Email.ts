@@ -20,28 +20,32 @@ export class EmailService {
 		text: string,
 		html: string
 	): Promise<boolean> {
-		sgMail.setApiKey(Config.SENDGRID_TOKEN);
+		if (process.env.NODE_ENV === 'test') {
+			return true;
+		} else {
+			sgMail.setApiKey(Config.SENDGRID_TOKEN);
 
-		const msg = {
-			to: recipient,
-			from: SENDGRID_SENDER,
-			subject: subject,
-			text: text,
-			html: html
-		};
+			const msg = {
+				to: recipient,
+				from: SENDGRID_SENDER,
+				subject: subject,
+				text: text,
+				html: html
+			};
 
-		sgMail
-			.send(msg)
-			.then(() => {
-				logger.info('Email Sent to ' + recipient);
-				return true;
-			})
-			.catch(error => {
-				logger.err('Email could not be sent', error.toString());
-				return false;
-			});
+			sgMail
+				.send(msg)
+				.then(() => {
+					logger.info('Email Sent to ' + recipient);
+					return true;
+				})
+				.catch(error => {
+					logger.err('Email could not be sent', error.toString());
+					return false;
+				});
 
-		return true;
+			return true;
+		}
 	}
 
 	async generateEmailJWT(userId: number): Promise<string> {
@@ -50,8 +54,16 @@ export class EmailService {
 		};
 
 		const token = await jwt.sign(
-			{ userId: userId, secret: Config.SESSION_SECRET },
-			Config.SESSION_SECRET,
+			{
+				userId: userId,
+				secret:
+					process.env.NODE_ENV === 'test'
+						? 'supersecret'
+						: Config.SESSION_SECRET
+			},
+			process.env.NODE_ENV === 'test'
+				? 'supersecret'
+				: Config.SESSION_SECRET,
 			JWTOptions
 		);
 

@@ -37,8 +37,10 @@ server.applyMiddleware({ app });
 
 initSentry();
 
-app.listen({ port: Config.PORT }, () =>
-	console.info(
-		`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
-	)
-);
+if (process.env.NODE_ENV !== 'test') {
+	app.listen({ port: Config.PORT }, () =>
+		console.info(
+			`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+		)
+	);
+}

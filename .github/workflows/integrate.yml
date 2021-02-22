@@ -1,4 +1,4 @@
-name: Typecheck, and Lint
+name: Typecheck, and Test
 
 on: [push]
 jobs:
@@ -11,3 +11,5 @@ jobs:
             - name: typecheck
               working-directory: ${{ github.workspace }}
               run: npm run typecheck
+            - name: test
+              run: npm run test

@@ -15,6 +15,7 @@ import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
 import { sendFeedback } from './feedback';
+import { adminLogin, createAdmin } from './admin';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -27,6 +28,8 @@ export const resolvers: Resolvers.Resolvers = {
 		hasChat
 	},
 	Mutation: {
+		adminLogin,
+		createAdmin,
 		addNewChangeLog,
 		signup,
 		login,

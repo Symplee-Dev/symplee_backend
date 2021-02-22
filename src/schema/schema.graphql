@@ -11,6 +11,8 @@ type Query {
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
+	createAdmin(admin: AdminInput!): Admin!
+	adminLogin(credentials: AdminLoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
 	createChat(chat: CreateChatInput!): Chat!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
@@ -59,6 +61,25 @@ input LoginInput {
 	password: String!
 }
 
+input AdminLoginInput {
+	username: String
+	email: String
+	password: String!
+	pin: Int!
+}
+
+type Admin {
+	id: Int!
+	username: String!
+	email: String!
+	name: String!
+	password: String!
+	pin: Int!
+	created_at: String!
+	verified: Boolean!
+	key: String!
+}
+
 type ChangeLog {
 	id: Int!
 	body: String!
@@ -84,6 +105,13 @@ input UserInput {
 	name: String!
 	username: String!
 	password: String!
+}
+input AdminInput {
+	email: String!
+	name: String!
+	username: String!
+	password: String!
+	pin: Int!
 }
 
 type schema {

@@ -3,6 +3,46 @@ import AppFeedback from '../models/AppFeedback';
 import { EmailService } from '../Services/Email';
 import { Sanitizer } from '../utils/Cleaner';
 
+export const toggleFeedbackResolved = async (
+	parent: any,
+	args: Resolvers.MutationToggleFeedbackResolvedArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.AppFeedback> => {
+	const { id, status } = args;
+
+	context.logger.info(`Toggling Resolved/Not Resolved for Feedback ID ${id}`);
+
+	const feedback = await AppFeedback.query().updateAndFetchById(id, {
+		resolved: !status
+	});
+	return feedback;
+};
+
+export const getFeedback = async (
+	parent: any,
+	args: {},
+	context: Services.ServerContext
+): Promise<Resolvers.AppFeedback[]> => {
+	context.logger.info('Getting All Feedback');
+
+	const feedbackList = await AppFeedback.query();
+	return feedbackList;
+};
+
+export const feedbackById = async (
+	parent: any,
+	args: Resolvers.QueryFeedbackByIdArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.AppFeedback> => {
+	const { id } = args;
+
+	context.logger.info('Getting All Feedback');
+
+	const feedback = await AppFeedback.query().findById(id);
+
+	return feedback;
+};
+
 export const sendFeedback = async (
 	parent: any,
 	args: Resolvers.MutationSendFeedbackArgs,

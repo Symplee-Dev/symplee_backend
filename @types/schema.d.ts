@@ -17,10 +17,12 @@ interface Query {
   test: Scalars['String'];
   user: User;
   changeLogById: ChangeLog;
-  changeLogs: Array<Maybe<ChangeLog>>;
+  changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
+  getFeedback: Array<AppFeedback>;
+  feedbackById: AppFeedback;
 }
 
 
@@ -44,6 +46,11 @@ interface QueryHasChatArgs {
   chatId: Scalars['Int'];
 }
 
+
+interface QueryFeedbackByIdArgs {
+  id: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -54,6 +61,7 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
 }
@@ -97,6 +105,12 @@ interface MutationEditChangeLogArgs {
 
 interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
+}
+
+
+interface MutationToggleFeedbackResolvedArgs {
+  id: Scalars['Int'];
+  status: Scalars['Boolean'];
 }
 
 

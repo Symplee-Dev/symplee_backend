@@ -14,7 +14,12 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
-import { sendFeedback } from './feedback';
+import {
+	getFeedback,
+	feedbackById,
+	sendFeedback,
+	toggleFeedbackResolved
+} from './feedback';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -24,7 +29,9 @@ export const resolvers: Resolvers.Resolvers = {
 		changeLogs,
 		serverStatus,
 		chatGroup,
-		hasChat
+		hasChat,
+		getFeedback,
+		feedbackById
 	},
 	Mutation: {
 		addNewChangeLog,
@@ -35,6 +42,7 @@ export const resolvers: Resolvers.Resolvers = {
 		createChatGroup,
 		createChat,
 		sendFeedback,
+		toggleFeedbackResolved,
 		updateUser
 	},
 	User: {

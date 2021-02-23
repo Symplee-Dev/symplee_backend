@@ -63,6 +63,7 @@ interface Mutation {
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
+  deleteFeedback: Scalars['Boolean'];
   toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
@@ -117,6 +118,11 @@ interface MutationEditChangeLogArgs {
 
 interface MutationSendFeedbackArgs {
   feedback: SendAppFeedbackInput;
+}
+
+
+interface MutationDeleteFeedbackArgs {
+  id: Scalars['Int'];
 }
 
 

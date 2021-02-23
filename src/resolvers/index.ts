@@ -19,7 +19,8 @@ import {
 	getFeedback,
 	feedbackById,
 	sendFeedback,
-	toggleFeedbackResolved
+	toggleFeedbackResolved,
+	deleteFeedback
 } from './feedback';
 
 export const resolvers: Resolvers.Resolvers = {
@@ -46,6 +47,7 @@ export const resolvers: Resolvers.Resolvers = {
 		createChat,
 		sendFeedback,
 		toggleFeedbackResolved,
+		deleteFeedback,
 		updateUser,
 		updateChatGroup
 	},

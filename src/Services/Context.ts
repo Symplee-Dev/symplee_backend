@@ -26,6 +26,12 @@ export class Context {
 		logger.info(
 			'Headers: Authorization: ' + this.request.headers.authorization
 		);
+
+		logger.info(
+			this.request.headers.authorization !== undefined &&
+				this.request.headers.authorization.length > 0 &&
+				this.request.headers.authorization !== null
+		);
 		if (
 			this.request.headers.authorization &&
 			this.request.headers.authorization.length > 0

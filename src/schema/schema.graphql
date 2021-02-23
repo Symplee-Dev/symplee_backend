@@ -1,6 +1,7 @@
 type Query {
 	test: String!
 	user(id: Int!): User!
+	admin: Admin!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog!]!
 	serverStatus: Boolean!

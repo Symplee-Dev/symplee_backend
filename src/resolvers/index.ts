@@ -14,7 +14,7 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
-import { adminLogin, createAdmin } from './admin';
+import { admin, adminLogin, createAdmin } from './admin';
 import {
 	getFeedback,
 	feedbackById,
@@ -27,6 +27,7 @@ export const resolvers: Resolvers.Resolvers = {
 	Query: {
 		test,
 		user,
+		admin,
 		changeLogById,
 		changeLogs,
 		serverStatus,

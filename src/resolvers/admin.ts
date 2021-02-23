@@ -1,7 +1,39 @@
 import { AuthenticationError } from 'apollo-server-errors';
+import jwtDecode from 'jwt-decode';
 import { v4 } from 'uuid';
 import AdminModel from '../models/AdminModel';
 import { Authentication, signJWT } from '../Services/Authentication';
+
+export const admin = async (
+	parent: any,
+	args: any,
+	context: Services.ServerContext
+): Promise<Resolvers.Admin> => {
+	if (!context.authenticated) {
+		throw new Error('Not Authorized');
+	}
+
+	if (!context.token) {
+		throw new Error('Not Authorized');
+	}
+
+	let user: number | undefined = context.session?.userId;
+
+	context.logger.info('Admin User Info: ' + user);
+
+	if (!user) {
+		throw new Error('Not Authorized');
+	}
+
+	context.logger.info(`attempting to get admin id ${user}`);
+	const admin = AdminModel.query().findById(user).first();
+
+	if (!admin) {
+		throw new Error('No Admin Found');
+	}
+
+	return admin;
+};
 
 export const createAdmin = async (
 	parent: any,

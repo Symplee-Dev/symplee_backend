@@ -16,6 +16,7 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+  admin: Admin;
   changeLogById: ChangeLog;
   changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];

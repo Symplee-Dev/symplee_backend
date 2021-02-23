@@ -19,6 +19,7 @@ interface Query {
   __typename?: 'Query';
   test: Scalars['String'];
   user: User;
+  admin: Admin;
   changeLogById: ChangeLog;
   changeLogs: Array<ChangeLog>;
   serverStatus: Scalars['Boolean'];
@@ -443,6 +444,7 @@ export type ResolversParentTypes = {
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  admin?: Resolver<ResolversTypes['Admin'], ParentType, ContextType>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
   changeLogs?: Resolver<Array<ResolversTypes['ChangeLog']>, ParentType, ContextType>;
   serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;

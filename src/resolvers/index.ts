@@ -14,18 +14,20 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
-import { adminLogin, createAdmin } from './admin';
+import { admin, adminLogin, createAdmin } from './admin';
 import {
 	getFeedback,
 	feedbackById,
 	sendFeedback,
-	toggleFeedbackResolved
+	toggleFeedbackResolved,
+	deleteFeedback
 } from './feedback';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
 		test,
 		user,
+		admin,
 		changeLogById,
 		changeLogs,
 		serverStatus,
@@ -46,6 +48,7 @@ export const resolvers: Resolvers.Resolvers = {
 		createChat,
 		sendFeedback,
 		toggleFeedbackResolved,
+		deleteFeedback,
 		updateUser,
 		updateChatGroup
 	},

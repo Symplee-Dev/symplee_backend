@@ -1,6 +1,7 @@
 type Query {
 	test: String!
 	user(id: Int!): User!
+	admin: Admin!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog!]!
 	serverStatus: Boolean!
@@ -21,6 +22,7 @@ type Mutation {
 	addNewChangeLog(newChangeLog: NewChangeLogInput!): ChangeLog!
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
+	deleteFeedback(id: Int!): Boolean!
 	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
 	updateUser(user: UpdateUserInput!, userId: Int!): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!

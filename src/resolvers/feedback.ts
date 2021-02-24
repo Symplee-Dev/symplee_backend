@@ -3,6 +3,28 @@ import AppFeedback from '../models/AppFeedback';
 import { EmailService } from '../Services/Email';
 import { Sanitizer } from '../utils/Cleaner';
 
+export const deleteFeedback = async (
+	parent: any,
+	args: Resolvers.MutationDeleteFeedbackArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	const { id } = args;
+
+	if (typeof id !== 'number') {
+		throw new Error('ID is not compatible');
+	}
+
+	const feedbackToDelete = AppFeedback.query().findById(id);
+
+	if (!feedbackToDelete) {
+		throw new Error('Nothing to delete or invalid feedback id');
+	}
+
+	feedbackToDelete.delete();
+
+	return true;
+};
+
 export const toggleFeedbackResolved = async (
 	parent: any,
 	args: Resolvers.MutationToggleFeedbackResolvedArgs,

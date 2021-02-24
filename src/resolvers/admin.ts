@@ -1,8 +1,10 @@
 import { AuthenticationError } from 'apollo-server-errors';
+import { date } from 'faker';
 import jwtDecode from 'jwt-decode';
 import { v4 } from 'uuid';
 import AdminModel from '../models/AdminModel';
 import { Authentication, signJWT } from '../Services/Authentication';
+import { EmailService } from '../Services/Email';
 
 export const admin = async (
 	parent: any,
@@ -39,17 +41,34 @@ export const createAdmin = async (
 	parent: any,
 	args: Resolvers.MutationCreateAdminArgs,
 	context: Services.ServerContext
-): Promise<Resolvers.Admin> => {
+): Promise<Resolvers.NewAdmin> => {
 	if (context.authenticated) {
 		throw new Error('User already authenticated');
 	}
 
-	const { name, username, email, password, pin } = args.admin;
+	const { token, name, username, email, password, pin } = args.admin;
+
+	const tokenValid: {
+		name: string;
+		email: string;
+		iat: number;
+		exp: number;
+	} = jwtDecode(token);
+	if (tokenValid.exp > Date.now()) {
+		throw new Error('Token Invalid');
+	}
 
 	const foundEmail = await await AdminModel.query().where({ email }).first();
 
 	if (foundEmail) {
 		throw new Error('Email aready in use!');
+	}
+	const foundUsername = await await AdminModel.query()
+		.where({ username })
+		.first();
+
+	if (foundUsername) {
+		throw new Error('Username aready in use!');
 	}
 
 	const key = v4().slice(0, 5);
@@ -60,12 +79,23 @@ export const createAdmin = async (
 		password: await new Authentication(password).hashPassword(),
 		pin,
 		username,
-		verified: false,
+		verified: true,
 		name,
 		key
 	});
 
-	return admin;
+	context.session = {
+		userId: admin.id,
+		username: admin.username
+	};
+	const jwt = await signJWT(context);
+
+	if (!jwt) {
+		throw new AuthenticationError('No Validation Created');
+	}
+
+	context.response.setHeader('Authorization', jwt);
+	return { ...admin, token: jwt };
 };
 
 export const adminLogin = async (
@@ -134,4 +164,61 @@ export const adminLogin = async (
 		authenticated: true,
 		token: jwt
 	};
+};
+
+const LINK_TO =
+	process.env.NODE_ENV === 'production'
+		? 'https://admin.boltchat.app/auth/verify'
+		: 'http://localhost:3000/auth/verify';
+
+export const sendAdminInvite = async (
+	parent: any,
+	args: Resolvers.MutationSendAdminInviteArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	const { admin } = args;
+
+	if (!admin) {
+		throw new Error('No Admin Details');
+	}
+
+	if (!admin.name || admin.name.replace(' ', '').length < 2) {
+		throw new Error('Name Not Long Enough');
+	}
+
+	if (!admin.email || !admin.email.includes('@')) {
+		throw new Error('Not a valid email');
+	}
+
+	// const foundEmail = await AdminModel.query()
+	// 	.where({ email: admin.email })
+	// 	.first();
+	// if (foundEmail) {
+	// 	throw new Error('Email Already Used!');
+	// }
+
+	const sender = new EmailService(context);
+
+	const token = await sender.generateAdminEmailJWT(admin);
+
+	const sent = await sender.sendPlainEmail(
+		admin.email,
+		'You have been selected for an admin role',
+		'Please Verify Your Email.',
+		'<h3>Please Verify Your Email</h3> <br> <a href="' +
+			LINK_TO +
+			'?token=' +
+			token +
+			'&name=' +
+			admin.name.replace(' ', '+') +
+			'&email=' +
+			admin.email +
+			'">Verify Email</a>'
+	);
+
+	if (!sent) {
+		throw new Error('Error Sending Email');
+	}
+
+	return true;
 };

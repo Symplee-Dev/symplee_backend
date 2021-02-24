@@ -14,7 +14,8 @@ type Query {
 type Mutation {
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
-	createAdmin(admin: AdminInput!): Admin!
+	sendAdminInvite(admin: AdminInviteInput!): Boolean!
+	createAdmin(admin: AdminInput!): NewAdmin!
 	adminLogin(credentials: AdminLoginInput!): LoginReturn
 	verifyEmail(token: String!): Boolean!
 	createChat(chat: CreateChatInput!): Chat!
@@ -26,6 +27,11 @@ type Mutation {
 	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
 	updateUser(user: UpdateUserInput!, userId: Int!): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
+}
+
+input AdminInviteInput {
+	name: String!
+	email: String!
 }
 
 input UpdateChatGroupInput {
@@ -94,6 +100,18 @@ type Admin {
 	verified: Boolean!
 	key: String!
 }
+type NewAdmin {
+	id: Int!
+	username: String!
+	email: String!
+	name: String!
+	password: String!
+	pin: Int!
+	created_at: String!
+	verified: Boolean!
+	key: String!
+	token: String!
+}
 
 type ChangeLog {
 	id: Int!
@@ -130,6 +148,7 @@ input UpdateUserInput {
 	avatar: String
 }
 input AdminInput {
+	token: String!
 	email: String!
 	name: String!
 	username: String!

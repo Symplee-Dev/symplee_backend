@@ -47,7 +47,30 @@ export class EmailService {
 			return true;
 		}
 	}
+	async generateAdminEmailJWT(credentials: {
+		name: string;
+		email: string;
+	}): Promise<string> {
+		const JWTOptions: jwt.SignOptions = {
+			expiresIn: '7d'
+		};
+		const token = await jwt.sign(
+			{
+				name: credentials.name,
+				email: credentials.email,
+				secret:
+					process.env.NODE_ENV === 'test'
+						? 'supersecret'
+						: Config.SESSION_SECRET
+			},
+			process.env.NODE_ENV === 'test'
+				? 'supersecret'
+				: Config.SESSION_SECRET,
+			JWTOptions
+		);
 
+		return token;
+	}
 	async generateEmailJWT(userId: number): Promise<string> {
 		const JWTOptions: jwt.SignOptions = {
 			expiresIn: '30d'

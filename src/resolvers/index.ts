@@ -14,7 +14,7 @@ import {
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
-import { admin, adminLogin, createAdmin } from './admin';
+import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
 import {
 	getFeedback,
 	feedbackById,
@@ -37,6 +37,7 @@ export const resolvers: Resolvers.Resolvers = {
 		feedbackById
 	},
 	Mutation: {
+		sendAdminInvite,
 		adminLogin,
 		createAdmin,
 		addNewChangeLog,

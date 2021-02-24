@@ -56,7 +56,8 @@ interface Mutation {
   __typename?: 'Mutation';
   signup: User;
   login?: Maybe<LoginReturn>;
-  createAdmin: Admin;
+  sendAdminInvite: Scalars['Boolean'];
+  createAdmin: NewAdmin;
   adminLogin?: Maybe<LoginReturn>;
   verifyEmail: Scalars['Boolean'];
   createChat: Chat;
@@ -78,6 +79,11 @@ interface MutationSignupArgs {
 
 interface MutationLoginArgs {
   credentials: LoginInput;
+}
+
+
+interface MutationSendAdminInviteArgs {
+  admin: AdminInviteInput;
 }
 
 
@@ -142,6 +148,11 @@ interface MutationUpdateUserArgs {
 interface MutationUpdateChatGroupArgs {
   group?: Maybe<UpdateChatGroupInput>;
   chatGroupId: Scalars['Int'];
+}
+
+interface AdminInviteInput {
+  name: Scalars['String'];
+  email: Scalars['String'];
 }
 
 interface UpdateChatGroupInput {
@@ -213,6 +224,20 @@ interface Admin {
   key: Scalars['String'];
 }
 
+interface NewAdmin {
+  __typename?: 'NewAdmin';
+  id: Scalars['Int'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
+  pin: Scalars['Int'];
+  created_at: Scalars['String'];
+  verified: Scalars['Boolean'];
+  key: Scalars['String'];
+  token: Scalars['String'];
+}
+
 interface ChangeLog {
   __typename?: 'ChangeLog';
   id: Scalars['Int'];
@@ -251,6 +276,7 @@ interface UpdateUserInput {
 }
 
 interface AdminInput {
+  token: Scalars['String'];
   email: Scalars['String'];
   name: Scalars['String'];
   username: Scalars['String'];

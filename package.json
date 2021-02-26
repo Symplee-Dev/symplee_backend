@@ -11,7 +11,7 @@
 		"start": "NODE_ENV=production node dist/index.js",
 		"typecheck": "tsc -p . --noEmit true",
 		"huskyinstall": "npx husky install",
-		"test": "jest --silent --detectOpenHandles"
+		"test": "NODE_ENV=test jest --silent --detectOpenHandles"
 	},
 	"husky": {
 		"hooks": {

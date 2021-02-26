@@ -33,7 +33,7 @@ export const signJWT = async (
 
 	const signed = await jwt.sign(
 		{ ...session.session },
-		Config.SESSION_SECRET,
+		Config.SESSION_SECRET ?? 'supersecret',
 		JWTOptions
 	);
 

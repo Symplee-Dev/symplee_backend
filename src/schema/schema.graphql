@@ -4,6 +4,7 @@ type Query {
 	admin: Admin!
 	changeLogById(id: Int!): ChangeLog!
 	changeLogs: [ChangeLog!]!
+	latestChangeLog: ChangeLog!
 	serverStatus: Boolean!
 	chatGroup(id: Int!): ChatGroup!
 	hasChat(userId: Int!, chatId: Int!): Boolean!

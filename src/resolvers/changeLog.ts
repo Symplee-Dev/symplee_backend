@@ -1,5 +1,18 @@
 import ChangeLog from '../models/ChangeLogModel';
 
+export const latestChangeLog = async (
+	parent: any,
+	args: {},
+	context: Services.ServerContext
+): Promise<Resolvers.ChangeLog> => {
+	const changeLog = await ChangeLog.query()
+		.orderBy('version', 'desc')
+		.first();
+	context.logger.info(changeLog);
+
+	return changeLog;
+};
+
 export const changeLogs = async (
 	parent: any,
 	args: {},
@@ -44,15 +57,27 @@ export const addNewChangeLog = async (
 		body && `body:\n${body}`
 	);
 
+	let newVersion: string = version;
+
+	while (newVersion.includes(' ')) {
+		if (!newVersion.includes(' ')) {
+			break;
+		}
+		newVersion = newVersion.replace(' ', '');
+	}
+
+	newVersion = newVersion.substr(0, 1).toUpperCase() + newVersion.substr(1);
 	// Check if version exist
-	const foundVersion = await ChangeLog.query().where({ version }).first();
+	const foundVersion = await ChangeLog.query()
+		.where({ version: newVersion })
+		.first();
 
 	if (foundVersion) {
 		throw new Error('Version already in exist!');
 	}
 
 	// Check if version is null;
-	const noVersion = version === '' || version === null || !version;
+	const noVersion = newVersion === '' || newVersion === null || !newVersion;
 
 	if (noVersion) {
 		throw new Error('No version entered');
@@ -74,7 +99,7 @@ export const addNewChangeLog = async (
 	const newChangeLog = await ChangeLog.query().insertAndFetch({
 		body,
 		changes,
-		version,
+		version: newVersion,
 		created_at: now,
 		updated_at: now
 	});

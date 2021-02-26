@@ -94,7 +94,6 @@ export const createAdmin = async (
 		throw new AuthenticationError('No Validation Created');
 	}
 
-	context.response.setHeader('Authorization', jwt);
 	return { ...admin, token: jwt };
 };
 

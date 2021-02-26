@@ -33,7 +33,7 @@ export const signJWT = async (
 
 	const signed = await jwt.sign(
 		{ ...session.session },
-		process.env.NODE_ENV === "test" || prcoess.env.NODE_ENV === "TEST" ? 'supersecret' : Config.SESSION_SECRET,
+		process.env.NODE_ENV === "test" || process.env.NODE_ENV === "TEST" ? 'supersecret' : Config.SESSION_SECRET,
 		JWTOptions
 	);
 

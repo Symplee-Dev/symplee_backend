@@ -1,4 +1,6 @@
 import User from '../models/User';
+import UserGroups from '../models/UserGroups';
+import ChatGroup from '../models/ChatGroup';
 
 export const userResolvers = {
 	chatGroups: async (
@@ -8,14 +10,28 @@ export const userResolvers = {
 	) => {
 		context.logger.info('Query user args');
 
-		const { chatGroups } = await User.query()
-			.where({
-				id: parent.id
-			})
-			.withGraphFetched({ chatGroups: true })
-			.first();
+		// const { chatGroups } = await User.query()
+		// 	.where({
+		// 		id: parent.id
+		// 	})
+		// 	.withGraphFetched({ chatGroups: true })
+		// 	.first();
 
-		return chatGroups;
+		const groupsIds = await UserGroups.query().where({ userId: parent.id });
+
+		console.log(groupsIds);
+
+		let groups: ChatGroup[] = [];
+
+		for (let i = 0; i < groupsIds.length; i++) {
+			const group = await ChatGroup.query().findById(
+				groupsIds[i].chatGroupId
+			);
+
+			groups.push(group);
+		}
+
+		return groups;
 	}
 };
 

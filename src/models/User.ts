@@ -26,19 +26,19 @@ class User extends BaseModel {
 				from: 'users.id',
 				to: 'messages.authorid'
 			}
-		},
-		chatGroups: {
-			relation: BaseModel.ManyToManyRelation,
-			modelClass: ChatGroup,
-			join: {
-				from: 'users.id',
-				through: {
-					from: 'user_groups.userId',
-					to: 'user_groups.chatGroupId'
-				},
-				to: 'chat_groups.id'
-			}
 		}
+		// chatGroups: {
+		// 	relation: BaseModel.ManyToManyRelation,
+		// 	modelClass: ChatGroup,
+		// 	join: {
+		// 		from: 'users.id',
+		// 		through: {
+		// 			from: 'user_groups.userId',
+		// 			to: 'user_groups.chatGroupId'
+		// 		},
+		// 		to: 'chat_groups.id'
+		// 	}
+		// }
 	};
 }
 

@@ -4,7 +4,7 @@ import { login } from './login';
 import { userResolvers, user, updateUser } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup } from './chatGroup';
+import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -36,7 +36,8 @@ export const resolvers: Resolvers.Resolvers = {
 		chatGroup,
 		hasChat,
 		getFeedback,
-		feedbackById
+		feedbackById,
+		getMembers
 	},
 	Mutation: {
 		sendAdminInvite,

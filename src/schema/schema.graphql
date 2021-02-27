@@ -10,6 +10,7 @@ type Query {
 	hasChat(userId: Int!, chatId: Int!): Boolean!
 	getFeedback: [AppFeedback!]!
 	feedbackById(id: Int!): AppFeedback!
+	getMembers(chatId: Int!): [User!]!
 }
 
 type Mutation {
@@ -181,6 +182,7 @@ type ChatGroup {
 	chats: [Chat]!
 	createdBy: Int!
 	avatar: String
+	members: [User!]!
 }
 
 type Chat {

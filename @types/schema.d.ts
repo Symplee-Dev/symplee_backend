@@ -25,6 +25,7 @@ interface Query {
   hasChat: Scalars['Boolean'];
   getFeedback: Array<AppFeedback>;
   feedbackById: AppFeedback;
+  getMembers: Array<User>;
 }
 
 
@@ -51,6 +52,11 @@ interface QueryHasChatArgs {
 
 interface QueryFeedbackByIdArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryGetMembersArgs {
+  chatId: Scalars['Int'];
 }
 
 interface Mutation {

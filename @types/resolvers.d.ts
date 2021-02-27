@@ -28,6 +28,7 @@ interface Query {
   hasChat: Scalars['Boolean'];
   getFeedback: Array<AppFeedback>;
   feedbackById: AppFeedback;
+  getMembers: Array<User>;
 }
 
 
@@ -54,6 +55,11 @@ interface QueryHasChatArgs {
 
 interface QueryFeedbackByIdArgs {
   id: Scalars['Int'];
+}
+
+
+interface QueryGetMembersArgs {
+  chatId: Scalars['Int'];
 }
 
 interface Mutation {
@@ -484,6 +490,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   hasChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasChatArgs, 'userId' | 'chatId'>>;
   getFeedback?: Resolver<Array<ResolversTypes['AppFeedback']>, ParentType, ContextType>;
   feedbackById?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<QueryFeedbackByIdArgs, 'id'>>;
+  getMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetMembersArgs, 'chatId'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

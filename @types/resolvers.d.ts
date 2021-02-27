@@ -22,6 +22,7 @@ interface Query {
   admin: Admin;
   changeLogById: ChangeLog;
   changeLogs: Array<ChangeLog>;
+  latestChangeLog: ChangeLog;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];
@@ -477,6 +478,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   admin?: Resolver<ResolversTypes['Admin'], ParentType, ContextType>;
   changeLogById?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<QueryChangeLogByIdArgs, 'id'>>;
   changeLogs?: Resolver<Array<ResolversTypes['ChangeLog']>, ParentType, ContextType>;
+  latestChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType>;
   serverStatus?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   chatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<QueryChatGroupArgs, 'id'>>;
   hasChat?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryHasChatArgs, 'userId' | 'chatId'>>;

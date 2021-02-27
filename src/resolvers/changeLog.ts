@@ -5,12 +5,8 @@ export const latestChangeLog = async (
 	args: {},
 	context: Services.ServerContext
 ): Promise<Resolvers.ChangeLog> => {
-	const changeLog = await ChangeLog.query()
-		.orderBy('version', 'desc')
-		.first();
-	context.logger.info(changeLog);
-
-	return changeLog;
+	const latest = await ChangeLog.query().orderBy('version', 'desc').first();
+	return latest;
 };
 
 export const changeLogs = async (
@@ -18,7 +14,7 @@ export const changeLogs = async (
 	args: {},
 	context: Services.ServerContext
 ): Promise<Resolvers.ChangeLog[]> => {
-	const changeLogs = await ChangeLog.query();
+	const changeLogs = await ChangeLog.query().orderBy('version', 'desc');
 	return changeLogs;
 };
 
@@ -95,7 +91,6 @@ export const addNewChangeLog = async (
 	}
 
 	const now = new Date().toString();
-
 	const newChangeLog = await ChangeLog.query().insertAndFetch({
 		body,
 		changes,

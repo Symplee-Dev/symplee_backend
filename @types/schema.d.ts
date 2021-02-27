@@ -19,6 +19,7 @@ interface Query {
   admin: Admin;
   changeLogById: ChangeLog;
   changeLogs: Array<ChangeLog>;
+  latestChangeLog: ChangeLog;
   serverStatus: Scalars['Boolean'];
   chatGroup: ChatGroup;
   hasChat: Scalars['Boolean'];

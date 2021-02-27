@@ -6,6 +6,7 @@ import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
 import { chatGroup, updateChatGroup } from './chatGroup';
 import {
+	latestChangeLog,
 	changeLogById,
 	changeLogs,
 	addNewChangeLog,
@@ -30,6 +31,7 @@ export const resolvers: Resolvers.Resolvers = {
 		admin,
 		changeLogById,
 		changeLogs,
+		latestChangeLog,
 		serverStatus,
 		chatGroup,
 		hasChat,

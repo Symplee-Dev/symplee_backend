@@ -76,6 +76,7 @@ interface Mutation {
   toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
+  sendMessage: Scalars['Boolean'];
 }
 
 
@@ -154,6 +155,21 @@ interface MutationUpdateUserArgs {
 
 interface MutationUpdateChatGroupArgs {
   group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationSendMessageArgs {
+  message: Scalars['String'];
+}
+
+interface Subscription {
+  __typename?: 'Subscription';
+  messageSent: Scalars['String'];
+}
+
+
+interface SubscriptionMessageSentArgs {
   chatGroupId: Scalars['Int'];
 }
 
@@ -318,6 +334,7 @@ interface ChatGroup {
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
+  members: Array<User>;
 }
 
 interface Chat {

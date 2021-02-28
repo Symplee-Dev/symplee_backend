@@ -29,6 +29,11 @@ type Mutation {
 	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
 	updateUser(user: UpdateUserInput!, userId: Int!): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
+	sendMessage(message: String!): Boolean!
+}
+
+type Subscription {
+	messageSent(chatGroupId: Int!): String!
 }
 
 input AdminInviteInput {

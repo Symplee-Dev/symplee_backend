@@ -1,6 +1,7 @@
 import User from '../models/User';
 import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
+import { pubsub } from '..';
 
 export const userResolvers = {
 	chatGroups: async (
@@ -62,4 +63,16 @@ export const updateUser = async (
 	}
 
 	return edited;
+};
+
+export const sendMessage = async (
+	parent: any,
+	args: Resolvers.MutationSendMessageArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	context.logger.info('Sending message');
+
+	pubsub.publish('MESSAGE_SENT', { chatGroupId: 1, message: args.message });
+
+	return true;
 };

@@ -79,6 +79,7 @@ interface Mutation {
   toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
+  sendMessage: Scalars['Boolean'];
 }
 
 
@@ -157,6 +158,21 @@ interface MutationUpdateUserArgs {
 
 interface MutationUpdateChatGroupArgs {
   group?: Maybe<UpdateChatGroupInput>;
+  chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationSendMessageArgs {
+  message: Scalars['String'];
+}
+
+interface Subscription {
+  __typename?: 'Subscription';
+  messageSent: Scalars['String'];
+}
+
+
+interface SubscriptionMessageSentArgs {
   chatGroupId: Scalars['Int'];
 }
 
@@ -321,6 +337,7 @@ interface ChatGroup {
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
+  members: Array<User>;
 }
 
 interface Chat {
@@ -425,6 +442,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Subscription: ResolverTypeWrapper<{}>;
   AdminInviteInput: AdminInviteInput;
   UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: ResolverTypeWrapper<AppFeedback>;
@@ -455,6 +473,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  Subscription: {};
   AdminInviteInput: AdminInviteInput;
   UpdateChatGroupInput: UpdateChatGroupInput;
   AppFeedback: AppFeedback;
@@ -509,6 +528,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   toggleFeedbackResolved?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationToggleFeedbackResolvedArgs, 'id' | 'status'>>;
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user' | 'userId'>>;
   updateChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationUpdateChatGroupArgs, 'chatGroupId'>>;
+  sendMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'message'>>;
+};
+
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
+  messageSent?: SubscriptionResolver<ResolversTypes['String'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatGroupId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
@@ -593,6 +617,7 @@ export type ChatGroupResolvers<ContextType = any, ParentType extends ResolversPa
   chats?: Resolver<Array<Maybe<ResolversTypes['Chat']>>, ParentType, ContextType>;
   createdBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  members?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -618,6 +643,7 @@ export type MessageResolvers<ContextType = any, ParentType extends ResolversPare
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Subscription?: SubscriptionResolvers<ContextType>;
   AppFeedback?: AppFeedbackResolvers<ContextType>;
   Admin?: AdminResolvers<ContextType>;
   NewAdmin?: NewAdminResolvers<ContextType>;

@@ -77,6 +77,18 @@ export const createContext = async (
 	req: e.Request,
 	res: e.Response
 ): Promise<Services.ServerContext> => {
+	if (!req) {
+		return {
+			token: '',
+			request: req,
+			response: res,
+			valid: false,
+			session: {} as any,
+			logger,
+			authenticated: false
+		};
+	}
+
 	const context = await new Context(req, res).Initialize();
 
 	return {

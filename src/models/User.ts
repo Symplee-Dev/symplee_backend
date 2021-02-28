@@ -1,5 +1,4 @@
 import BaseModel from './BaseModel';
-import Message from './Message';
 import ChatGroup from './ChatGroup';
 
 class User extends BaseModel {
@@ -19,14 +18,6 @@ class User extends BaseModel {
 	}
 
 	static relationMappings = {
-		messages: {
-			relation: BaseModel.HasManyRelation,
-			modelClass: Message,
-			join: {
-				from: 'users.id',
-				to: 'messages.authorid'
-			}
-		}
 		// chatGroups: {
 		// 	relation: BaseModel.ManyToManyRelation,
 		// 	modelClass: ChatGroup,

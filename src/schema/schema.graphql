@@ -11,6 +11,7 @@ type Query {
 	getFeedback: [AppFeedback!]!
 	feedbackById(id: Int!): AppFeedback!
 	getMembers(chatId: Int!): [User!]!
+	getMessages(chatId: Int!): [MessagesChats]!
 }
 
 type Mutation {
@@ -29,11 +30,18 @@ type Mutation {
 	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
 	updateUser(user: UpdateUserInput!, userId: Int!): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
-	sendMessage(message: String!): Boolean!
+	sendMessage(message: NewMessage!): Boolean!
 }
 
 type Subscription {
-	messageSent(chatGroupId: Int!): String!
+	messageSent(chatId: Int!): MessagesChats!
+}
+
+input NewMessage {
+	body: String!
+	authorUsername: String!
+	authorId: Int!
+	chatId: Int!
 }
 
 input AdminInviteInput {
@@ -195,14 +203,16 @@ type Chat {
 	name: String!
 	isPublic: Boolean!
 	createdById: Int!
-	messages: [Message]!
+	messages: [MessagesChats]!
 	icon: String!
 }
 
-type Message {
+type MessagesChats {
 	id: Int!
 	body: String!
+	authorUsername: String!
 	authorId: Int!
 	chatId: Int!
 	createdAt: String!
+	author: User!
 }

@@ -55,6 +55,7 @@ interface QueryFeedbackByIdArgs {
 
 interface Mutation {
   __typename?: 'Mutation';
+  sendForgotPasswordEmail: Scalars['Boolean'];
   signup: User;
   login?: Maybe<LoginReturn>;
   sendAdminInvite: Scalars['Boolean'];
@@ -70,6 +71,12 @@ interface Mutation {
   toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
+}
+
+
+interface MutationSendForgotPasswordEmailArgs {
+  email: Scalars['String'];
+  origin?: Maybe<Scalars['String']>;
 }
 
 
@@ -274,6 +281,7 @@ interface UpdateUserInput {
   name?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
 }
 
 interface AdminInput {

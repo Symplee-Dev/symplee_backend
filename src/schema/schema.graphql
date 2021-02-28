@@ -13,6 +13,7 @@ type Query {
 }
 
 type Mutation {
+	sendForgotPasswordEmail(email: String!, origin: String): Boolean!
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
 	sendAdminInvite(admin: AdminInviteInput!): Boolean!
@@ -26,7 +27,7 @@ type Mutation {
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
 	deleteFeedback(id: Int!): Boolean!
 	toggleFeedbackResolved(id: Int!, status: Boolean!): AppFeedback!
-	updateUser(user: UpdateUserInput!, userId: Int!): User!
+	updateUser(user: UpdateUserInput!, userId: Int): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
 }
 
@@ -147,6 +148,7 @@ input UpdateUserInput {
 	name: String
 	username: String
 	avatar: String
+	password: String
 }
 input AdminInput {
 	token: String!

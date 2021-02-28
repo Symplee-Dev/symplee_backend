@@ -23,6 +23,7 @@ import {
 	toggleFeedbackResolved,
 	deleteFeedback
 } from './feedback';
+import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -39,6 +40,7 @@ export const resolvers: Resolvers.Resolvers = {
 		feedbackById
 	},
 	Mutation: {
+		sendForgotPasswordEmail,
 		sendAdminInvite,
 		adminLogin,
 		createAdmin,

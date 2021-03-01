@@ -39,7 +39,13 @@ const server = new ApolloServer({
 	}
 });
 
-export const pubsub = new RedisPubSub();
+export const pubsub = new RedisPubSub({
+	connection: {
+		host: Config.REDIS_HOST,
+		port: Number(Config.REDIS_PORT),
+		password: Config.REDIS_PASSWORD
+	}
+});
 
 const app = express();
 

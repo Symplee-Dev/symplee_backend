@@ -16,7 +16,10 @@ export const initializeConfig = (): Utilities.Config.ENV => {
 		SESSION_SECRET: process.env.SESSION_SECRET ?? '',
 		SENDGRID_TOKEN: process.env.SENDGRID_TOKEN ?? '',
 		DB_URL: process.env.DB_URL ?? '',
-		SENTRY_DSN: process.env.SENTRY_DSN ?? ''
+		SENTRY_DSN: process.env.SENTRY_DSN ?? '',
+		REDIS_HOST: process.env.REDIS_HOST ?? '',
+		REDIS_PORT: process.env.REDIS_PORT ?? '',
+		REDIS_PASSWORD: process.env.REDIS_PASSWORD ?? ''
 	};
 
 	return config;

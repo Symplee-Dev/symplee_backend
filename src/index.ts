@@ -9,6 +9,8 @@ import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './resolvers/index';
 import dotenv from 'dotenv';
 import { initSentry } from './Services/Sentry';
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { createServer } from 'http';
 
 // Init Config Variables
 dotenv.config();
@@ -23,7 +25,25 @@ const server = new ApolloServer({
 	resolvers: resolvers as any,
 	context: async ({ req, res }: { req: e.Request; res: e.Response }) => {
 		logger.info('Running Context');
+
 		return await createContext(req, res);
+	},
+	subscriptions: {
+		path: '/subscriptions',
+		onConnect: (connectionParams, webSocket, context) => {
+			logger.info('Connected!');
+		},
+		onDisconnect: (webSocket, context) => {
+			logger.warn('Disconnected!');
+		}
+	}
+});
+
+export const pubsub = new RedisPubSub({
+	connection: {
+		host: Config.REDIS_HOST,
+		port: Number(Config.REDIS_PORT),
+		password: Config.REDIS_PASSWORD
 	}
 });
 
@@ -35,12 +55,18 @@ console.log(Config);
 
 server.applyMiddleware({ app });
 
+const httpServer = createServer(app);
+server.installSubscriptionHandlers(httpServer);
+
 initSentry();
 
 if (process.env.NODE_ENV !== 'test') {
-	app.listen({ port: Config.PORT }, () =>
+	httpServer.listen(Config.PORT, () => {
+		console.log(
+			`🚀 Subscription endpoint ready at ws://localhost:${PORT}${server.subscriptionsPath}`
+		);
 		console.info(
 			`🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
-		)
-	);
+		);
+	});
 }

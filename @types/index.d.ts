@@ -20,6 +20,9 @@ declare global {
 				SENDGRID_TOKEN: string;
 				DB_URL: string;
 				SENTRY_DSN: string;
+				REDIS_HOST: string;
+				REDIS_PORT: string;
+				REDIS_PASSWORD: string;
 			};
 		}
 	}

@@ -1,4 +1,7 @@
+import { ApolloError } from 'apollo-server-errors';
+import jwtDecode from 'jwt-decode';
 import User from '../models/User';
+import { Authentication } from '../Services/Authentication';
 import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
 
@@ -54,10 +57,35 @@ export const updateUser = async (
 ): Promise<Resolvers.User> => {
 	context.logger.info('Updating user');
 
-	const edited = await User.query().patchAndFetchById(args.userId, args.user);
+	const tokenID: { userId: number; exp: number } | false =
+		!!context.token && jwtDecode(context.token);
+
+	context.logger.info('tokenID: ', tokenID);
+
+	if (!tokenID || tokenID.exp > Date.now()) {
+		throw new ApolloError('User Not Authenticated', '401');
+	}
+
+	let userUpdate = args.user.password
+		? {
+				...args.user,
+				password: await new Authentication(
+					args.user.password
+				).hashPassword()
+		  }
+		: { ...args.user };
+
+	const edited = await User.query().patchAndFetchById(
+		tokenID.userId,
+		userUpdate
+	);
+
+	context.logger.info('Edited: ', edited);
 
 	if (!edited) {
-		context.logger.err('Error updating user with id of ' + args.userId);
+		if (args.userId) {
+			context.logger.err('Error updating user with id of ' + args.userId);
+		}
 		throw new Error('Unable to update user. Try again later.');
 	}
 

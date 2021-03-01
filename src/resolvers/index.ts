@@ -16,6 +16,7 @@ import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
+
 import {
 	getFeedback,
 	feedbackById,
@@ -23,6 +24,9 @@ import {
 	toggleFeedbackResolved,
 	deleteFeedback
 } from './feedback';
+import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
+
+import { sendMessage, messageSent, getMessages } from './messageChats';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -37,9 +41,11 @@ export const resolvers: Resolvers.Resolvers = {
 		hasChat,
 		getFeedback,
 		feedbackById,
-		getMembers
+		getMembers,
+		getMessages
 	},
 	Mutation: {
+		sendForgotPasswordEmail,
 		sendAdminInvite,
 		adminLogin,
 		createAdmin,
@@ -54,9 +60,13 @@ export const resolvers: Resolvers.Resolvers = {
 		toggleFeedbackResolved,
 		deleteFeedback,
 		updateUser,
-		updateChatGroup
+		updateChatGroup,
+		sendMessage
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any
+	},
+	Subscription: {
+		messageSent
 	}
 };

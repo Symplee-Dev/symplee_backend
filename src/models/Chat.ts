@@ -1,12 +1,12 @@
 import BaseModel from './BaseModel';
-import Message from './Message';
+import MessagesChats from './MessagesChats';
 
 class Chat extends BaseModel {
 	id!: number;
 	name!: string;
 	isPublic!: boolean;
 	createdById!: number;
-	messages!: Message[];
+	messages!: MessagesChats[];
 	icon!: string;
 	chatGroupId!: number;
 
@@ -17,10 +17,10 @@ class Chat extends BaseModel {
 	static relationMappings = {
 		messages: {
 			relation: BaseModel.HasManyRelation,
-			modelClass: Message,
+			modelClass: MessagesChats,
 			join: {
 				from: 'chats.id',
-				to: 'messages.chatGroupId'
+				to: 'messages_chats.chatId'
 			}
 		}
 	};

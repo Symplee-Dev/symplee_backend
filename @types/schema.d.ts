@@ -25,6 +25,8 @@ interface Query {
   hasChat: Scalars['Boolean'];
   getFeedback: Array<AppFeedback>;
   feedbackById: AppFeedback;
+  getMembers: Array<User>;
+  getMessages: Array<Maybe<MessagesChats>>;
 }
 
 
@@ -53,6 +55,16 @@ interface QueryFeedbackByIdArgs {
   id: Scalars['Int'];
 }
 
+
+interface QueryGetMembersArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface QueryGetMessagesArgs {
+  chatId: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   signup: User;
@@ -70,6 +82,7 @@ interface Mutation {
   toggleFeedbackResolved: AppFeedback;
   updateUser: User;
   updateChatGroup: ChatGroup;
+  sendMessage: Scalars['Boolean'];
 }
 
 
@@ -149,6 +162,28 @@ interface MutationUpdateUserArgs {
 interface MutationUpdateChatGroupArgs {
   group?: Maybe<UpdateChatGroupInput>;
   chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationSendMessageArgs {
+  message: NewMessage;
+}
+
+interface Subscription {
+  __typename?: 'Subscription';
+  messageSent: MessagesChats;
+}
+
+
+interface SubscriptionMessageSentArgs {
+  chatId: Scalars['Int'];
+}
+
+interface NewMessage {
+  body: Scalars['String'];
+  authorUsername: Scalars['String'];
+  authorId: Scalars['Int'];
+  chatId: Scalars['Int'];
 }
 
 interface AdminInviteInput {
@@ -312,6 +347,7 @@ interface ChatGroup {
   chats: Array<Maybe<Chat>>;
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
+  members: Array<User>;
 }
 
 interface Chat {
@@ -320,17 +356,19 @@ interface Chat {
   name: Scalars['String'];
   isPublic: Scalars['Boolean'];
   createdById: Scalars['Int'];
-  messages: Array<Maybe<Message>>;
+  messages: Array<Maybe<MessagesChats>>;
   icon: Scalars['String'];
 }
 
-interface Message {
-  __typename?: 'Message';
+interface MessagesChats {
+  __typename?: 'MessagesChats';
   id: Scalars['Int'];
   body: Scalars['String'];
+  authorUsername: Scalars['String'];
   authorId: Scalars['Int'];
   chatId: Scalars['Int'];
   createdAt: Scalars['String'];
+  author: User;
 }
 
 } } export {};

@@ -1,5 +1,6 @@
 import BaseModel from './BaseModel';
 import Chat from './Chat';
+import User from './User';
 
 class ChatGroup extends BaseModel {
 	id!: number;
@@ -9,6 +10,7 @@ class ChatGroup extends BaseModel {
 	chats!: Chat[];
 	createdBy!: number;
 	avatar?: string;
+	members!: User[];
 
 	static get tableName() {
 		return 'chat_groups';
@@ -21,6 +23,18 @@ class ChatGroup extends BaseModel {
 			join: {
 				from: 'chat_groups.id',
 				to: 'chats.chatGroupId'
+			}
+		},
+		members: {
+			relation: BaseModel.ManyToManyRelation,
+			modelClass: User,
+			join: {
+				from: 'chat_groups.id',
+				through: {
+					from: 'user_groups.chatGroupId',
+					to: 'user_groups.userId'
+				},
+				to: 'users.id'
 			}
 		}
 	};

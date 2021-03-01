@@ -1,4 +1,5 @@
 import ChatGroup from '../models/ChatGroup';
+import UserGroups from '../models/UserGroups';
 
 export const chatGroup = async (
 	parent: any,
@@ -35,4 +36,20 @@ export const updateChatGroup = async (
 	}
 
 	return edited;
+};
+
+export const getMembers = async (
+	parent: any,
+	args: Resolvers.QueryGetMembersArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Getting members for chat group' + args.chatId);
+
+	const members = await ChatGroup.query()
+		.findById(args.chatId)
+		.withGraphFetched({ members: true });
+
+	console.log(members);
+
+	return members.members;
 };

@@ -24,6 +24,7 @@ import {
 	toggleFeedbackResolved,
 	deleteFeedback
 } from './feedback';
+import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
 
@@ -44,6 +45,7 @@ export const resolvers: Resolvers.Resolvers = {
 		getMessages
 	},
 	Mutation: {
+		sendForgotPasswordEmail,
 		sendAdminInvite,
 		adminLogin,
 		createAdmin,

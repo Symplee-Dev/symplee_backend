@@ -70,6 +70,7 @@ interface QueryGetMessagesArgs {
 
 interface Mutation {
   __typename?: 'Mutation';
+  sendForgotPasswordEmail: Scalars['Boolean'];
   signup: User;
   login?: Maybe<LoginReturn>;
   sendAdminInvite: Scalars['Boolean'];
@@ -86,6 +87,12 @@ interface Mutation {
   updateUser: User;
   updateChatGroup: ChatGroup;
   sendMessage: Scalars['Boolean'];
+}
+
+
+interface MutationSendForgotPasswordEmailArgs {
+  email: Scalars['String'];
+  origin?: Maybe<Scalars['String']>;
 }
 
 
@@ -158,7 +165,7 @@ interface MutationToggleFeedbackResolvedArgs {
 
 interface MutationUpdateUserArgs {
   user: UpdateUserInput;
-  userId: Scalars['Int'];
+  userId?: Maybe<Scalars['Int']>;
 }
 
 
@@ -312,6 +319,7 @@ interface UpdateUserInput {
   name?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   avatar?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
 }
 
 interface AdminInput {
@@ -531,6 +539,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  sendForgotPasswordEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendForgotPasswordEmailArgs, 'email'>>;
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   sendAdminInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendAdminInviteArgs, 'admin'>>;
@@ -544,7 +553,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;
   deleteFeedback?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteFeedbackArgs, 'id'>>;
   toggleFeedbackResolved?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationToggleFeedbackResolvedArgs, 'id' | 'status'>>;
-  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user' | 'userId'>>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user'>>;
   updateChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationUpdateChatGroupArgs, 'chatGroupId'>>;
   sendMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'message'>>;
 };

@@ -26,6 +26,12 @@ export class Context {
 		logger.info(
 			'Headers: Authorization: ' + this.request.headers.authorization
 		);
+
+		logger.info(
+			this.request.headers.authorization !== undefined &&
+				this.request.headers.authorization.length > 0 &&
+				this.request.headers.authorization !== null
+		);
 		if (
 			this.request.headers.authorization &&
 			this.request.headers.authorization.length > 0
@@ -71,6 +77,18 @@ export const createContext = async (
 	req: e.Request,
 	res: e.Response
 ): Promise<Services.ServerContext> => {
+	if (!req) {
+		return {
+			token: '',
+			request: req,
+			response: res,
+			valid: false,
+			session: {} as any,
+			logger,
+			authenticated: false
+		};
+	}
+
 	const context = await new Context(req, res).Initialize();
 
 	return {

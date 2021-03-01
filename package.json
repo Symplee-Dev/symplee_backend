@@ -11,7 +11,7 @@
 		"start": "NODE_ENV=production node dist/index.js",
 		"typecheck": "tsc -p . --noEmit true",
 		"huskyinstall": "npx husky install",
-		"test": "jest --silent --detectOpenHandles"
+		"test": "NODE_ENV=test jest --silent --detectOpenHandles"
 	},
 	"husky": {
 		"hooks": {
@@ -43,7 +43,9 @@
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"graphql": "^15.5.0",
+		"graphql-redis-subscriptions": "^2.3.1",
 		"husky": "^4.3.7",
+		"ioredis": "^4.23.0",
 		"jsonwebtoken": "^8.5.1",
 		"jwt-decode": "^3.1.2",
 		"knex": "^0.21.17",
@@ -64,6 +66,7 @@
 		"@types/dotenv": "^8.2.0",
 		"@types/express": "^4.17.11",
 		"@types/faker": "^5.1.7",
+		"@types/ioredis": "^4.22.0",
 		"@types/jest": "^26.0.20",
 		"@types/jsonwebtoken": "^8.5.0",
 		"@types/jwt-decode": "^3.1.0",

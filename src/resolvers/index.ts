@@ -4,7 +4,7 @@ import { login } from './login';
 import { userResolvers, user, updateUser } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup } from './chatGroup';
+import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -16,6 +16,7 @@ import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
+
 import {
 	getFeedback,
 	feedbackById,
@@ -24,6 +25,8 @@ import {
 	deleteFeedback
 } from './feedback';
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
+
+import { sendMessage, messageSent, getMessages } from './messageChats';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -37,7 +40,9 @@ export const resolvers: Resolvers.Resolvers = {
 		chatGroup,
 		hasChat,
 		getFeedback,
-		feedbackById
+		feedbackById,
+		getMembers,
+		getMessages
 	},
 	Mutation: {
 		sendForgotPasswordEmail,
@@ -55,9 +60,13 @@ export const resolvers: Resolvers.Resolvers = {
 		toggleFeedbackResolved,
 		deleteFeedback,
 		updateUser,
-		updateChatGroup
+		updateChatGroup,
+		sendMessage
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any
+	},
+	Subscription: {
+		messageSent
 	}
 };

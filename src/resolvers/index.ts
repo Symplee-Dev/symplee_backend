@@ -27,6 +27,7 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
+import { acceptInvite, sendInvite, markNotificationAsRead } from './invites';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -61,7 +62,10 @@ export const resolvers: Resolvers.Resolvers = {
 		deleteFeedback,
 		updateUser,
 		updateChatGroup,
-		sendMessage
+		sendMessage,
+		acceptInvite: acceptInvite as any,
+		sendInvite: sendInvite as any,
+		markNotificationAsRead: markNotificationAsRead as any
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

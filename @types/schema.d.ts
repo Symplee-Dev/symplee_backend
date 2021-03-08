@@ -91,10 +91,10 @@ interface Mutation {
   updateUser: User;
   updateChatGroup: ChatGroup;
   sendMessage: Scalars['Boolean'];
-  toggleUserOnline: Scalars['Boolean'];
   sendInvite: Scalars['Boolean'];
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
+  toggleUserOnline: Scalars['Boolean'];
 }
 
 
@@ -188,10 +188,6 @@ interface MutationSendMessageArgs {
 }
 
 
-interface MutationToggleUserOnlineArgs {
-  status?: Maybe<Scalars['Boolean']>;
-}
-
 interface MutationSendInviteArgs {
   invite: SendInviteInput;
 }
@@ -204,6 +200,11 @@ interface MutationAcceptInviteArgs {
 
 interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
+}
+
+
+interface MutationToggleUserOnlineArgs {
+  status?: Maybe<Scalars['Boolean']>;
 }
 
 interface Subscription {

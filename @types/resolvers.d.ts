@@ -94,10 +94,10 @@ interface Mutation {
   updateUser: User;
   updateChatGroup: ChatGroup;
   sendMessage: Scalars['Boolean'];
-  toggleUserOnline: Scalars['Boolean'];
   sendInvite: Scalars['Boolean'];
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
+  toggleUserOnline: Scalars['Boolean'];
 }
 
 
@@ -191,10 +191,6 @@ interface MutationSendMessageArgs {
 }
 
 
-interface MutationToggleUserOnlineArgs {
-  status?: Maybe<Scalars['Boolean']>;
-}
-
 interface MutationSendInviteArgs {
   invite: SendInviteInput;
 }
@@ -207,6 +203,11 @@ interface MutationAcceptInviteArgs {
 
 interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
+}
+
+
+interface MutationToggleUserOnlineArgs {
+  status?: Maybe<Scalars['Boolean']>;
 }
 
 interface Subscription {
@@ -639,10 +640,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'user'>>;
   updateChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationUpdateChatGroupArgs, 'chatGroupId'>>;
   sendMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'message'>>;
-  toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
   sendInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendInviteArgs, 'invite'>>;
   acceptInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptInviteArgs, never>>;
   markNotificationAsRead?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationMarkNotificationAsReadArgs, 'notificationId'>>;
+  toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

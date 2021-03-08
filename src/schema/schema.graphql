@@ -41,7 +41,7 @@ type Mutation {
 
 type Subscription {
 	messageSent(chatId: Int!): MessagesChats!,
-	activeChatUsers(chatId: Int!): [Users!]!
+	activeChatUsers(chatId: Int!): [User!]!
 }
 
 input SendInviteInput {

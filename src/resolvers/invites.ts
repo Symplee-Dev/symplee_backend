@@ -5,18 +5,18 @@ import Notifications from '../models/Notifications';
 
 export const sendInvite = async (
 	parent: any,
-	args: Resolvers.SendInviteInput,
+	args: Resolvers.MutationSendInviteArgs,
 	context: Services.ServerContext
 ) => {
 	context.logger.info('Starting to send an invite');
 
-	const { fromId, groupId, to, uses } = args;
+	const { fromId, groupId, uses, to } = args.invite;
 
 	const newInvite = await GroupInvites.query()
 		.insertAndFetch({
-			fromId,
-			groupId,
-			uses,
+			fromId: fromId,
+			groupId: groupId,
+			uses: uses,
 			used: 0,
 			code: v4()
 		})
@@ -32,21 +32,38 @@ export const sendInvite = async (
 		});
 	}
 
-	return newInvite ? true : false;
+	return newInvite.code;
 };
 
 export const acceptInvite = async (
 	parent: any,
-	args: Resolvers.AcceptInviteInput,
+	args: Resolvers.MutationAcceptInviteArgs,
 	context: Services.ServerContext
 ) => {
 	context.logger.info('Starting to accept invite');
 
-	const { code, userId, notificationId } = args;
+	const { code, userId, notificationId } = args.acceptArgs;
 
 	const invite = await GroupInvites.query().where({ code }).first();
 
 	if (invite) {
+		if (invite.uses !== -1 && invite.uses < invite.used) {
+			if (invite.uses === invite.used - 1) {
+				await GroupInvites.query().deleteById(invite.id);
+			} else {
+				await GroupInvites.query().patchAndFetchById(invite.id, {
+					used: invite.used + 1
+				});
+			}
+		}
+
+		const existingRelation = await UserGroups.query().where({
+			userId,
+			chatGroupId: invite.groupId
+		});
+
+		if (existingRelation) throw new Error('Already In This group!');
+
 		const createdRelation = await UserGroups.query().insertAndFetch({
 			userId: userId,
 			chatGroupId: invite.groupId
@@ -57,9 +74,12 @@ export const acceptInvite = async (
 			throw new Error('Could not accept invite. Try again later.');
 		}
 
-		await Notifications.query().patchAndFetchById(notificationId, {
-			read: true
-		});
+		// Entered manually
+		if (notificationId !== -1) {
+			await Notifications.query().patchAndFetchById(notificationId, {
+				read: true
+			});
+		}
 
 		return true;
 	}

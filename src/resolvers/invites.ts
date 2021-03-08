@@ -64,10 +64,12 @@ export const acceptInvite = async (
 
 		if (existingRelation) throw new Error('Already In This group!');
 
-		const createdRelation = await UserGroups.query().insertAndFetch({
-			userId: userId,
-			chatGroupId: invite.groupId
-		});
+		const createdRelation = await UserGroups.query()
+			.insertAndFetch({
+				userId: userId,
+				chatGroupId: invite.groupId
+			})
+			.first();
 
 		if (!createdRelation) {
 			context.logger.err('Failed to accept invite ' + code);

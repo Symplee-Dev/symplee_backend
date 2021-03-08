@@ -91,7 +91,7 @@ interface Mutation {
   updateUser: User;
   updateChatGroup: ChatGroup;
   sendMessage: Scalars['Boolean'];
-  sendInvite: Scalars['Boolean'];
+  sendInvite: Scalars['String'];
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
 }
@@ -193,7 +193,7 @@ interface MutationSendInviteArgs {
 
 
 interface MutationAcceptInviteArgs {
-  acceptArgs?: Maybe<AcceptInviteInput>;
+  acceptArgs: AcceptInviteInput;
 }
 
 

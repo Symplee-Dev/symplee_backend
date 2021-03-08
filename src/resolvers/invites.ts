@@ -47,6 +47,16 @@ export const acceptInvite = async (
 	const invite = await GroupInvites.query().where({ code }).first();
 
 	if (invite) {
+		if (invite.uses !== -1 && invite.uses < invite.used) {
+			if (invite.uses === invite.used - 1) {
+				await GroupInvites.query().deleteById(invite.id);
+			} else {
+				await GroupInvites.query().patchAndFetchById(invite.id, {
+					used: invite.used + 1
+				});
+			}
+		}
+
 		const createdRelation = await UserGroups.query().insertAndFetch({
 			userId: userId,
 			chatGroupId: invite.groupId
@@ -57,9 +67,12 @@ export const acceptInvite = async (
 			throw new Error('Could not accept invite. Try again later.');
 		}
 
-		await Notifications.query().patchAndFetchById(notificationId, {
-			read: true
-		});
+		// Entered manually
+		if (notificationId !== -1) {
+			await Notifications.query().patchAndFetchById(notificationId, {
+				read: true
+			});
+		}
 
 		return true;
 	}

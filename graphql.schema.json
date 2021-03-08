@@ -1123,7 +1123,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Boolean",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -1138,9 +1138,13 @@
                 "name": "acceptArgs",
                 "description": null,
                 "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "AcceptInviteInput",
-                  "ofType": null
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "AcceptInviteInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null,
                 "isDeprecated": false,

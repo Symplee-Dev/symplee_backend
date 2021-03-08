@@ -94,6 +94,7 @@ interface Mutation {
   sendInvite: Scalars['String'];
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
+  toggleUserOnline: Scalars['Boolean'];
 }
 
 
@@ -201,13 +202,24 @@ interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
 }
 
+
+interface MutationToggleUserOnlineArgs {
+  status?: Maybe<Scalars['Boolean']>;
+}
+
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
+  activeChatUsers: Array<User>;
 }
 
 
 interface SubscriptionMessageSentArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionActiveChatUsersArgs {
   chatId: Scalars['Int'];
 }
 
@@ -382,6 +394,7 @@ interface User {
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
   avatar?: Maybe<Scalars['String']>;
+  is_online: Scalars['Boolean'];
 }
 
 interface ChatGroup {

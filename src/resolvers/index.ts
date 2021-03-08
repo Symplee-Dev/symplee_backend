@@ -1,7 +1,7 @@
 import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
-import { userResolvers, user, updateUser } from './user';
+import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
 import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
@@ -69,6 +69,7 @@ export const resolvers: Resolvers.Resolvers = {
 		updateUser,
 		updateChatGroup,
 		sendMessage,
+		toggleUserOnline,
 		acceptInvite: acceptInvite as any,
 		sendInvite: sendInvite as any,
 		markNotificationAsRead: markNotificationAsRead as any

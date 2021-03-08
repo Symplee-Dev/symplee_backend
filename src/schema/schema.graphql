@@ -36,10 +36,12 @@ type Mutation {
 	sendInvite(invite: SendInviteInput!): String!
 	acceptInvite(acceptArgs: AcceptInviteInput!): Boolean!
 	markNotificationAsRead(notificationId: Int!): Boolean!
+	toggleUserOnline(status: Boolean): Boolean!
 }
 
 type Subscription {
-	messageSent(chatId: Int!): MessagesChats!
+	messageSent(chatId: Int!): MessagesChats!,
+	activeChatUsers(chatId: Int!): [User!]!
 }
 
 input SendInviteInput {
@@ -203,7 +205,8 @@ type User {
 	chatGroups: [ChatGroup!]!
 	createdAt: String!
 	verified: Boolean!
-	avatar: String
+	avatar: String,
+	is_online: Boolean!
 }
 
 type ChatGroup {

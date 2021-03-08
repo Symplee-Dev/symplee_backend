@@ -97,6 +97,7 @@ interface Mutation {
   sendInvite: Scalars['String'];
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
+  toggleUserOnline: Scalars['Boolean'];
 }
 
 
@@ -204,13 +205,24 @@ interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
 }
 
+
+interface MutationToggleUserOnlineArgs {
+  status?: Maybe<Scalars['Boolean']>;
+}
+
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
+  activeChatUsers: Array<User>;
 }
 
 
 interface SubscriptionMessageSentArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionActiveChatUsersArgs {
   chatId: Scalars['Int'];
 }
 
@@ -385,6 +397,7 @@ interface User {
   createdAt: Scalars['String'];
   verified: Scalars['Boolean'];
   avatar?: Maybe<Scalars['String']>;
+  is_online: Scalars['Boolean'];
 }
 
 interface ChatGroup {
@@ -630,10 +643,12 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendInvite?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSendInviteArgs, 'invite'>>;
   acceptInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptInviteArgs, 'acceptArgs'>>;
   markNotificationAsRead?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationMarkNotificationAsReadArgs, 'notificationId'>>;
+  toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messageSent?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatId'>>;
+  activeChatUsers?: SubscriptionResolver<Array<ResolversTypes['User']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
@@ -707,6 +722,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  is_online?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

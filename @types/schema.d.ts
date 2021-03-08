@@ -27,6 +27,7 @@ interface Query {
   feedbackById: AppFeedback;
   getMembers: Array<User>;
   getMessages: Array<Maybe<MessagesChats>>;
+  getNotifications: Array<Maybe<Notification>>;
 }
 
 
@@ -65,6 +66,12 @@ interface QueryGetMessagesArgs {
   chatId: Scalars['Int'];
 }
 
+
+interface QueryGetNotificationsArgs {
+  userId: Scalars['Int'];
+  type: Scalars['String'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   sendForgotPasswordEmail: Scalars['Boolean'];
@@ -84,6 +91,9 @@ interface Mutation {
   updateUser: User;
   updateChatGroup: ChatGroup;
   sendMessage: Scalars['Boolean'];
+  sendInvite: Scalars['Boolean'];
+  acceptInvite: Scalars['Boolean'];
+  markNotificationAsRead: Scalars['Boolean'];
 }
 
 
@@ -176,6 +186,21 @@ interface MutationSendMessageArgs {
   message: NewMessage;
 }
 
+
+interface MutationSendInviteArgs {
+  invite: SendInviteInput;
+}
+
+
+interface MutationAcceptInviteArgs {
+  acceptArgs?: Maybe<AcceptInviteInput>;
+}
+
+
+interface MutationMarkNotificationAsReadArgs {
+  notificationId: Scalars['Int'];
+}
+
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
@@ -184,6 +209,19 @@ interface Subscription {
 
 interface SubscriptionMessageSentArgs {
   chatId: Scalars['Int'];
+}
+
+interface SendInviteInput {
+  fromId: Scalars['Int'];
+  uses: Scalars['Int'];
+  to: Array<Maybe<Scalars['Int']>>;
+  groupId: Scalars['Int'];
+}
+
+interface AcceptInviteInput {
+  userId: Scalars['Int'];
+  code: Scalars['String'];
+  notificationId: Scalars['Int'];
 }
 
 interface NewMessage {
@@ -377,6 +415,30 @@ interface MessagesChats {
   chatId: Scalars['Int'];
   createdAt: Scalars['String'];
   author: User;
+}
+
+interface GroupInvite {
+  __typename?: 'GroupInvite';
+  id: Scalars['Int'];
+  fromId: Scalars['Int'];
+  fromAuthor: User;
+  code: Scalars['String'];
+  uses: Scalars['Int'];
+  used: Scalars['Int'];
+  groupId: Scalars['Int'];
+  group: ChatGroup;
+}
+
+interface Notification {
+  __typename?: 'Notification';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  description: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
+  fromId?: Maybe<Scalars['Int']>;
+  from?: Maybe<User>;
+  createdAt: Scalars['String'];
+  read: Scalars['Boolean'];
 }
 
 } } export {};

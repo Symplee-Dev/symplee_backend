@@ -5,18 +5,18 @@ import Notifications from '../models/Notifications';
 
 export const sendInvite = async (
 	parent: any,
-	args: Resolvers.SendInviteInput,
+	args: Resolvers.MutationSendInviteArgs,
 	context: Services.ServerContext
 ) => {
 	context.logger.info('Starting to send an invite');
 
-	const { fromId, groupId, to, uses } = args;
+	const { fromId, groupId, uses, to } = args.invite;
 
 	const newInvite = await GroupInvites.query()
 		.insertAndFetch({
-			fromId,
-			groupId,
-			uses,
+			fromId: fromId,
+			groupId: groupId,
+			uses: uses,
 			used: 0,
 			code: v4()
 		})
@@ -32,17 +32,17 @@ export const sendInvite = async (
 		});
 	}
 
-	return newInvite ? true : false;
+	return newInvite.code;
 };
 
 export const acceptInvite = async (
 	parent: any,
-	args: Resolvers.AcceptInviteInput,
+	args: Resolvers.MutationAcceptInviteArgs,
 	context: Services.ServerContext
 ) => {
 	context.logger.info('Starting to accept invite');
 
-	const { code, userId, notificationId } = args;
+	const { code, userId, notificationId } = args.acceptArgs;
 
 	const invite = await GroupInvites.query().where({ code }).first();
 
@@ -56,6 +56,13 @@ export const acceptInvite = async (
 				});
 			}
 		}
+
+		const existingRelation = await UserGroups.query().where({
+			userId,
+			chatGroupId: invite.groupId
+		});
+
+		if (existingRelation) throw new Error('Already In This group!');
 
 		const createdRelation = await UserGroups.query().insertAndFetch({
 			userId: userId,

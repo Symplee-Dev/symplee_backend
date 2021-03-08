@@ -91,3 +91,29 @@ export const updateUser = async (
 
 	return edited;
 };
+
+export const toggleUserOnline = async (parent: any, args: Resolvers.MutationToggleUserOnlineArgs, context: Services.ServerContext): Promise<boolean> => {
+	const tokenId: { userId: number, exp: number} | false = !!context.token && jwtDecode(context.token);
+
+	context.logger.info('toggleUserOnline')
+
+	if(!tokenId) {
+		throw new ApolloError('No user to toggle', '400')
+	}
+	
+	const findUser = await User.query().findById(tokenId.userId);
+	
+	context.logger.info("User > ", findUser)
+	
+	if(!findUser) {
+		throw new ApolloError('No user to toggle', '400')		
+	}
+
+	if(tokenId.exp > Date.now()) {
+		await User.query().patchAndFetchById(tokenId.userId, {is_online: false})
+		return false; 
+	}
+
+	const isOnline = (await User.query().patchAndFetchById(tokenId.userId, { is_online: args.status ? args.status : false })).is_online
+	return isOnline;
+}

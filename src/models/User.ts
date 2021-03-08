@@ -12,7 +12,8 @@ class User extends BaseModel {
 	createdAt!: string;
 	verified!: boolean;
 	avatar?: string;
-
+	is_online!: boolean;
+	
 	static get tableName() {
 		return 'users';
 	}

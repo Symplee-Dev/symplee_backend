@@ -12,6 +12,7 @@ type Query {
 	feedbackById(id: Int!): AppFeedback!
 	getMembers(chatId: Int!): [User!]!
 	getMessages(chatId: Int!): [MessagesChats]!
+	getNotifications(userId: Int!, type: String!): [Notification]!
 }
 
 type Mutation {
@@ -32,10 +33,28 @@ type Mutation {
 	updateUser(user: UpdateUserInput!, userId: Int): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
 	sendMessage(message: NewMessage!): Boolean!
+	sendInvite(invite: SendInviteInput!): String!
+	acceptInvite(acceptArgs: AcceptInviteInput!): Boolean!
+	markNotificationAsRead(notificationId: Int!): Boolean!
+	toggleUserOnline(status: Boolean): Boolean!
 }
 
 type Subscription {
-	messageSent(chatId: Int!): MessagesChats!
+	messageSent(chatId: Int!): MessagesChats!,
+	activeChatUsers(chatId: Int!): [User!]!
+}
+
+input SendInviteInput {
+	fromId: Int!
+	uses: Int!
+	to: [Int]!
+	groupId: Int!
+}
+
+input AcceptInviteInput {
+	userId: Int!
+	code: String!
+	notificationId: Int!
 }
 
 input NewMessage {
@@ -186,7 +205,8 @@ type User {
 	chatGroups: [ChatGroup!]!
 	createdAt: String!
 	verified: Boolean!
-	avatar: String
+	avatar: String,
+	is_online: Boolean!
 }
 
 type ChatGroup {
@@ -217,4 +237,26 @@ type MessagesChats {
 	chatId: Int!
 	createdAt: String!
 	author: User!
+}
+
+type GroupInvite {
+	id: Int!
+	fromId: Int!
+	fromAuthor: User!
+	code: String!
+	uses: Int!
+	used: Int!
+	groupId: Int!
+	group: ChatGroup!
+}
+
+type Notification {
+	id: Int!
+	userId: Int!
+	description: String!
+	type: String
+	fromId: Int
+	from: User
+	createdAt: String!
+	read: Boolean!
 }

@@ -86,3 +86,36 @@ export const markNotificationAsRead = async (
 
 	return true;
 };
+
+export const getNotifications = async (
+	parent: any,
+	args: Resolvers.QueryGetNotificationsArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Starting to get notifications');
+
+	const { userId, type } = args;
+
+	let notifications: Notifications[] = [];
+
+	if (type === 'ALL') {
+		notifications = await Notifications.query()
+			.where({ userId })
+			.withGraphFetched({ from: true });
+	}
+
+	if (type === 'READ') {
+		notifications = await Notifications.query()
+			.where({ userId, read: true })
+			.limit(50)
+			.withGraphFetched({ from: true });
+	}
+
+	if (type === 'UNREAD') {
+		notifications = await Notifications.query()
+			.where({ userId, read: false })
+			.withGraphFetched({ from: true });
+	}
+
+	return notifications;
+};

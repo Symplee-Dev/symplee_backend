@@ -12,7 +12,7 @@ type Query {
 	feedbackById(id: Int!): AppFeedback!
 	getMembers(chatId: Int!): [User!]!
 	getMessages(chatId: Int!): [MessagesChats]!
-	getNotifications(userId: Int!): [Notification]!
+	getNotifications(userId: Int!, type: String!): [Notification]!
 }
 
 type Mutation {

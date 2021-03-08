@@ -69,6 +69,7 @@ interface QueryGetMessagesArgs {
 
 interface QueryGetNotificationsArgs {
   userId: Scalars['Int'];
+  type: Scalars['String'];
 }
 
 interface Mutation {

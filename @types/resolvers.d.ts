@@ -72,6 +72,7 @@ interface QueryGetMessagesArgs {
 
 interface QueryGetNotificationsArgs {
   userId: Scalars['Int'];
+  type: Scalars['String'];
 }
 
 interface Mutation {
@@ -605,7 +606,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   feedbackById?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<QueryFeedbackByIdArgs, 'id'>>;
   getMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetMembersArgs, 'chatId'>>;
   getMessages?: Resolver<Array<Maybe<ResolversTypes['MessagesChats']>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, 'chatId'>>;
-  getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId'>>;
+  getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId' | 'type'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

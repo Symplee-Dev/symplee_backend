@@ -1,7 +1,7 @@
 import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
-import { userResolvers, user, updateUser, toggleUserOnline} from './user';
+import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
 import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
@@ -27,6 +27,12 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
+import {
+	acceptInvite,
+	sendInvite,
+	markNotificationAsRead,
+	getNotifications
+} from './invites';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -42,7 +48,8 @@ export const resolvers: Resolvers.Resolvers = {
 		getFeedback,
 		feedbackById,
 		getMembers,
-		getMessages
+		getMessages,
+		getNotifications
 	},
 	Mutation: {
 		sendForgotPasswordEmail,
@@ -62,12 +69,15 @@ export const resolvers: Resolvers.Resolvers = {
 		updateUser,
 		updateChatGroup,
 		sendMessage,
-		toggleUserOnline
+		toggleUserOnline,
+		acceptInvite: acceptInvite as any,
+		sendInvite: sendInvite as any,
+		markNotificationAsRead: markNotificationAsRead as any
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any
 	},
 	Subscription: {
-		messageSent,
+		messageSent
 	}
 };

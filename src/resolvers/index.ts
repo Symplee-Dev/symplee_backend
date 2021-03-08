@@ -27,7 +27,12 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
-import { acceptInvite, sendInvite, markNotificationAsRead } from './invites';
+import {
+	acceptInvite,
+	sendInvite,
+	markNotificationAsRead,
+	getNotifications
+} from './invites';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -43,7 +48,8 @@ export const resolvers: Resolvers.Resolvers = {
 		getFeedback,
 		feedbackById,
 		getMembers,
-		getMessages
+		getMessages,
+		getNotifications
 	},
 	Mutation: {
 		sendForgotPasswordEmail,

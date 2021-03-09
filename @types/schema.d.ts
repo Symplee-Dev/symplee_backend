@@ -28,6 +28,7 @@ interface Query {
   getMembers: Array<User>;
   getMessages: Array<Maybe<MessagesChats>>;
   getNotifications: Array<Maybe<Notification>>;
+  getFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -72,6 +73,11 @@ interface QueryGetNotificationsArgs {
   type: Scalars['String'];
 }
 
+
+interface QueryGetFriendsArgs {
+  userId: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   sendForgotPasswordEmail: Scalars['Boolean'];
@@ -95,6 +101,8 @@ interface Mutation {
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
   toggleUserOnline: Scalars['Boolean'];
+  addFriend: Scalars['Boolean'];
+  removeFriend: Scalars['Boolean'];
 }
 
 
@@ -205,6 +213,21 @@ interface MutationMarkNotificationAsReadArgs {
 
 interface MutationToggleUserOnlineArgs {
   status?: Maybe<Scalars['Boolean']>;
+}
+
+
+interface MutationAddFriendArgs {
+  friendRequest: FriendRequestInput;
+}
+
+
+interface MutationRemoveFriendArgs {
+  friendId: Scalars['Int'];
+}
+
+interface FriendRequestInput {
+  userId: Scalars['Int'];
+  friendId: Scalars['Int'];
 }
 
 interface Subscription {
@@ -452,6 +475,16 @@ interface Notification {
   from?: Maybe<User>;
   createdAt: Scalars['String'];
   read: Scalars['Boolean'];
+}
+
+interface UserFriend {
+  __typename?: 'UserFriend';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  friendId: Scalars['Int'];
+  friend?: Maybe<User>;
+  friendsSince: Scalars['String'];
+  status: Scalars['String'];
 }
 
 } } export {};

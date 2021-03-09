@@ -27,6 +27,7 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
+import { getFriends, addFriend, removeFriend } from './friends';
 import {
 	acceptInvite,
 	sendInvite,
@@ -49,7 +50,8 @@ export const resolvers: Resolvers.Resolvers = {
 		feedbackById,
 		getMembers,
 		getMessages,
-		getNotifications
+		getNotifications,
+		getFriends
 	},
 	Mutation: {
 		sendForgotPasswordEmail,
@@ -70,9 +72,11 @@ export const resolvers: Resolvers.Resolvers = {
 		updateChatGroup,
 		sendMessage,
 		toggleUserOnline,
-		acceptInvite: acceptInvite as any,
-		sendInvite: sendInvite as any,
-		markNotificationAsRead: markNotificationAsRead as any
+		acceptInvite,
+		sendInvite,
+		markNotificationAsRead,
+		addFriend,
+		removeFriend
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

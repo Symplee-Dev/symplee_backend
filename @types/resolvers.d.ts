@@ -31,6 +31,7 @@ interface Query {
   getMembers: Array<User>;
   getMessages: Array<Maybe<MessagesChats>>;
   getNotifications: Array<Maybe<Notification>>;
+  getFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -75,6 +76,11 @@ interface QueryGetNotificationsArgs {
   type: Scalars['String'];
 }
 
+
+interface QueryGetFriendsArgs {
+  userId: Scalars['Int'];
+}
+
 interface Mutation {
   __typename?: 'Mutation';
   sendForgotPasswordEmail: Scalars['Boolean'];
@@ -98,6 +104,8 @@ interface Mutation {
   acceptInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
   toggleUserOnline: Scalars['Boolean'];
+  addFriend: Scalars['Boolean'];
+  removeFriend: Scalars['Boolean'];
 }
 
 
@@ -208,6 +216,21 @@ interface MutationMarkNotificationAsReadArgs {
 
 interface MutationToggleUserOnlineArgs {
   status?: Maybe<Scalars['Boolean']>;
+}
+
+
+interface MutationAddFriendArgs {
+  friendRequest: FriendRequestInput;
+}
+
+
+interface MutationRemoveFriendArgs {
+  friendId: Scalars['Int'];
+}
+
+interface FriendRequestInput {
+  userId: Scalars['Int'];
+  friendId: Scalars['Int'];
 }
 
 interface Subscription {
@@ -457,6 +480,16 @@ interface Notification {
   read: Scalars['Boolean'];
 }
 
+interface UserFriend {
+  __typename?: 'UserFriend';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  friendId: Scalars['Int'];
+  friend?: Maybe<User>;
+  friendsSince: Scalars['String'];
+  status: Scalars['String'];
+}
+
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -540,6 +573,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  FriendRequestInput: FriendRequestInput;
   Subscription: ResolverTypeWrapper<{}>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -567,6 +601,7 @@ export type ResolversTypes = {
   MessagesChats: ResolverTypeWrapper<MessagesChats>;
   GroupInvite: ResolverTypeWrapper<GroupInvite>;
   Notification: ResolverTypeWrapper<Notification>;
+  UserFriend: ResolverTypeWrapper<UserFriend>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -576,6 +611,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  FriendRequestInput: FriendRequestInput;
   Subscription: {};
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -603,6 +639,7 @@ export type ResolversParentTypes = {
   MessagesChats: MessagesChats;
   GroupInvite: GroupInvite;
   Notification: Notification;
+  UserFriend: UserFriend;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -620,6 +657,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetMembersArgs, 'chatId'>>;
   getMessages?: Resolver<Array<Maybe<ResolversTypes['MessagesChats']>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, 'chatId'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId' | 'type'>>;
+  getFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetFriendsArgs, 'userId'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -644,6 +682,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   acceptInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptInviteArgs, 'acceptArgs'>>;
   markNotificationAsRead?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationMarkNotificationAsReadArgs, 'notificationId'>>;
   toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
+  addFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddFriendArgs, 'friendRequest'>>;
+  removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
@@ -783,6 +823,16 @@ export type NotificationResolvers<ContextType = any, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserFriendResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserFriend'] = ResolversParentTypes['UserFriend']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  friendId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  friend?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  friendsSince?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
@@ -799,6 +849,7 @@ export type Resolvers<ContextType = any> = {
   MessagesChats?: MessagesChatsResolvers<ContextType>;
   GroupInvite?: GroupInviteResolvers<ContextType>;
   Notification?: NotificationResolvers<ContextType>;
+  UserFriend?: UserFriendResolvers<ContextType>;
 };
 
 

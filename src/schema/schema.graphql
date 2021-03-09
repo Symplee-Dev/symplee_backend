@@ -33,8 +33,8 @@ type Mutation {
 	updateUser(user: UpdateUserInput!, userId: Int): User!
 	updateChatGroup(group: UpdateChatGroupInput, chatGroupId: Int!): ChatGroup!
 	sendMessage(message: NewMessage!): Boolean!
-	sendInvite(invite: SendInviteInput!): Boolean!
-	acceptInvite(acceptArgs: AcceptInviteInput): Boolean!
+	sendInvite(invite: SendInviteInput!): String!
+	acceptInvite(acceptArgs: AcceptInviteInput!): Boolean!
 	markNotificationAsRead(notificationId: Int!): Boolean!
 	toggleUserOnline(status: Boolean): Boolean!
 }

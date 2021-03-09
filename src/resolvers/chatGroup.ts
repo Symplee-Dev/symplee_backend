@@ -1,7 +1,8 @@
 import { withFilter } from 'graphql-subscriptions';
 import { pubsub } from '..';
 import ChatGroup from '../models/ChatGroup';
-import UserGroups from '../models/UserGroups';
+import User from '../models/User';
+import { logger } from '../utils/logger';
 
 export const chatGroup = async (
 	parent: any,
@@ -55,3 +56,18 @@ export const getMembers = async (
 
 	return members.members;
 };
+
+//TODO: Finish Subscription: filter ChatUsers for 
+export const activeChatUsers = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('ACTIVE_CHAT_USERS'),
+		(
+			payload: {chatId: number; user: User},
+			variables: Resolvers.SubscriptionActiveChatUsersArgs
+		) => {
+			logger.info(payload);
+			logger.info(variables);
+			const usersInChat =
+		}
+	)
+}

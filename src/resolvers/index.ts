@@ -4,7 +4,7 @@ import { login } from './login';
 import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
+import { chatGroup, updateChatGroup, getMembers, activeChatUsers } from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -78,6 +78,7 @@ export const resolvers: Resolvers.Resolvers = {
 		chatGroups: userResolvers.chatGroups as any
 	},
 	Subscription: {
-		messageSent
+		messageSent,
+		activeChatUsers
 	}
 };

@@ -4,7 +4,12 @@ import { login } from './login';
 import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
+import {
+	chatGroup,
+	updateChatGroup,
+	getMembers,
+	searchGroups
+} from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -51,7 +56,8 @@ export const resolvers: Resolvers.Resolvers = {
 		getMembers,
 		getMessages,
 		getNotifications,
-		getFriends
+		getFriends,
+		searchGroups
 	},
 	Mutation: {
 		sendForgotPasswordEmail,

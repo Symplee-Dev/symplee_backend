@@ -55,3 +55,19 @@ export const getMembers = async (
 
 	return members.members;
 };
+
+export const searchGroups = async (
+	parent: any,
+	args: Resolvers.QuerySearchGroupsArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Searching groups');
+
+	const groups = await ChatGroup.query().where({ isPublic: true }).limit(100);
+
+	const groupsFiltered = groups.filter(
+		g => g.name.search(args.queryString) !== -1
+	);
+
+	return groupsFiltered;
+};

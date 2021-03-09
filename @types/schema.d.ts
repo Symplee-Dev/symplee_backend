@@ -29,6 +29,7 @@ interface Query {
   getMessages: Array<Maybe<MessagesChats>>;
   getNotifications: Array<Maybe<Notification>>;
   getFriends: Array<Maybe<UserFriend>>;
+  searchGroups: Array<Maybe<ChatGroup>>;
 }
 
 
@@ -76,6 +77,11 @@ interface QueryGetNotificationsArgs {
 
 interface QueryGetFriendsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QuerySearchGroupsArgs {
+  queryString: Scalars['String'];
 }
 
 interface Mutation {

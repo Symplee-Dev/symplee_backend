@@ -14,6 +14,7 @@ type Query {
 	getMessages(chatId: Int!): [MessagesChats]!
 	getNotifications(userId: Int!, type: String!): [Notification]!
 	getFriends(userId: Int!): [UserFriend]!
+	searchGroups(queryString: String!): [ChatGroup]!
 }
 
 type Mutation {

@@ -32,6 +32,7 @@ interface Query {
   getMessages: Array<Maybe<MessagesChats>>;
   getNotifications: Array<Maybe<Notification>>;
   getFriends: Array<Maybe<UserFriend>>;
+  searchGroups: Array<Maybe<ChatGroup>>;
 }
 
 
@@ -79,6 +80,11 @@ interface QueryGetNotificationsArgs {
 
 interface QueryGetFriendsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QuerySearchGroupsArgs {
+  queryString: Scalars['String'];
 }
 
 interface Mutation {
@@ -658,6 +664,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getMessages?: Resolver<Array<Maybe<ResolversTypes['MessagesChats']>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, 'chatId'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId' | 'type'>>;
   getFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetFriendsArgs, 'userId'>>;
+  searchGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QuerySearchGroupsArgs, 'queryString'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {

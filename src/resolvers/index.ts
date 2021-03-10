@@ -4,7 +4,12 @@ import { login } from './login';
 import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
+import {
+	chatGroup,
+	updateChatGroup,
+	getMembers,
+	searchGroups
+} from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -28,6 +33,13 @@ import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
 import {
+	getFriends,
+	addFriend,
+	removeFriend,
+	acceptFriend,
+	declineFriend
+} from './friends';
+import {
 	acceptInvite,
 	sendInvite,
 	markNotificationAsRead,
@@ -49,7 +61,9 @@ export const resolvers: Resolvers.Resolvers = {
 		feedbackById,
 		getMembers,
 		getMessages,
-		getNotifications
+		getNotifications,
+		getFriends,
+		searchGroups
 	},
 	Mutation: {
 		sendForgotPasswordEmail,
@@ -70,9 +84,13 @@ export const resolvers: Resolvers.Resolvers = {
 		updateChatGroup,
 		sendMessage,
 		toggleUserOnline,
-		acceptInvite: acceptInvite as any,
-		sendInvite: sendInvite as any,
-		markNotificationAsRead: markNotificationAsRead as any
+		acceptInvite,
+		sendInvite,
+		markNotificationAsRead,
+		addFriend,
+		removeFriend,
+		acceptFriend,
+		declineFriend
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

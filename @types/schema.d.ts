@@ -77,6 +77,7 @@ interface QueryGetNotificationsArgs {
 
 interface QueryGetFriendsArgs {
   userId: Scalars['Int'];
+  friendId: Scalars['Int'];
 }
 
 
@@ -110,6 +111,7 @@ interface Mutation {
   addFriend: Scalars['Boolean'];
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
+  declineFriend: Scalars['Boolean'];
 }
 
 
@@ -236,6 +238,17 @@ interface MutationRemoveFriendArgs {
 interface MutationAcceptFriendArgs {
   notificationId: Scalars['Int'];
   invite: AcceptFriendInput;
+}
+
+
+interface MutationDeclineFriendArgs {
+  notificationId: Scalars['Int'];
+  invite: DeclineFriendInput;
+}
+
+interface DeclineFriendInput {
+  userId: Scalars['Int'];
+  fromId: Scalars['Int'];
 }
 
 interface AcceptFriendInput {

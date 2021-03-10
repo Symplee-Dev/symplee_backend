@@ -54,7 +54,13 @@ export const getFriends = async (
 		.where({ userId: args.userId })
 		.withGraphFetched({ friend: true });
 
-	return friends;
+	const otherFriends = await UserFriends.query()
+		.where({
+			userId: args.friendId
+		})
+		.withGraphFetched({ friend: true });
+
+	return [...friends, ...otherFriends];
 };
 
 export const acceptFriend = async (
@@ -63,19 +69,40 @@ export const acceptFriend = async (
 	context: Services.ServerContext
 ): Promise<boolean> => {
 	context.logger.info('Accepting friend request');
+	context.logger.info(args);
 
 	await Notifications.query()
 		.where({
 			id: args.notificationId
 		})
-		.patchAndFetch({ read: true });
+		.first()
+		.update({ read: true });
 
 	await UserFriends.query()
-		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
-		.patchAndFetch({
+		.where({ friendId: args.invite.userId, userId: args.invite.fromId })
+		.first()
+		.update({
 			friendsSince: new Date().toString(),
 			status: 'FRIENDS'
 		});
+
+	return true;
+};
+
+export const declineFriend = async (
+	parent: any,
+	args: Resolvers.MutationAcceptFriendArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	context.logger.info('Declining friend request');
+
+	await Notifications.query().delete().where({
+		id: args.notificationId
+	});
+
+	await UserFriends.query()
+		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
+		.delete();
 
 	return true;
 };

@@ -13,7 +13,7 @@ type Query {
 	getMembers(chatId: Int!): [User!]!
 	getMessages(chatId: Int!): [MessagesChats]!
 	getNotifications(userId: Int!, type: String!): [Notification]!
-	getFriends(userId: Int!): [UserFriend]!
+	getFriends(userId: Int!, friendId: Int!): [UserFriend]!
 	searchGroups(queryString: String!): [ChatGroup]!
 }
 
@@ -42,6 +42,12 @@ type Mutation {
 	addFriend(friendRequest: FriendRequestInput!): Boolean!
 	removeFriend(friendId: Int!): Boolean!
 	acceptFriend(notificationId: Int!, invite: AcceptFriendInput!): Boolean!
+	declineFriend(notificationId: Int!, invite: DeclineFriendInput!): Boolean!
+}
+
+input DeclineFriendInput {
+	userId: Int!
+	fromId: Int!
 }
 
 input AcceptFriendInput {

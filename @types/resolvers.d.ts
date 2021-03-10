@@ -80,6 +80,7 @@ interface QueryGetNotificationsArgs {
 
 interface QueryGetFriendsArgs {
   userId: Scalars['Int'];
+  friendId: Scalars['Int'];
 }
 
 
@@ -113,6 +114,7 @@ interface Mutation {
   addFriend: Scalars['Boolean'];
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
+  declineFriend: Scalars['Boolean'];
 }
 
 
@@ -239,6 +241,17 @@ interface MutationRemoveFriendArgs {
 interface MutationAcceptFriendArgs {
   notificationId: Scalars['Int'];
   invite: AcceptFriendInput;
+}
+
+
+interface MutationDeclineFriendArgs {
+  notificationId: Scalars['Int'];
+  invite: DeclineFriendInput;
+}
+
+interface DeclineFriendInput {
+  userId: Scalars['Int'];
+  fromId: Scalars['Int'];
 }
 
 interface AcceptFriendInput {
@@ -591,6 +604,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
+  DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
   Subscription: ResolverTypeWrapper<{}>;
@@ -630,6 +644,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   Mutation: {};
+  DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
   Subscription: {};
@@ -677,7 +692,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetMembersArgs, 'chatId'>>;
   getMessages?: Resolver<Array<Maybe<ResolversTypes['MessagesChats']>>, ParentType, ContextType, RequireFields<QueryGetMessagesArgs, 'chatId'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId' | 'type'>>;
-  getFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetFriendsArgs, 'userId'>>;
+  getFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetFriendsArgs, 'userId' | 'friendId'>>;
   searchGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QuerySearchGroupsArgs, 'queryString'>>;
 };
 
@@ -706,6 +721,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   addFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddFriendArgs, 'friendRequest'>>;
   removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId'>>;
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
+  declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

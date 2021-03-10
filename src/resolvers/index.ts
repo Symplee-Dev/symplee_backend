@@ -32,7 +32,13 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
-import { getFriends, addFriend, removeFriend, acceptFriend } from './friends';
+import {
+	getFriends,
+	addFriend,
+	removeFriend,
+	acceptFriend,
+	declineFriend
+} from './friends';
 import {
 	acceptInvite,
 	sendInvite,
@@ -83,7 +89,8 @@ export const resolvers: Resolvers.Resolvers = {
 		markNotificationAsRead,
 		addFriend,
 		removeFriend,
-		acceptFriend
+		acceptFriend,
+		declineFriend
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

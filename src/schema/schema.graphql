@@ -40,7 +40,7 @@ type Mutation {
 	markNotificationAsRead(notificationId: Int!): Boolean!
 	toggleUserOnline(status: Boolean): Boolean!
 	addFriend(friendRequest: FriendRequestInput!): Boolean!
-	removeFriend(friendId: Int!): Boolean!
+	removeFriend(friendId: Int!, userId: Int!): Boolean!
 	acceptFriend(notificationId: Int!, invite: AcceptFriendInput!): Boolean!
 	declineFriend(notificationId: Int!, invite: DeclineFriendInput!): Boolean!
 }
@@ -289,4 +289,5 @@ type UserFriend {
 	friend: User
 	friendsSince: String!
 	status: String!
+	sentBy: Int!
 }

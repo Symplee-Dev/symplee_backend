@@ -13,7 +13,16 @@ export const addFriend = async (
 		userId: args.friendRequest.userId,
 		friendId: args.friendRequest.friendId,
 		friendsSince: new Date().toString(),
-		status: 'PENDING'
+		status: 'PENDING',
+		sentBy: args.friendRequest.userId
+	});
+
+	await UserFriends.query().insert({
+		userId: args.friendRequest.friendId,
+		friendId: args.friendRequest.userId,
+		friendsSince: new Date().toString(),
+		status: 'PENDING',
+		sentBy: args.friendRequest.userId
 	});
 
 	const { username } = await User.query()
@@ -38,7 +47,12 @@ export const removeFriend = async (
 ): Promise<boolean> => {
 	context.logger.info('Starting remove friend');
 
-	await UserFriends.query().delete().where({ friendId: args.friendId });
+	await UserFriends.query()
+		.delete()
+		.where({ friendId: args.friendId, userId: args.userId });
+	await UserFriends.query()
+		.delete()
+		.where({ friendId: args.userId, userId: args.friendId });
 
 	return true;
 };
@@ -54,13 +68,7 @@ export const getFriends = async (
 		.where({ userId: args.userId })
 		.withGraphFetched({ friend: true });
 
-	const otherFriends = await UserFriends.query()
-		.where({
-			userId: args.friendId
-		})
-		.withGraphFetched({ friend: true });
-
-	return [...friends, ...otherFriends];
+	return friends;
 };
 
 export const acceptFriend = async (
@@ -86,6 +94,14 @@ export const acceptFriend = async (
 			status: 'FRIENDS'
 		});
 
+	await UserFriends.query()
+		.where({ userId: args.invite.userId, friendId: args.invite.fromId })
+		.first()
+		.update({
+			friendsSince: new Date().toString(),
+			status: 'FRIENDS'
+		});
+
 	return true;
 };
 
@@ -102,6 +118,10 @@ export const declineFriend = async (
 
 	await UserFriends.query()
 		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
+		.delete();
+
+	await UserFriends.query()
+		.where({ fromId: args.invite.userId, userId: args.invite.fromId })
 		.delete();
 
 	return true;

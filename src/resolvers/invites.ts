@@ -57,10 +57,12 @@ export const acceptInvite = async (
 			}
 		}
 
-		const existingRelation = await UserGroups.query().where({
-			userId,
-			chatGroupId: invite.groupId
-		});
+		const existingRelation = await UserGroups.query()
+			.where({
+				userId,
+				chatGroupId: invite.groupId
+			})
+			.first();
 
 		if (existingRelation) throw new Error('Already In This group!');
 

@@ -17,6 +17,7 @@ type Query {
 	searchGroups(queryString: String!): [ChatGroup]!
 	getProfile(userId: Int!, otherUserId: Int!): GetProfileReturn!
 	getAcceptedFriends(userId: Int!): [UserFriend]!
+	getPendingFriends(userId: Int!): [UserFriend]!
 }
 
 type GetProfileReturn {

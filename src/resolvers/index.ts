@@ -32,6 +32,7 @@ import {
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
+import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
 import {
 	getFriends,
 	addFriend,
@@ -63,7 +64,10 @@ export const resolvers: Resolvers.Resolvers = {
 		getMessages,
 		getNotifications,
 		getFriends,
-		searchGroups
+		searchGroups,
+		getProfile,
+		getPendingFriends,
+		getAcceptedFriends
 	},
 	Mutation: {
 		sendForgotPasswordEmail,

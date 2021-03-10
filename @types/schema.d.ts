@@ -32,6 +32,7 @@ interface Query {
   searchGroups: Array<Maybe<ChatGroup>>;
   getProfile: GetProfileReturn;
   getAcceptedFriends: Array<Maybe<UserFriend>>;
+  getPendingFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -95,6 +96,11 @@ interface QueryGetProfileArgs {
 
 
 interface QueryGetAcceptedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetPendingFriendsArgs {
   userId: Scalars['Int'];
 }
 

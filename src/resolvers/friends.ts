@@ -135,10 +135,30 @@ export const getAcceptedFriends = async (
 ): Promise<UserFriends[]> => {
 	context.logger.info('Getting accepted friends');
 
-	const friends = await UserFriends.query().where({
-		userId: args.userId,
-		status: 'FRIENDS'
-	});
+	const friends = await UserFriends.query()
+		.where({
+			userId: args.userId,
+			status: 'FRIENDS'
+		})
+		.withGraphFetched({ friend: true });
+
+	return friends;
+};
+
+export const getPendingFriends = async (
+	parent: any,
+	args: Resolvers.QueryGetAcceptedFriendsArgs,
+	context: Services.ServerContext
+): Promise<UserFriends[]> => {
+	context.logger.info('Getting accepted friends');
+
+	const friends = await UserFriends.query()
+		.where({
+			userId: args.userId,
+			status: 'PENDING',
+			sentBy: args.userId
+		})
+		.withGraphFetched({ friend: true });
 
 	return friends;
 };

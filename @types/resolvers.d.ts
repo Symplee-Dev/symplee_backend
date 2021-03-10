@@ -33,6 +33,8 @@ interface Query {
   getNotifications: Array<Maybe<Notification>>;
   getFriends: Array<Maybe<UserFriend>>;
   searchGroups: Array<Maybe<ChatGroup>>;
+  getProfile: GetProfileReturn;
+  getAcceptedFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -86,6 +88,23 @@ interface QueryGetFriendsArgs {
 
 interface QuerySearchGroupsArgs {
   queryString: Scalars['String'];
+}
+
+
+interface QueryGetProfileArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+
+interface QueryGetAcceptedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+interface GetProfileReturn {
+  __typename?: 'GetProfileReturn';
+  user: User;
+  relatedGroups: Array<Maybe<ChatGroup>>;
 }
 
 interface Mutation {
@@ -605,6 +624,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
@@ -645,6 +665,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
+  GetProfileReturn: GetProfileReturn;
   Mutation: {};
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
@@ -696,6 +717,14 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, 'userId' | 'type'>>;
   getFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetFriendsArgs, 'userId' | 'friendId'>>;
   searchGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QuerySearchGroupsArgs, 'queryString'>>;
+  getProfile?: Resolver<ResolversTypes['GetProfileReturn'], ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'userId' | 'otherUserId'>>;
+  getAcceptedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetAcceptedFriendsArgs, 'userId'>>;
+};
+
+export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  relatedGroups?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
@@ -876,6 +905,7 @@ export type UserFriendResolvers<ContextType = any, ParentType extends ResolversP
 
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
+  GetProfileReturn?: GetProfileReturnResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
   AppFeedback?: AppFeedbackResolvers<ContextType>;

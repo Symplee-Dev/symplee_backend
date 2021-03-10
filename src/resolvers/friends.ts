@@ -1,6 +1,7 @@
 import UserFriends from '../models/UserFriends';
 import Notifications from '../models/Notifications';
 import User from '../models/User';
+import ChatGroup from '../models/ChatGroup';
 
 export const addFriend = async (
 	parent: any,
@@ -125,4 +126,39 @@ export const declineFriend = async (
 		.delete();
 
 	return true;
+};
+
+export const getAcceptedFriends = async (
+	parent: any,
+	args: Resolvers.QueryGetAcceptedFriendsArgs,
+	context: Services.ServerContext
+): Promise<UserFriends[]> => {
+	context.logger.info('Getting accepted friends');
+
+	const friends = await UserFriends.query().where({
+		userId: args.userId,
+		status: 'FRIENDS'
+	});
+
+	return friends;
+};
+
+export const getProfile = async (
+	parent: any,
+	args: Resolvers.QueryGetProfileArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.GetProfileReturn> => {
+	context.logger.info('Getting profile for user ' + args.userId);
+
+	const profile = await User.query().where({ id: args.otherUserId }).first();
+	const userGroups = await ChatGroup.query().where({ userId: args.userId });
+	const otherUserGroups = await ChatGroup.query().where({
+		userId: args.otherUserId
+	});
+	const relatedGroups = userGroups.filter(g => {
+		const match = otherUserGroups.find(og => og.id === g.id);
+		return match !== undefined;
+	});
+
+	return { relatedGroups, user: profile };
 };

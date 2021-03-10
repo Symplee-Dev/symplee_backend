@@ -15,6 +15,13 @@ type Query {
 	getNotifications(userId: Int!, type: String!): [Notification]!
 	getFriends(userId: Int!, friendId: Int!): [UserFriend]!
 	searchGroups(queryString: String!): [ChatGroup]!
+	getProfile(userId: Int!, otherUserId: Int!): GetProfileReturn!
+	getAcceptedFriends(userId: Int!): [UserFriend]!
+}
+
+type GetProfileReturn {
+	user: User!
+	relatedGroups: [ChatGroup]!
 }
 
 type Mutation {

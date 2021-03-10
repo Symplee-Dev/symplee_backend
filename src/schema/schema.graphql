@@ -41,6 +41,12 @@ type Mutation {
 	toggleUserOnline(status: Boolean): Boolean!
 	addFriend(friendRequest: FriendRequestInput!): Boolean!
 	removeFriend(friendId: Int!): Boolean!
+	acceptFriend(notificationId: Int!, invite: AcceptFriendInput!): Boolean!
+}
+
+input AcceptFriendInput {
+	userId: Int!
+	fromId: Int!
 }
 
 input FriendRequestInput {

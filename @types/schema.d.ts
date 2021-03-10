@@ -109,6 +109,7 @@ interface Mutation {
   toggleUserOnline: Scalars['Boolean'];
   addFriend: Scalars['Boolean'];
   removeFriend: Scalars['Boolean'];
+  acceptFriend: Scalars['Boolean'];
 }
 
 
@@ -229,6 +230,17 @@ interface MutationAddFriendArgs {
 
 interface MutationRemoveFriendArgs {
   friendId: Scalars['Int'];
+}
+
+
+interface MutationAcceptFriendArgs {
+  notificationId: Scalars['Int'];
+  invite: AcceptFriendInput;
+}
+
+interface AcceptFriendInput {
+  userId: Scalars['Int'];
+  fromId: Scalars['Int'];
 }
 
 interface FriendRequestInput {

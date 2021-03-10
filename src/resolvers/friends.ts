@@ -56,3 +56,26 @@ export const getFriends = async (
 
 	return friends;
 };
+
+export const acceptFriend = async (
+	parent: any,
+	args: Resolvers.MutationAcceptFriendArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	context.logger.info('Accepting friend request');
+
+	await Notifications.query()
+		.where({
+			id: args.notificationId
+		})
+		.patchAndFetch({ read: true });
+
+	await UserFriends.query()
+		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
+		.patchAndFetch({
+			friendsSince: new Date().toString(),
+			status: 'FRIENDS'
+		});
+
+	return true;
+};

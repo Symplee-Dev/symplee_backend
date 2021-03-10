@@ -235,6 +235,7 @@ interface MutationAddFriendArgs {
 
 interface MutationRemoveFriendArgs {
   friendId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
@@ -519,6 +520,7 @@ interface UserFriend {
   friend?: Maybe<User>;
   friendsSince: Scalars['String'];
   status: Scalars['String'];
+  sentBy: Scalars['Int'];
 }
 
 
@@ -719,7 +721,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   markNotificationAsRead?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationMarkNotificationAsReadArgs, 'notificationId'>>;
   toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
   addFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddFriendArgs, 'friendRequest'>>;
-  removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId'>>;
+  removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId' | 'userId'>>;
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
 };
@@ -868,6 +870,7 @@ export type UserFriendResolvers<ContextType = any, ParentType extends ResolversP
   friend?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   friendsSince?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  sentBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

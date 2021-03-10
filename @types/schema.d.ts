@@ -232,6 +232,7 @@ interface MutationAddFriendArgs {
 
 interface MutationRemoveFriendArgs {
   friendId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
@@ -516,6 +517,7 @@ interface UserFriend {
   friend?: Maybe<User>;
   friendsSince: Scalars['String'];
   status: Scalars['String'];
+  sentBy: Scalars['Int'];
 }
 
 } } export {};

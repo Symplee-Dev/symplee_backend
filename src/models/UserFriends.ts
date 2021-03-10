@@ -7,6 +7,7 @@ class UserFriends extends BaseModel {
 	friendId!: number;
 	friendsSince!: string;
 	status!: string;
+	sentBy!: number;
 
 	static get tableName() {
 		return 'user_friends';

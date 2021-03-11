@@ -30,6 +30,9 @@ interface Query {
   getNotifications: Array<Maybe<Notification>>;
   getFriends: Array<Maybe<UserFriend>>;
   searchGroups: Array<Maybe<ChatGroup>>;
+  getProfile: GetProfileReturn;
+  getAcceptedFriends: Array<Maybe<UserFriend>>;
+  getPendingFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -83,6 +86,28 @@ interface QueryGetFriendsArgs {
 
 interface QuerySearchGroupsArgs {
   queryString: Scalars['String'];
+}
+
+
+interface QueryGetProfileArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+
+interface QueryGetAcceptedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetPendingFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+interface GetProfileReturn {
+  __typename?: 'GetProfileReturn';
+  user: User;
+  relatedGroups: Array<Maybe<ChatGroup>>;
 }
 
 interface Mutation {

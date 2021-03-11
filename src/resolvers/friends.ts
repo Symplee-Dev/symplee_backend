@@ -1,6 +1,9 @@
 import UserFriends from '../models/UserFriends';
 import Notifications from '../models/Notifications';
 import User from '../models/User';
+import ChatGroup from '../models/ChatGroup';
+import UserGroups from '../models/UserGroups';
+import { QueryBuilder } from 'objection';
 
 export const addFriend = async (
 	parent: any,
@@ -125,4 +128,78 @@ export const declineFriend = async (
 		.delete();
 
 	return true;
+};
+
+export const getAcceptedFriends = async (
+	parent: any,
+	args: Resolvers.QueryGetAcceptedFriendsArgs,
+	context: Services.ServerContext
+): Promise<UserFriends[]> => {
+	context.logger.info('Getting accepted friends');
+
+	const friends = await UserFriends.query()
+		.where({
+			userId: args.userId,
+			status: 'FRIENDS'
+		})
+		.withGraphFetched({ friend: true });
+
+	return friends;
+};
+
+export const getPendingFriends = async (
+	parent: any,
+	args: Resolvers.QueryGetAcceptedFriendsArgs,
+	context: Services.ServerContext
+): Promise<UserFriends[]> => {
+	context.logger.info('Getting accepted friends');
+
+	const friends = await UserFriends.query()
+		.where({
+			userId: args.userId,
+			status: 'PENDING',
+			sentBy: args.userId
+		})
+		.withGraphFetched({ friend: true });
+
+	return friends;
+};
+
+export const getProfile = async (
+	parent: any,
+	args: Resolvers.QueryGetProfileArgs,
+	context: Services.ServerContext
+): Promise<Resolvers.GetProfileReturn> => {
+	context.logger.info('Getting profile for user ' + args.userId);
+
+	const profile = await User.query().where({ id: args.otherUserId }).first();
+	const userGroups = await UserGroups.query().where({ userId: args.userId });
+	const otherUserGroups = await UserGroups.query().where({
+		userId: args.otherUserId
+	});
+
+	const relatedGroups = userGroups.filter(g => {
+		const match = otherUserGroups.find(og => {
+			context.logger.info(og.chatGroupId, g.chatGroupId);
+			return og.chatGroupId === g.chatGroupId;
+		});
+
+		return match !== undefined;
+	});
+
+	const finalRelatedGroups: Promise<ChatGroup>[] = relatedGroups.map(
+		async g => {
+			const group = await ChatGroup.query()
+				.where({ id: g.chatGroupId })
+				.first();
+			return group;
+		}
+	);
+
+	await Promise.all(finalRelatedGroups);
+
+	return {
+		relatedGroups: (finalRelatedGroups as unknown) as ChatGroup[],
+		user: profile
+	};
 };

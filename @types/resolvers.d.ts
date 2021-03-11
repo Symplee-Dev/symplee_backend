@@ -535,6 +535,7 @@ interface Notification {
   from?: Maybe<User>;
   createdAt: Scalars['String'];
   read: Scalars['Boolean'];
+  code?: Maybe<Scalars['String']>;
 }
 
 interface UserFriend {
@@ -896,6 +897,7 @@ export type NotificationResolvers<ContextType = any, ParentType extends Resolver
   from?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   read?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

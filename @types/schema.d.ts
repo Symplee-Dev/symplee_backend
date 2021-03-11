@@ -532,6 +532,7 @@ interface Notification {
   from?: Maybe<User>;
   createdAt: Scalars['String'];
   read: Scalars['Boolean'];
+  code?: Maybe<Scalars['String']>;
 }
 
 interface UserFriend {

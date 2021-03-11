@@ -28,6 +28,7 @@ export const sendInvite = async (
 			description: `${newInvite.fromAuthor.username} has invited you to join ${newInvite.group.name}`,
 			type: 'INVITE',
 			fromId,
+			code: newInvite.code,
 			createdAt: new Date().toString()
 		});
 	}

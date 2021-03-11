@@ -288,6 +288,7 @@ type Notification {
 	from: User
 	createdAt: String!
 	read: Boolean!
+	code: String
 }
 
 type UserFriend {

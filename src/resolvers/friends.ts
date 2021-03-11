@@ -2,6 +2,8 @@ import UserFriends from '../models/UserFriends';
 import Notifications from '../models/Notifications';
 import User from '../models/User';
 import ChatGroup from '../models/ChatGroup';
+import UserGroups from '../models/UserGroups';
+import { QueryBuilder } from 'objection';
 
 export const addFriend = async (
 	parent: any,
@@ -171,14 +173,33 @@ export const getProfile = async (
 	context.logger.info('Getting profile for user ' + args.userId);
 
 	const profile = await User.query().where({ id: args.otherUserId }).first();
-	const userGroups = await ChatGroup.query().where({ userId: args.userId });
-	const otherUserGroups = await ChatGroup.query().where({
+	const userGroups = await UserGroups.query().where({ userId: args.userId });
+	const otherUserGroups = await UserGroups.query().where({
 		userId: args.otherUserId
 	});
+
 	const relatedGroups = userGroups.filter(g => {
-		const match = otherUserGroups.find(og => og.id === g.id);
+		const match = otherUserGroups.find(og => {
+			context.logger.info(og.chatGroupId, g.chatGroupId);
+			return og.chatGroupId === g.chatGroupId;
+		});
+
 		return match !== undefined;
 	});
 
-	return { relatedGroups, user: profile };
+	const finalRelatedGroups: Promise<ChatGroup>[] = relatedGroups.map(
+		async g => {
+			const group = await ChatGroup.query()
+				.where({ id: g.chatGroupId })
+				.first();
+			return group;
+		}
+	);
+
+	await Promise.all(finalRelatedGroups);
+
+	return {
+		relatedGroups: (finalRelatedGroups as unknown) as ChatGroup[],
+		user: profile
+	};
 };

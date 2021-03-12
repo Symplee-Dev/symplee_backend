@@ -31,8 +31,12 @@ import {
 	deleteFeedback
 } from './feedback';
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
-
-import { sendMessage, messageSent, getMessages } from './messageChats';
+import {
+	sendMessage,
+	messageSent,
+	getMessages,
+	editMessage
+} from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
 import { declineInvite } from './invites';
 import {
@@ -98,7 +102,8 @@ export const resolvers: Resolvers.Resolvers = {
 		acceptFriend,
 		declineFriend,
 		declineInvite,
-		deleteGroup
+		deleteGroup,
+		editMessage
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

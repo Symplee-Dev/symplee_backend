@@ -1,6 +1,9 @@
 import { pubsub } from '..';
 import { logger } from '../utils/logger';
 import MessagesChats from '../models/MessagesChats';
+import jwtDecode from 'jwt-decode';
+import { ApolloError, AuthenticationError } from 'apollo-server-errors';
+import UserGroups from '../models/UserGroups';
 const { withFilter } = require('apollo-server');
 
 const MESSAGE_LIST_LIMIT = 50;
@@ -55,4 +58,42 @@ export const getMessages = async (
 		.withGraphFetched({ author: true });
 
 	return messages;
+};
+
+export const editMessage = async (
+	parent: any,
+	args: Resolvers.MutationEditMessageArgs,
+	context: Services.ServerContext
+): Promise<MessagesChats> => {
+	const message = args.message;
+
+	const token = context.token;
+
+	if (!token) {
+		throw new AuthenticationError('User is not verified');
+	}
+
+	if (!message?.id || !message.body) {
+		throw new ApolloError('Nothing to edit', '500');
+	}
+
+	const decoded: { userId: number } = jwtDecode(token);
+
+	if (!decoded.userId) {
+		throw new AuthenticationError('User is not verified');
+	}
+
+	const foundMessage = await MessagesChats.query().findById(message.id);
+
+	if (!foundMessage) {
+		throw new ApolloError('Nothing to edit', '500');
+	}
+
+	if (decoded.userId !== foundMessage.authorId) {
+		throw new AuthenticationError('User is not authorized to edit');
+	}
+
+	return await MessagesChats.query().patchAndFetchById(message.id, {
+		body: message.body
+	});
 };

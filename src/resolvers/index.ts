@@ -8,7 +8,8 @@ import {
 	chatGroup,
 	updateChatGroup,
 	getMembers,
-	searchGroups
+	searchGroups,
+	deleteGroup
 } from './chatGroup';
 import {
 	latestChangeLog,
@@ -96,7 +97,8 @@ export const resolvers: Resolvers.Resolvers = {
 		removeFriend,
 		acceptFriend,
 		declineFriend,
-		declineInvite
+		declineInvite,
+		deleteGroup
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

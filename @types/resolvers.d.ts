@@ -141,6 +141,8 @@ interface Mutation {
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
+  deleteGroup: Scalars['Boolean'];
+  editMessage: MessagesChats;
 }
 
 
@@ -281,6 +283,16 @@ interface MutationDeclineFriendArgs {
   invite: DeclineFriendInput;
 }
 
+
+interface MutationDeleteGroupArgs {
+  chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationEditMessageArgs {
+  message?: Maybe<InEditMessage>;
+}
+
 interface DeclineFriendInput {
   userId: Scalars['Int'];
   fromId: Scalars['Int'];
@@ -294,6 +306,11 @@ interface AcceptFriendInput {
 interface FriendRequestInput {
   userId: Scalars['Int'];
   friendId: Scalars['Int'];
+}
+
+interface InEditMessage {
+  id: Scalars['Int'];
+  body: Scalars['String'];
 }
 
 interface Subscription {
@@ -648,6 +665,7 @@ export type ResolversTypes = {
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
+  InEditMessage: InEditMessage;
   Subscription: ResolverTypeWrapper<{}>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -690,6 +708,7 @@ export type ResolversParentTypes = {
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
+  InEditMessage: InEditMessage;
   Subscription: {};
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -776,6 +795,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId' | 'userId'>>;
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
+  deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'chatGroupId'>>;
+  editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, never>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

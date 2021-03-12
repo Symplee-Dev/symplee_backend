@@ -131,6 +131,7 @@ interface Mutation {
   sendMessage: Scalars['Boolean'];
   sendInvite: Scalars['String'];
   acceptInvite: Scalars['Boolean'];
+  declineInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
   toggleUserOnline: Scalars['Boolean'];
   addFriend: Scalars['Boolean'];
@@ -240,6 +241,11 @@ interface MutationAcceptInviteArgs {
 }
 
 
+interface MutationDeclineInviteArgs {
+  declineArgs: DeclineInviteInput;
+}
+
+
 interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
 }
@@ -311,6 +317,12 @@ interface SendInviteInput {
 }
 
 interface AcceptInviteInput {
+  userId: Scalars['Int'];
+  code: Scalars['String'];
+  notificationId: Scalars['Int'];
+}
+
+interface DeclineInviteInput {
   userId: Scalars['Int'];
   code: Scalars['String'];
   notificationId: Scalars['Int'];

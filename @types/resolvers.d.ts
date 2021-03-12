@@ -134,6 +134,7 @@ interface Mutation {
   sendMessage: Scalars['Boolean'];
   sendInvite: Scalars['String'];
   acceptInvite: Scalars['Boolean'];
+  declineInvite: Scalars['Boolean'];
   markNotificationAsRead: Scalars['Boolean'];
   toggleUserOnline: Scalars['Boolean'];
   addFriend: Scalars['Boolean'];
@@ -243,6 +244,11 @@ interface MutationAcceptInviteArgs {
 }
 
 
+interface MutationDeclineInviteArgs {
+  declineArgs: DeclineInviteInput;
+}
+
+
 interface MutationMarkNotificationAsReadArgs {
   notificationId: Scalars['Int'];
 }
@@ -314,6 +320,12 @@ interface SendInviteInput {
 }
 
 interface AcceptInviteInput {
+  userId: Scalars['Int'];
+  code: Scalars['String'];
+  notificationId: Scalars['Int'];
+}
+
+interface DeclineInviteInput {
   userId: Scalars['Int'];
   code: Scalars['String'];
   notificationId: Scalars['Int'];
@@ -639,6 +651,7 @@ export type ResolversTypes = {
   Subscription: ResolverTypeWrapper<{}>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
+  DeclineInviteInput: DeclineInviteInput;
   NewMessage: NewMessage;
   AdminInviteInput: AdminInviteInput;
   UpdateChatGroupInput: UpdateChatGroupInput;
@@ -680,6 +693,7 @@ export type ResolversParentTypes = {
   Subscription: {};
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
+  DeclineInviteInput: DeclineInviteInput;
   NewMessage: NewMessage;
   AdminInviteInput: AdminInviteInput;
   UpdateChatGroupInput: UpdateChatGroupInput;
@@ -755,6 +769,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendMessageArgs, 'message'>>;
   sendInvite?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationSendInviteArgs, 'invite'>>;
   acceptInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptInviteArgs, 'acceptArgs'>>;
+  declineInvite?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineInviteArgs, 'declineArgs'>>;
   markNotificationAsRead?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationMarkNotificationAsReadArgs, 'notificationId'>>;
   toggleUserOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationToggleUserOnlineArgs, never>>;
   addFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddFriendArgs, 'friendRequest'>>;

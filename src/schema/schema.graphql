@@ -45,6 +45,7 @@ type Mutation {
 	sendMessage(message: NewMessage!): Boolean!
 	sendInvite(invite: SendInviteInput!): String!
 	acceptInvite(acceptArgs: AcceptInviteInput!): Boolean!
+	declineInvite(declineArgs: DeclineInviteInput!): Boolean!
 	markNotificationAsRead(notificationId: Int!): Boolean!
 	toggleUserOnline(status: Boolean): Boolean!
 	addFriend(friendRequest: FriendRequestInput!): Boolean!
@@ -81,6 +82,12 @@ input SendInviteInput {
 }
 
 input AcceptInviteInput {
+	userId: Int!
+	code: String!
+	notificationId: Int!
+}
+
+input DeclineInviteInput {
 	userId: Int!
 	code: String!
 	notificationId: Int!
@@ -288,6 +295,7 @@ type Notification {
 	from: User
 	createdAt: String!
 	read: Boolean!
+	code: String
 }
 
 type UserFriend {

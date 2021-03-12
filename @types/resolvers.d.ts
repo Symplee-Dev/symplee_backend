@@ -208,12 +208,13 @@ interface MutationMarkNotificationAsReadArgs {
 
 interface MutationToggleUserOnlineArgs {
   status?: Maybe<Scalars['Boolean']>;
+  chatId?: Maybe<Scalars['Int']>;
 }
 
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
-  activeChatUsers?: Maybe<Array<User>>;
+  activeChatUsers?: Maybe<ActiveUserReturn>;
 }
 
 
@@ -223,8 +224,13 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
-  chatId?: Maybe<Scalars['Int']>;
-  users?: Maybe<Array<Scalars['Int']>>;
+  chatId: Scalars['Int'];
+}
+
+interface ActiveUserReturn {
+  __typename?: 'ActiveUserReturn';
+  userId: Scalars['Int'];
+  isOnline: Scalars['Boolean'];
 }
 
 interface SendInviteInput {
@@ -542,6 +548,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
   Subscription: ResolverTypeWrapper<{}>;
+  ActiveUserReturn: ResolverTypeWrapper<ActiveUserReturn>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
   NewMessage: NewMessage;
@@ -578,6 +585,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Mutation: {};
   Subscription: {};
+  ActiveUserReturn: ActiveUserReturn;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
   NewMessage: NewMessage;
@@ -649,7 +657,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messageSent?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatId'>>;
-  activeChatUsers?: SubscriptionResolver<Maybe<Array<ResolversTypes['User']>>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, never>>;
+  activeChatUsers?: SubscriptionResolver<Maybe<ResolversTypes['ActiveUserReturn']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
+};
+
+export type ActiveUserReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['ActiveUserReturn'] = ResolversParentTypes['ActiveUserReturn']> = {
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  isOnline?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
@@ -788,6 +802,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  ActiveUserReturn?: ActiveUserReturnResolvers<ContextType>;
   AppFeedback?: AppFeedbackResolvers<ContextType>;
   Admin?: AdminResolvers<ContextType>;
   NewAdmin?: NewAdminResolvers<ContextType>;

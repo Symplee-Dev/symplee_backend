@@ -15,17 +15,21 @@ export const activeChatUsers = {
 	subscribe: withFilter(
 		() => pubsub.asyncIterator('ACTIVE_CHAT_USERS'),
 		async (
-			payload: { user: User },
+			payload: {
+				user: { userId: number; isOnline: boolean; chatId: number };
+			},
 			variables: Resolvers.SubscriptionActiveChatUsersArgs
 		) => {
 			logger.info('payload in filter' + payload);
 			logger.info('variable in filter' + variables);
 
-			return payload.user.is_online;
+			return variables.chatId === payload.user.chatId
+				? payload.user.isOnline
+				: false;
 		}
 	),
-	resolve: (value: any) => {
+	resolve: (value: { userId: number; isOnline: boolean; chatId: number }) => {
 		logger.info('value from resolver' + value);
-		return [value];
+		return { userId: value.userId, isOnline: value.isOnline };
 	}
 };

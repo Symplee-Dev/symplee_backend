@@ -124,6 +124,12 @@ export const toggleUserOnline = async (
 	const user = await User.query().patchAndFetchById(tokenId.userId, {
 		is_online: args.status ? args.status : false
 	});
-	pubsub.publish('ACTIVE_CHAT_USERS', { user });
+
+	if (args.chatId) {
+		pubsub.publish('ACTIVE_CHAT_USERS', {
+			user: { id: user.id, isOnline: user.is_online, chatId: args.chatId }
+		});
+	}
+
 	return user.is_online;
 };

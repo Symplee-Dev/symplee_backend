@@ -1211,6 +1211,18 @@
                 "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
+              },
+              {
+                "name": "chatId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
               }
             ],
             "type": {
@@ -1277,28 +1289,12 @@
                 "name": "chatId",
                 "description": null,
                 "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "users",
-                "description": null,
-                "type": {
-                  "kind": "LIST",
+                  "kind": "NON_NULL",
                   "name": null,
                   "ofType": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Int",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
                   }
                 },
                 "defaultValue": null,
@@ -1307,16 +1303,51 @@
               }
             ],
             "type": {
-              "kind": "LIST",
+              "kind": "OBJECT",
+              "name": "ActiveUserReturn",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ActiveUserReturn",
+        "description": null,
+        "fields": [
+          {
+            "name": "userId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "User",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isOnline",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
               }
             },
             "isDeprecated": false,

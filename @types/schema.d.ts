@@ -205,12 +205,13 @@ interface MutationMarkNotificationAsReadArgs {
 
 interface MutationToggleUserOnlineArgs {
   status?: Maybe<Scalars['Boolean']>;
+  chatId?: Maybe<Scalars['Int']>;
 }
 
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
-  activeChatUsers?: Maybe<Array<User>>;
+  activeChatUsers?: Maybe<ActiveUserReturn>;
 }
 
 
@@ -220,8 +221,13 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
-  chatId?: Maybe<Scalars['Int']>;
-  users?: Maybe<Array<Scalars['Int']>>;
+  chatId: Scalars['Int'];
+}
+
+interface ActiveUserReturn {
+  __typename?: 'ActiveUserReturn';
+  userId: Scalars['Int'];
+  isOnline: Scalars['Boolean'];
 }
 
 interface SendInviteInput {

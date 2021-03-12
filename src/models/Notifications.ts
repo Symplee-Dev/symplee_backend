@@ -12,6 +12,7 @@ class Notifications extends BaseModel {
 	from?: User;
 	createdAt!: string;
 	read!: boolean;
+	code?: string;
 
 	static get tableName() {
 		return 'notifications';

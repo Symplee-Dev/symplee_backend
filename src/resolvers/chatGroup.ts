@@ -1,7 +1,4 @@
-import { withFilter } from 'graphql-subscriptions';
-import { pubsub } from '..';
 import ChatGroup from '../models/ChatGroup';
-import UserGroups from '../models/UserGroups';
 
 export const chatGroup = async (
 	parent: any,

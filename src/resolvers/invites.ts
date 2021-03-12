@@ -2,6 +2,7 @@ import GroupInvites from '../models/GroupInvites';
 import { v4 } from 'uuid';
 import UserGroups from '../models/UserGroups';
 import Notifications from '../models/Notifications';
+import ChatGroup from '../models/ChatGroup';
 
 export const sendInvite = async (
 	parent: any,
@@ -28,6 +29,7 @@ export const sendInvite = async (
 			description: `${newInvite.fromAuthor.username} has invited you to join ${newInvite.group.name}`,
 			type: 'INVITE',
 			fromId,
+			code: newInvite.code,
 			createdAt: new Date().toString()
 		});
 	}
@@ -87,6 +89,22 @@ export const acceptInvite = async (
 	}
 
 	return false;
+};
+
+export const declineInvite = async (
+	parent: any,
+	args: Resolvers.MutationDeclineInviteArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Declining invite');
+
+	const { code, userId, notificationId } = args.declineArgs;
+
+	await Notifications.query().patchAndFetchById(notificationId, {
+		read: true
+	});
+
+	return true;
 };
 
 export const markNotificationAsRead = async (

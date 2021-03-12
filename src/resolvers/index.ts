@@ -4,7 +4,7 @@ import { login } from './login';
 import { userResolvers, user, updateUser, toggleUserOnline } from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
-import { chatGroup, updateChatGroup, getMembers, activeChatUsers } from './chatGroup';
+import { chatGroup, updateChatGroup, getMembers } from './chatGroup';
 import {
 	latestChangeLog,
 	changeLogById,
@@ -16,7 +16,7 @@ import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
 import { hasChat } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
-
+import { activeChatUsers } from './getActiveUsers';
 import {
 	getFeedback,
 	feedbackById,

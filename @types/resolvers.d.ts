@@ -213,7 +213,7 @@ interface MutationToggleUserOnlineArgs {
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
-  activeChatUsers: Array<User>;
+  activeChatUsers?: Maybe<Array<User>>;
 }
 
 
@@ -223,7 +223,8 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
-  chatId: Scalars['Int'];
+  chatId?: Maybe<Scalars['Int']>;
+  users?: Maybe<Array<Scalars['Int']>>;
 }
 
 interface SendInviteInput {
@@ -648,7 +649,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messageSent?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatId'>>;
-  activeChatUsers?: SubscriptionResolver<Array<ResolversTypes['User']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
+  activeChatUsers?: SubscriptionResolver<Maybe<Array<ResolversTypes['User']>>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, never>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

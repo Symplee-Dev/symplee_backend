@@ -40,8 +40,8 @@ type Mutation {
 }
 
 type Subscription {
-	messageSent(chatId: Int!): MessagesChats!,
-	activeChatUsers(chatId: Int!): [User!]!
+	messageSent(chatId: Int!): MessagesChats!
+	activeChatUsers(chatId: Int, users: [Int!]): [User!]
 }
 
 input SendInviteInput {
@@ -205,7 +205,7 @@ type User {
 	chatGroups: [ChatGroup!]!
 	createdAt: String!
 	verified: Boolean!
-	avatar: String,
+	avatar: String
 	is_online: Boolean!
 }
 

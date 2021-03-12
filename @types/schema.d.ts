@@ -210,7 +210,7 @@ interface MutationToggleUserOnlineArgs {
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
-  activeChatUsers: Array<User>;
+  activeChatUsers?: Maybe<Array<User>>;
 }
 
 
@@ -220,7 +220,8 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
-  chatId: Scalars['Int'];
+  chatId?: Maybe<Scalars['Int']>;
+  users?: Maybe<Array<Scalars['Int']>>;
 }
 
 interface SendInviteInput {

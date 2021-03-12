@@ -57,17 +57,3 @@ export const getMembers = async (
 	return members.members;
 };
 
-//TODO: Finish Subscription: filter ChatUsers for 
-export const activeChatUsers = {
-	subscribe: withFilter(
-		() => pubsub.asyncIterator('ACTIVE_CHAT_USERS'),
-		(
-			payload: {chatId: number; user: User},
-			variables: Resolvers.SubscriptionActiveChatUsersArgs
-		) => {
-			logger.info(payload);
-			logger.info(variables);
-			const usersInChat =
-		}
-	)
-}

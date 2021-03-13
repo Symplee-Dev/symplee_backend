@@ -20,7 +20,12 @@ import {
 } from './changeLog';
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
-import { hasChat, deleteChatChannel } from './chat';
+import {
+	hasChat,
+	deleteChatChannel,
+	userTypingSubscription,
+	userTyping
+} from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
 
 import {
@@ -110,7 +115,8 @@ export const resolvers: Resolvers.Resolvers = {
 		deleteGroup,
 		editMessage,
 		deleteMessage,
-		deleteChatChannel
+		deleteChatChannel,
+		userTyping
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any
@@ -118,6 +124,7 @@ export const resolvers: Resolvers.Resolvers = {
 	Subscription: {
 		messageSent,
 		messageDeleted,
-		messageEdited
+		messageEdited,
+		userTyping: userTypingSubscription
 	}
 };

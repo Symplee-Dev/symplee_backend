@@ -143,6 +143,7 @@ interface Mutation {
   deleteChatChannel: Scalars['Boolean'];
   editMessage: MessagesChats;
   deleteMessage: Scalars['Boolean'];
+  userTyping: Scalars['Boolean'];
 }
 
 
@@ -309,6 +310,13 @@ interface MutationDeleteMessageArgs {
   messageId: Scalars['Int'];
 }
 
+
+interface MutationUserTypingArgs {
+  chatId: Scalars['Int'];
+  userId: Scalars['Int'];
+  username: Scalars['String'];
+}
+
 interface DeclineFriendInput {
   userId: Scalars['Int'];
   fromId: Scalars['Int'];
@@ -335,6 +343,7 @@ interface Subscription {
   activeChatUsers: Array<User>;
   messageEdited: MessagesChats;
   messageDeleted: Scalars['Int'];
+  userTyping?: Maybe<UserTypingReturn>;
 }
 
 
@@ -355,6 +364,17 @@ interface SubscriptionMessageEditedArgs {
 
 interface SubscriptionMessageDeletedArgs {
   chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionUserTypingArgs {
+  chatId: Scalars['Int'];
+}
+
+interface UserTypingReturn {
+  __typename?: 'UserTypingReturn';
+  userId: Scalars['Int'];
+  username: Scalars['String'];
 }
 
 interface SendInviteInput {

@@ -57,6 +57,7 @@ type Mutation {
 	deleteChatChannel(chatChannelId: Int!): Boolean!
 	editMessage(message: InEditMessage!): MessagesChats!
 	deleteMessage(messageId: Int!): Boolean!
+	userTyping(chatId: Int!, userId: Int!, username: String!): Boolean!
 }
 
 input DeclineFriendInput {
@@ -84,6 +85,12 @@ type Subscription {
 	activeChatUsers(chatId: Int!): [User!]!
 	messageEdited(chatId: Int!): MessagesChats!
 	messageDeleted(chatId: Int!): Int!
+	userTyping(chatId: Int!): UserTypingReturn
+}
+
+type UserTypingReturn {
+	userId: Int!
+	username: String!
 }
 
 input SendInviteInput {

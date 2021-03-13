@@ -52,6 +52,10 @@ type Mutation {
 	removeFriend(friendId: Int!, userId: Int!): Boolean!
 	acceptFriend(notificationId: Int!, invite: AcceptFriendInput!): Boolean!
 	declineFriend(notificationId: Int!, invite: DeclineFriendInput!): Boolean!
+	deleteGroup(chatGroupId: Int!): Boolean!
+	deleteChatChannel(chatChannelId: Int!): Boolean!
+	editMessage(message: InEditMessage!): MessagesChats!
+	deleteMessage(messageId: Int!): Boolean!
 }
 
 input DeclineFriendInput {
@@ -69,9 +73,16 @@ input FriendRequestInput {
 	friendId: Int!
 }
 
+input InEditMessage {
+	id: Int!
+	body: String!
+}
+
 type Subscription {
 	messageSent(chatId: Int!): MessagesChats!
 	activeChatUsers(chatId: Int!): [User!]!
+	messageEdited(chatId: Int!): MessagesChats!
+	messageDeleted(chatId: Int!): Int!
 }
 
 input SendInviteInput {

@@ -8,7 +8,8 @@ import {
 	chatGroup,
 	updateChatGroup,
 	getMembers,
-	searchGroups
+	searchGroups,
+	deleteGroup
 } from './chatGroup';
 import {
 	latestChangeLog,
@@ -19,7 +20,7 @@ import {
 } from './changeLog';
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
-import { hasChat } from './chat';
+import { hasChat, deleteChatChannel } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
 
 import {
@@ -30,8 +31,15 @@ import {
 	deleteFeedback
 } from './feedback';
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
-
-import { sendMessage, messageSent, getMessages } from './messageChats';
+import {
+	sendMessage,
+	messageSent,
+	getMessages,
+	editMessage,
+	deleteMessage,
+	messageEdited,
+	messageDeleted
+} from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
 import { declineInvite } from './invites';
 import {
@@ -96,12 +104,18 @@ export const resolvers: Resolvers.Resolvers = {
 		removeFriend,
 		acceptFriend,
 		declineFriend,
-		declineInvite
+		declineInvite,
+		deleteGroup,
+		editMessage,
+		deleteMessage,
+		deleteChatChannel
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any
 	},
 	Subscription: {
-		messageSent
+		messageSent,
+		messageDeleted,
+		messageEdited
 	}
 };

@@ -141,6 +141,7 @@ interface Mutation {
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
+  joinGroup: Scalars['Boolean'];
 }
 
 
@@ -279,6 +280,12 @@ interface MutationAcceptFriendArgs {
 interface MutationDeclineFriendArgs {
   notificationId: Scalars['Int'];
   invite: DeclineFriendInput;
+}
+
+
+interface MutationJoinGroupArgs {
+  groupId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 interface DeclineFriendInput {
@@ -776,6 +783,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId' | 'userId'>>;
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
+  joinGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationJoinGroupArgs, 'groupId' | 'userId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

@@ -33,7 +33,8 @@ import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
 
 import { sendMessage, messageSent, getMessages } from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
-import { declineInvite } from './invites';
+import { declineInvite, joinGroup } from './invites';
+
 import {
 	getFriends,
 	addFriend,
@@ -96,7 +97,8 @@ export const resolvers: Resolvers.Resolvers = {
 		removeFriend,
 		acceptFriend,
 		declineFriend,
-		declineInvite
+		declineInvite,
+		joinGroup
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

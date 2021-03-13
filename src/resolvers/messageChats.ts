@@ -1,6 +1,10 @@
 import { pubsub } from '..';
 import { logger } from '../utils/logger';
 import MessagesChats from '../models/MessagesChats';
+import jwtDecode from 'jwt-decode';
+import { ApolloError, AuthenticationError } from 'apollo-server-errors';
+import UserGroups from '../models/UserGroups';
+import Chat from '../models/Chat';
 const { withFilter } = require('apollo-server');
 
 const MESSAGE_LIST_LIMIT = 50;
@@ -11,6 +15,12 @@ export const sendMessage = async (
 	context: Services.ServerContext
 ): Promise<boolean> => {
 	context.logger.info('Sending message');
+
+	const availableChat = await Chat.query().findById(args.message.chatId);
+
+	if (!availableChat) {
+		throw new ApolloError('No available chat room', '404');
+	}
 
 	const message = await MessagesChats.query()
 		.insertAndFetch({
@@ -55,4 +65,128 @@ export const getMessages = async (
 		.withGraphFetched({ author: true });
 
 	return messages;
+};
+
+export const editMessage = async (
+	parent: any,
+	args: Resolvers.MutationEditMessageArgs,
+	context: Services.ServerContext
+): Promise<MessagesChats> => {
+	const message = args.message;
+
+	const token = context.token;
+
+	if (!token) {
+		throw new AuthenticationError('User is not verified');
+	}
+
+	if (!message?.id || !message.body) {
+		throw new ApolloError('Nothing to edit', '500');
+	}
+
+	const decoded: { userId: number } = jwtDecode(token);
+
+	if (!decoded.userId) {
+		throw new AuthenticationError('User is not verified');
+	}
+
+	const foundMessage = await MessagesChats.query().findById(message.id);
+
+	if (!foundMessage) {
+		throw new ApolloError('Nothing to edit', '500');
+	}
+
+	if (decoded.userId !== foundMessage.authorId) {
+		throw new AuthenticationError('User is not authorized to edit');
+	}
+
+	const newMessage = await MessagesChats.query().patchAndFetchById(
+		message.id,
+		{
+			body: message.body
+		}
+	);
+
+	pubsub.publish('MESSAGE_EDITED', {
+		chatId: newMessage.chatId,
+		message: newMessage
+	});
+
+	return newMessage;
+};
+
+export const deleteMessage = async (
+	parent: any,
+	args: Resolvers.MutationDeleteMessageArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	const id = args.messageId;
+	const token = context.token;
+
+	if (!id) {
+		throw new ApolloError('Nothing to delete', '500');
+	}
+
+	if (!token) {
+		throw new AuthenticationError('User is not authenticated');
+	}
+
+	const decoded: { userId: number } = jwtDecode(token);
+
+	if (!decoded.userId) {
+		throw new AuthenticationError('User is not authenticated');
+	}
+
+	const foundMessage = await MessagesChats.query().findById(id);
+
+	if (!foundMessage) {
+		throw new ApolloError('Nothing to delete', '500');
+	}
+
+	if (foundMessage.authorId !== decoded.userId) {
+		throw new AuthenticationError(
+			'User is not authorized to delete this message'
+		);
+	}
+
+	try {
+		await MessagesChats.query().deleteById(id);
+		pubsub.publish('MESSAGE_DELETED', {
+			chatId: foundMessage.chatId,
+			messageId: foundMessage.id
+		});
+		return true;
+	} catch (error) {
+		throw new ApolloError('Something wrong happened', '500');
+	}
+};
+
+export const messageEdited = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('MESSAGE_EDITED'),
+		(
+			payload: { chatId: number; message: MessagesChats },
+			variable: Resolvers.SubscriptionMessageEditedArgs
+		) => {
+			return payload.chatId === variable.chatId;
+		}
+	),
+	resolve: (value: { chatId: number; message: MessagesChats }) => {
+		return value.message;
+	}
+};
+
+export const messageDeleted = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('MESSAGE_DELETED'),
+		(
+			payload: { chatId: number; messageId: number },
+			variable: Resolvers.SubscriptionMessageDeletedArgs
+		) => {
+			return payload.chatId === variable.chatId;
+		}
+	),
+	resolve: (value: { chatId: number; messageId: number }) => {
+		return value.messageId;
+	}
 };

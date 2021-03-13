@@ -139,6 +139,10 @@ interface Mutation {
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
   joinGroup: Scalars['Boolean'];
+  deleteGroup: Scalars['Boolean'];
+  deleteChatChannel: Scalars['Boolean'];
+  editMessage: MessagesChats;
+  deleteMessage: Scalars['Boolean'];
 }
 
 
@@ -285,6 +289,26 @@ interface MutationJoinGroupArgs {
   userId: Scalars['Int'];
 }
 
+
+interface MutationDeleteGroupArgs {
+  chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationDeleteChatChannelArgs {
+  chatChannelId: Scalars['Int'];
+}
+
+
+interface MutationEditMessageArgs {
+  message: InEditMessage;
+}
+
+
+interface MutationDeleteMessageArgs {
+  messageId: Scalars['Int'];
+}
+
 interface DeclineFriendInput {
   userId: Scalars['Int'];
   fromId: Scalars['Int'];
@@ -300,10 +324,17 @@ interface FriendRequestInput {
   friendId: Scalars['Int'];
 }
 
+interface InEditMessage {
+  id: Scalars['Int'];
+  body: Scalars['String'];
+}
+
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
   activeChatUsers: Array<User>;
+  messageEdited: MessagesChats;
+  messageDeleted: Scalars['Int'];
 }
 
 
@@ -313,6 +344,16 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageEditedArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageDeletedArgs {
   chatId: Scalars['Int'];
 }
 

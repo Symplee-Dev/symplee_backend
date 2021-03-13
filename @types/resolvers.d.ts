@@ -142,6 +142,10 @@ interface Mutation {
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
   joinGroup: Scalars['Boolean'];
+  deleteGroup: Scalars['Boolean'];
+  deleteChatChannel: Scalars['Boolean'];
+  editMessage: MessagesChats;
+  deleteMessage: Scalars['Boolean'];
 }
 
 
@@ -288,6 +292,26 @@ interface MutationJoinGroupArgs {
   userId: Scalars['Int'];
 }
 
+
+interface MutationDeleteGroupArgs {
+  chatGroupId: Scalars['Int'];
+}
+
+
+interface MutationDeleteChatChannelArgs {
+  chatChannelId: Scalars['Int'];
+}
+
+
+interface MutationEditMessageArgs {
+  message: InEditMessage;
+}
+
+
+interface MutationDeleteMessageArgs {
+  messageId: Scalars['Int'];
+}
+
 interface DeclineFriendInput {
   userId: Scalars['Int'];
   fromId: Scalars['Int'];
@@ -303,10 +327,17 @@ interface FriendRequestInput {
   friendId: Scalars['Int'];
 }
 
+interface InEditMessage {
+  id: Scalars['Int'];
+  body: Scalars['String'];
+}
+
 interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
   activeChatUsers: Array<User>;
+  messageEdited: MessagesChats;
+  messageDeleted: Scalars['Int'];
 }
 
 
@@ -316,6 +347,16 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageEditedArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageDeletedArgs {
   chatId: Scalars['Int'];
 }
 
@@ -655,6 +696,7 @@ export type ResolversTypes = {
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
+  InEditMessage: InEditMessage;
   Subscription: ResolverTypeWrapper<{}>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -697,6 +739,7 @@ export type ResolversParentTypes = {
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
+  InEditMessage: InEditMessage;
   Subscription: {};
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
@@ -784,11 +827,17 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
   joinGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationJoinGroupArgs, 'groupId' | 'userId'>>;
+  deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'chatGroupId'>>;
+  deleteChatChannel?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteChatChannelArgs, 'chatChannelId'>>;
+  editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;
+  deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messageSent?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatId'>>;
   activeChatUsers?: SubscriptionResolver<Array<ResolversTypes['User']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
+  messageEdited?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageEdited", ParentType, ContextType, RequireFields<SubscriptionMessageEditedArgs, 'chatId'>>;
+  messageDeleted?: SubscriptionResolver<ResolversTypes['Int'], "messageDeleted", ParentType, ContextType, RequireFields<SubscriptionMessageDeletedArgs, 'chatId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

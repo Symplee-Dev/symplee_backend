@@ -19,7 +19,7 @@ class MessagesChats extends BaseModel {
 			relation: BaseModel.HasOneRelation,
 			modelClass: User,
 			join: {
-				from: 'messages_chats.authorId',
+				from: 'messages_chats.author_id',
 				to: 'users.id'
 			}
 		}

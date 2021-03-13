@@ -1,4 +1,8 @@
+import { ApolloError, AuthenticationError } from 'apollo-server-errors';
+import jwtDecode from 'jwt-decode';
+import Chat from '../models/Chat';
 import ChatGroup from '../models/ChatGroup';
+import UserGroups from '../models/UserGroups';
 
 export const chatGroup = async (
 	parent: any,
@@ -67,4 +71,46 @@ export const searchGroups = async (
 	);
 
 	return groupsFiltered;
+};
+
+export const deleteGroup = async (
+	parent: any,
+	args: Resolvers.MutationDeleteGroupArgs,
+	context: Services.ServerContext
+) => {
+	const id = args.chatGroupId;
+	context.logger.info('Deleting Group ID ' + id);
+
+	const token = context.token;
+
+	if (!id) {
+		throw new ApolloError('No group to delete', '404');
+	}
+
+	if (!token || !context.authenticated) {
+		throw new AuthenticationError('User not authenticated');
+	}
+
+	const decode: any = jwtDecode(token);
+
+	const group = await ChatGroup.query().findById(id);
+
+	if (!group) {
+		throw new ApolloError('No Group found', '500');
+	}
+
+	console.log(decode);
+
+	if (group.createdBy !== decode.userId) {
+		throw new AuthenticationError('User not authenticated');
+	}
+
+	try {
+		await UserGroups.query().delete().where('chatGroupId', id);
+		await Chat.query().delete().where('chatGroupId', id);
+		await ChatGroup.query().deleteById(id);
+		return true;
+	} catch (error) {
+		throw new ApolloError(error, '500');
+	}
 };

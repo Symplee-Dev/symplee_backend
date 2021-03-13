@@ -41,7 +41,8 @@ import {
 	messageDeleted
 } from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
-import { declineInvite } from './invites';
+import { declineInvite, joinGroup } from './invites';
+
 import {
 	getFriends,
 	addFriend,
@@ -105,6 +106,7 @@ export const resolvers: Resolvers.Resolvers = {
 		acceptFriend,
 		declineFriend,
 		declineInvite,
+		joinGroup,
 		deleteGroup,
 		editMessage,
 		deleteMessage,

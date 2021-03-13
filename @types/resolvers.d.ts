@@ -141,6 +141,7 @@ interface Mutation {
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
+  joinGroup: Scalars['Boolean'];
   deleteGroup: Scalars['Boolean'];
   deleteChatChannel: Scalars['Boolean'];
   editMessage: MessagesChats;
@@ -283,6 +284,12 @@ interface MutationAcceptFriendArgs {
 interface MutationDeclineFriendArgs {
   notificationId: Scalars['Int'];
   invite: DeclineFriendInput;
+}
+
+
+interface MutationJoinGroupArgs {
+  groupId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 
@@ -819,6 +826,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   removeFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationRemoveFriendArgs, 'friendId' | 'userId'>>;
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
+  joinGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationJoinGroupArgs, 'groupId' | 'userId'>>;
   deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'chatGroupId'>>;
   deleteChatChannel?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteChatChannelArgs, 'chatChannelId'>>;
   editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;

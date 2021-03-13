@@ -159,3 +159,25 @@ export const getNotifications = async (
 
 	return notifications;
 };
+
+export const joinGroup = async (
+	parent: any,
+	args: Resolvers.MutationJoinGroupArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Starting join group');
+
+	const { userId, groupId } = args;
+
+	const createdRelation = await UserGroups.query().insertAndFetch({
+		userId: userId,
+		chatGroupId: groupId
+	});
+
+	if (!createdRelation) {
+		context.logger.err('Failed to accept join group');
+		throw new Error('Could not accept invite. Try again later.');
+	}
+
+	return true;
+};

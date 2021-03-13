@@ -138,6 +138,7 @@ interface Mutation {
   removeFriend: Scalars['Boolean'];
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
+  joinGroup: Scalars['Boolean'];
   deleteGroup: Scalars['Boolean'];
   deleteChatChannel: Scalars['Boolean'];
   editMessage: MessagesChats;
@@ -280,6 +281,12 @@ interface MutationAcceptFriendArgs {
 interface MutationDeclineFriendArgs {
   notificationId: Scalars['Int'];
   invite: DeclineFriendInput;
+}
+
+
+interface MutationJoinGroupArgs {
+  groupId: Scalars['Int'];
+  userId: Scalars['Int'];
 }
 
 

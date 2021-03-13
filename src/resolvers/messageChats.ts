@@ -4,6 +4,7 @@ import MessagesChats from '../models/MessagesChats';
 import jwtDecode from 'jwt-decode';
 import { ApolloError, AuthenticationError } from 'apollo-server-errors';
 import UserGroups from '../models/UserGroups';
+import Chat from '../models/Chat';
 const { withFilter } = require('apollo-server');
 
 const MESSAGE_LIST_LIMIT = 50;
@@ -14,6 +15,12 @@ export const sendMessage = async (
 	context: Services.ServerContext
 ): Promise<boolean> => {
 	context.logger.info('Sending message');
+
+	const availableChat = await Chat.query().findById(args.message.chatId);
+
+	if (!availableChat) {
+		throw new ApolloError('No available chat room', '404');
+	}
 
 	const message = await MessagesChats.query()
 		.insertAndFetch({

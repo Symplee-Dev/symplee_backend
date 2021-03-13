@@ -97,3 +97,45 @@ export const editMessage = async (
 		body: message.body
 	});
 };
+
+export const deleteMessage = async (
+	parent: any,
+	args: Resolvers.MutationDeleteMessageArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	const id = args.messageId;
+	const token = context.token;
+
+	if (!id) {
+		throw new ApolloError('Nothing to delete', '500');
+	}
+
+	if (!token) {
+		throw new AuthenticationError('User is not authenticated');
+	}
+
+	const decoded: { userId: number } = jwtDecode(token);
+
+	if (!decoded.userId) {
+		throw new AuthenticationError('User is not authenticated');
+	}
+
+	const foundMessage = await MessagesChats.query().findById(id);
+
+	if (!foundMessage) {
+		throw new ApolloError('Nothing to delete', '500');
+	}
+
+	if (foundMessage.authorId !== decoded.userId) {
+		throw new AuthenticationError(
+			'User is not authorized to delete this message'
+		);
+	}
+
+	try {
+		await MessagesChats.query().deleteById(id);
+		return true;
+	} catch (error) {
+		throw new ApolloError('Something wrong happened', '500');
+	}
+};

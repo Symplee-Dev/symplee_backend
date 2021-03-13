@@ -20,7 +20,7 @@ import {
 } from './changeLog';
 import { serverStatus } from './serverStatus';
 import { createChat } from './createChat';
-import { hasChat } from './chat';
+import { hasChat, deleteChatChannel } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
 
 import {
@@ -35,7 +35,8 @@ import {
 	sendMessage,
 	messageSent,
 	getMessages,
-	editMessage
+	editMessage,
+	deleteMessage
 } from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
 import { declineInvite } from './invites';
@@ -103,7 +104,9 @@ export const resolvers: Resolvers.Resolvers = {
 		declineFriend,
 		declineInvite,
 		deleteGroup,
-		editMessage
+		editMessage,
+		deleteMessage,
+		deleteChatChannel
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

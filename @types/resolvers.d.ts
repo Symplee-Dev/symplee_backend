@@ -142,7 +142,9 @@ interface Mutation {
   acceptFriend: Scalars['Boolean'];
   declineFriend: Scalars['Boolean'];
   deleteGroup: Scalars['Boolean'];
+  deleteChatChannel: Scalars['Boolean'];
   editMessage: MessagesChats;
+  deleteMessage: Scalars['Boolean'];
 }
 
 
@@ -289,8 +291,18 @@ interface MutationDeleteGroupArgs {
 }
 
 
+interface MutationDeleteChatChannelArgs {
+  chatChannelId: Scalars['Int'];
+}
+
+
 interface MutationEditMessageArgs {
-  message?: Maybe<InEditMessage>;
+  message: InEditMessage;
+}
+
+
+interface MutationDeleteMessageArgs {
+  messageId: Scalars['Int'];
 }
 
 interface DeclineFriendInput {
@@ -796,7 +808,9 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   acceptFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAcceptFriendArgs, 'notificationId' | 'invite'>>;
   declineFriend?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeclineFriendArgs, 'notificationId' | 'invite'>>;
   deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'chatGroupId'>>;
-  editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, never>>;
+  deleteChatChannel?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteChatChannelArgs, 'chatChannelId'>>;
+  editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;
+  deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

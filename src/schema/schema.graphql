@@ -53,7 +53,9 @@ type Mutation {
 	acceptFriend(notificationId: Int!, invite: AcceptFriendInput!): Boolean!
 	declineFriend(notificationId: Int!, invite: DeclineFriendInput!): Boolean!
 	deleteGroup(chatGroupId: Int!): Boolean!
-	editMessage(message: InEditMessage): MessagesChats!
+	deleteChatChannel(chatChannelId: Int!): Boolean!
+	editMessage(message: InEditMessage!): MessagesChats!
+	deleteMessage(messageId: Int!): Boolean!
 }
 
 input DeclineFriendInput {

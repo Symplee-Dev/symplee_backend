@@ -1,5 +1,6 @@
 import { ApolloError, AuthenticationError } from 'apollo-server-errors';
 import jwtDecode from 'jwt-decode';
+import Chat from '../models/Chat';
 import ChatGroup from '../models/ChatGroup';
 import UserGroups from '../models/UserGroups';
 
@@ -106,6 +107,7 @@ export const deleteGroup = async (
 
 	try {
 		await UserGroups.query().delete().where('chatGroupId', id);
+		await Chat.query().delete().where('chatGroupId', id);
 		await ChatGroup.query().deleteById(id);
 		return true;
 	} catch (error) {

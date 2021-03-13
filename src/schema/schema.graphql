@@ -81,6 +81,8 @@ input InEditMessage {
 type Subscription {
 	messageSent(chatId: Int!): MessagesChats!
 	activeChatUsers(chatId: Int!): [User!]!
+	messageEdited(chatId: Int!): MessagesChats!
+	messageDeleted(chatId: Int!): Int!
 }
 
 input SendInviteInput {

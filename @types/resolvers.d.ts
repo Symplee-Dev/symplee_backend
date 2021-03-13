@@ -329,6 +329,8 @@ interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
   activeChatUsers: Array<User>;
+  messageEdited: MessagesChats;
+  messageDeleted: Scalars['Int'];
 }
 
 
@@ -338,6 +340,16 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageEditedArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageDeletedArgs {
   chatId: Scalars['Int'];
 }
 
@@ -816,6 +828,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
   messageSent?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageSent", ParentType, ContextType, RequireFields<SubscriptionMessageSentArgs, 'chatId'>>;
   activeChatUsers?: SubscriptionResolver<Array<ResolversTypes['User']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
+  messageEdited?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageEdited", ParentType, ContextType, RequireFields<SubscriptionMessageEditedArgs, 'chatId'>>;
+  messageDeleted?: SubscriptionResolver<ResolversTypes['Int'], "messageDeleted", ParentType, ContextType, RequireFields<SubscriptionMessageDeletedArgs, 'chatId'>>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {

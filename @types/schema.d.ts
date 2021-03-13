@@ -326,6 +326,8 @@ interface Subscription {
   __typename?: 'Subscription';
   messageSent: MessagesChats;
   activeChatUsers: Array<User>;
+  messageEdited: MessagesChats;
+  messageDeleted: Scalars['Int'];
 }
 
 
@@ -335,6 +337,16 @@ interface SubscriptionMessageSentArgs {
 
 
 interface SubscriptionActiveChatUsersArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageEditedArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMessageDeletedArgs {
   chatId: Scalars['Int'];
 }
 

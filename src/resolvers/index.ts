@@ -36,7 +36,9 @@ import {
 	messageSent,
 	getMessages,
 	editMessage,
-	deleteMessage
+	deleteMessage,
+	messageEdited,
+	messageDeleted
 } from './messageChats';
 import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
 import { declineInvite } from './invites';
@@ -112,6 +114,8 @@ export const resolvers: Resolvers.Resolvers = {
 		chatGroups: userResolvers.chatGroups as any
 	},
 	Subscription: {
-		messageSent
+		messageSent,
+		messageDeleted,
+		messageEdited
 	}
 };

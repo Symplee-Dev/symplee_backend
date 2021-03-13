@@ -100,9 +100,19 @@ export const editMessage = async (
 		throw new AuthenticationError('User is not authorized to edit');
 	}
 
-	return await MessagesChats.query().patchAndFetchById(message.id, {
-		body: message.body
+	const newMessage = await MessagesChats.query().patchAndFetchById(
+		message.id,
+		{
+			body: message.body
+		}
+	);
+
+	pubsub.publish('MESSAGE_EDITED', {
+		chatId: newMessage.chatId,
+		message: newMessage
 	});
+
+	return newMessage;
 };
 
 export const deleteMessage = async (
@@ -141,8 +151,42 @@ export const deleteMessage = async (
 
 	try {
 		await MessagesChats.query().deleteById(id);
+		pubsub.publish('MESSAGE_DELETED', {
+			chatId: foundMessage.chatId,
+			messageId: foundMessage.id
+		});
 		return true;
 	} catch (error) {
 		throw new ApolloError('Something wrong happened', '500');
+	}
+};
+
+export const messageEdited = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('MESSAGE_EDITED'),
+		(
+			payload: { chatId: number; message: MessagesChats },
+			variable: Resolvers.SubscriptionMessageEditedArgs
+		) => {
+			return payload.chatId === variable.chatId;
+		}
+	),
+	resolve: (value: { chatId: number; message: MessagesChats }) => {
+		return value.message;
+	}
+};
+
+export const messageDeleted = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('MESSAGE_DELETED'),
+		(
+			payload: { chatId: number; messageId: number },
+			variable: Resolvers.SubscriptionMessageDeletedArgs
+		) => {
+			return payload.chatId === variable.chatId;
+		}
+	),
+	resolve: (value: { chatId: number; messageId: number }) => {
+		return value.messageId;
 	}
 };

@@ -36,6 +36,7 @@ interface Query {
   getProfile: GetProfileReturn;
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
+  getBlockedFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -107,6 +108,11 @@ interface QueryGetPendingFriendsArgs {
   userId: Scalars['Int'];
 }
 
+
+interface QueryGetBlockedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -147,6 +153,10 @@ interface Mutation {
   editMessage: MessagesChats;
   deleteMessage: Scalars['Boolean'];
   userTyping: Scalars['Boolean'];
+  acceptInviteByLink: ErrorCode;
+  inviteByLink: Scalars['Boolean'];
+  blockUser: Scalars['Boolean'];
+  unblockUser: Scalars['Boolean'];
 }
 
 
@@ -319,6 +329,35 @@ interface MutationUserTypingArgs {
   userId: Scalars['Int'];
   username: Scalars['String'];
 }
+
+
+interface MutationAcceptInviteByLinkArgs {
+  token: Scalars['String'];
+}
+
+
+interface MutationInviteByLinkArgs {
+  userId: Scalars['Int'];
+  groupId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+  uses: Scalars['Int'];
+}
+
+
+interface MutationBlockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+
+interface MutationUnblockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+type ErrorCode =
+  | 'ALREADY_FAILURE'
+  | 'SUCCESS';
 
 interface DeclineFriendInput {
   userId: Scalars['Int'];
@@ -714,6 +753,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
+  ErrorCode: ErrorCode;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
@@ -814,6 +854,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getProfile?: Resolver<ResolversTypes['GetProfileReturn'], ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'userId' | 'otherUserId'>>;
   getAcceptedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetAcceptedFriendsArgs, 'userId'>>;
   getPendingFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetPendingFriendsArgs, 'userId'>>;
+  getBlockedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetBlockedFriendsArgs, 'userId'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {
@@ -855,6 +896,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;
   deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
   userTyping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUserTypingArgs, 'chatId' | 'userId' | 'username'>>;
+  acceptInviteByLink?: Resolver<ResolversTypes['ErrorCode'], ParentType, ContextType, RequireFields<MutationAcceptInviteByLinkArgs, 'token'>>;
+  inviteByLink?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationInviteByLinkArgs, 'userId' | 'groupId' | 'otherUserId' | 'uses'>>;
+  blockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationBlockUserArgs, 'userId' | 'otherUserId'>>;
+  unblockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUnblockUserArgs, 'userId' | 'otherUserId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

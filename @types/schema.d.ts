@@ -33,6 +33,7 @@ interface Query {
   getProfile: GetProfileReturn;
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
+  getBlockedFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -104,6 +105,11 @@ interface QueryGetPendingFriendsArgs {
   userId: Scalars['Int'];
 }
 
+
+interface QueryGetBlockedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -144,6 +150,10 @@ interface Mutation {
   editMessage: MessagesChats;
   deleteMessage: Scalars['Boolean'];
   userTyping: Scalars['Boolean'];
+  acceptInviteByLink: ErrorCode;
+  inviteByLink: Scalars['Boolean'];
+  blockUser: Scalars['Boolean'];
+  unblockUser: Scalars['Boolean'];
 }
 
 
@@ -316,6 +326,35 @@ interface MutationUserTypingArgs {
   userId: Scalars['Int'];
   username: Scalars['String'];
 }
+
+
+interface MutationAcceptInviteByLinkArgs {
+  token: Scalars['String'];
+}
+
+
+interface MutationInviteByLinkArgs {
+  userId: Scalars['Int'];
+  groupId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+  uses: Scalars['Int'];
+}
+
+
+interface MutationBlockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+
+interface MutationUnblockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+type ErrorCode =
+  | 'ALREADY_FAILURE'
+  | 'SUCCESS';
 
 interface DeclineFriendInput {
   userId: Scalars['Int'];

@@ -203,3 +203,21 @@ export const getProfile = async (
 		user: profile
 	};
 };
+
+export const getBlockedFriends = async (
+	parent: any,
+	args: Resolvers.QueryGetBlockedFriendsArgs,
+	context: Services.ServerContext
+): Promise<UserFriends[]> => {
+	context.logger.info('Getting blocked friends');
+
+	const friends = await UserFriends.query()
+		.where({
+			userId: args.userId,
+			status: 'BLOCKED',
+			sentBy: args.userId
+		})
+		.withGraphFetched({ friend: true });
+
+	return friends;
+};

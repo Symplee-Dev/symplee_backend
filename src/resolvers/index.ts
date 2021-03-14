@@ -1,7 +1,14 @@
 import { test } from './test';
 import { signup } from './signup';
 import { login } from './login';
-import { userResolvers, user, updateUser, toggleUserOnline } from './user';
+import {
+	userResolvers,
+	user,
+	updateUser,
+	toggleUserOnline,
+	blockUser,
+	unblockUser
+} from './user';
 import { verifyEmail } from './verifyEmail';
 import { createChatGroup } from './createChatGroup';
 import {
@@ -45,8 +52,18 @@ import {
 	messageEdited,
 	messageDeleted
 } from './messageChats';
-import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
-import { declineInvite, joinGroup } from './invites';
+import {
+	getPendingFriends,
+	getAcceptedFriends,
+	getProfile,
+	getBlockedFriends
+} from './friends';
+import {
+	acceptInviteByLink,
+	declineInvite,
+	inviteByLink,
+	joinGroup
+} from './invites';
 
 import {
 	getFriends,
@@ -67,6 +84,7 @@ export const resolvers: Resolvers.Resolvers = {
 		test,
 		user,
 		admin,
+		getBlockedFriends,
 		changeLogById,
 		changeLogs,
 		latestChangeLog,
@@ -116,7 +134,11 @@ export const resolvers: Resolvers.Resolvers = {
 		editMessage,
 		deleteMessage,
 		deleteChatChannel,
-		userTyping
+		userTyping,
+		inviteByLink,
+		acceptInviteByLink,
+		blockUser,
+		unblockUser
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

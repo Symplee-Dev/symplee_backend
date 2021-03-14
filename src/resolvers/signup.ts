@@ -5,8 +5,8 @@ import { EmailService } from '../Services/Email';
 
 const LINK_TO =
 	process.env.NODE_ENV === 'production'
-		? 'https://boltchat.app/auth/verify'
-		: 'http://localhost:3000/auth/verify/';
+		? 'https://symplee.app/auth/verify'
+		: 'http://localhost:3000/auth/verify';
 
 export const signup = async (
 	parent: any,

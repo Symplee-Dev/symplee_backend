@@ -18,6 +18,7 @@ type Query {
 	getProfile(userId: Int!, otherUserId: Int!): GetProfileReturn!
 	getAcceptedFriends(userId: Int!): [UserFriend]!
 	getPendingFriends(userId: Int!): [UserFriend]!
+	getBlockedFriends(userId: Int!): [UserFriend]!
 }
 
 type GetProfileReturn {
@@ -58,6 +59,20 @@ type Mutation {
 	editMessage(message: InEditMessage!): MessagesChats!
 	deleteMessage(messageId: Int!): Boolean!
 	userTyping(chatId: Int!, userId: Int!, username: String!): Boolean!
+	acceptInviteByLink(token: String!): ErrorCode!
+	inviteByLink(
+		userId: Int!
+		groupId: Int!
+		otherUserId: Int!
+		uses: Int!
+	): Boolean!
+	blockUser(userId: Int!, otherUserId: Int!): Boolean!
+	unblockUser(userId: Int!, otherUserId: Int!): Boolean!
+}
+
+enum ErrorCode {
+	ALREADY_FAILURE
+	SUCCESS
 }
 
 input DeclineFriendInput {

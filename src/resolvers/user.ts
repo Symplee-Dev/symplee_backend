@@ -4,6 +4,8 @@ import User from '../models/User';
 import { Authentication } from '../Services/Authentication';
 import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
+import UserFriends from '../models/UserFriends';
+import { toUpper } from 'lodash';
 
 export const userResolvers = {
 	chatGroups: async (
@@ -92,28 +94,77 @@ export const updateUser = async (
 	return edited;
 };
 
-export const toggleUserOnline = async (parent: any, args: Resolvers.MutationToggleUserOnlineArgs, context: Services.ServerContext): Promise<boolean> => {
-	const tokenId: { userId: number, exp: number} | false = !!context.token && jwtDecode(context.token);
+export const toggleUserOnline = async (
+	parent: any,
+	args: Resolvers.MutationToggleUserOnlineArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	const tokenId: { userId: number; exp: number } | false =
+		!!context.token && jwtDecode(context.token);
 
-	context.logger.info('toggleUserOnline')
+	context.logger.info('toggleUserOnline');
 
-	if(!tokenId) {
-		throw new ApolloError('No user to toggle', '400')
+	if (!tokenId) {
+		throw new ApolloError('No user to toggle', '400');
 	}
-	
+
 	const findUser = await User.query().findById(tokenId.userId);
-	
-	context.logger.info("User > ", findUser)
-	
-	if(!findUser) {
-		throw new ApolloError('No user to toggle', '400')		
+
+	context.logger.info('User > ', findUser);
+
+	if (!findUser) {
+		throw new ApolloError('No user to toggle', '400');
 	}
 
-	if(tokenId.exp > Date.now()) {
-		await User.query().patchAndFetchById(tokenId.userId, {is_online: false})
-		return false; 
+	if (tokenId.exp > Date.now()) {
+		await User.query().patchAndFetchById(tokenId.userId, {
+			is_online: false
+		});
+		return false;
 	}
 
-	const isOnline = (await User.query().patchAndFetchById(tokenId.userId, { is_online: args.status ? args.status : false })).is_online
+	const isOnline = (
+		await User.query().patchAndFetchById(tokenId.userId, {
+			is_online: args.status ? args.status : false
+		})
+	).is_online;
 	return isOnline;
-}
+};
+
+export const blockUser = async (
+	parent: any,
+	args: Resolvers.MutationBlockUserArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	context.logger.info('Starting block user');
+
+	const { otherUserId, userId } = args;
+
+	await UserFriends.query()
+		.where({ userId: userId, friendId: otherUserId })
+		.patch({ status: 'BLOCKED' });
+	await UserFriends.query()
+		.where({ userId: otherUserId, friendId: userId })
+		.patch({ status: 'BLOCKED' });
+
+	return true;
+};
+
+export const unblockUser = async (
+	parent: any,
+	args: Resolvers.MutationUnblockUserArgs,
+	context: Services.ServerContext
+): Promise<boolean> => {
+	context.logger.info('Unblock users');
+
+	const { otherUserId, userId } = args;
+
+	await UserFriends.query()
+		.where({ userId: userId, friendId: otherUserId })
+		.patch({ status: 'FRIENDS' });
+	await UserFriends.query()
+		.where({ userId: otherUserId, friendId: userId })
+		.patch({ status: 'FRIENDS' });
+
+	return true;
+};

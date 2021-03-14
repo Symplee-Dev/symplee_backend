@@ -146,6 +146,7 @@ interface Mutation {
   deleteChatChannel: Scalars['Boolean'];
   editMessage: MessagesChats;
   deleteMessage: Scalars['Boolean'];
+  userTyping: Scalars['Boolean'];
 }
 
 
@@ -312,6 +313,13 @@ interface MutationDeleteMessageArgs {
   messageId: Scalars['Int'];
 }
 
+
+interface MutationUserTypingArgs {
+  chatId: Scalars['Int'];
+  userId: Scalars['Int'];
+  username: Scalars['String'];
+}
+
 interface DeclineFriendInput {
   userId: Scalars['Int'];
   fromId: Scalars['Int'];
@@ -338,6 +346,7 @@ interface Subscription {
   activeChatUsers: Array<User>;
   messageEdited: MessagesChats;
   messageDeleted: Scalars['Int'];
+  userTyping?: Maybe<UserTypingReturn>;
 }
 
 
@@ -357,6 +366,18 @@ interface SubscriptionMessageEditedArgs {
 
 
 interface SubscriptionMessageDeletedArgs {
+  chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionUserTypingArgs {
+  chatId: Scalars['Int'];
+}
+
+interface UserTypingReturn {
+  __typename?: 'UserTypingReturn';
+  userId: Scalars['Int'];
+  username: Scalars['String'];
   chatId: Scalars['Int'];
 }
 
@@ -698,6 +719,7 @@ export type ResolversTypes = {
   FriendRequestInput: FriendRequestInput;
   InEditMessage: InEditMessage;
   Subscription: ResolverTypeWrapper<{}>;
+  UserTypingReturn: ResolverTypeWrapper<UserTypingReturn>;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
   DeclineInviteInput: DeclineInviteInput;
@@ -741,6 +763,7 @@ export type ResolversParentTypes = {
   FriendRequestInput: FriendRequestInput;
   InEditMessage: InEditMessage;
   Subscription: {};
+  UserTypingReturn: UserTypingReturn;
   SendInviteInput: SendInviteInput;
   AcceptInviteInput: AcceptInviteInput;
   DeclineInviteInput: DeclineInviteInput;
@@ -831,6 +854,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteChatChannel?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteChatChannelArgs, 'chatChannelId'>>;
   editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;
   deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
+  userTyping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUserTypingArgs, 'chatId' | 'userId' | 'username'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
@@ -838,6 +862,14 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
   activeChatUsers?: SubscriptionResolver<Array<ResolversTypes['User']>, "activeChatUsers", ParentType, ContextType, RequireFields<SubscriptionActiveChatUsersArgs, 'chatId'>>;
   messageEdited?: SubscriptionResolver<ResolversTypes['MessagesChats'], "messageEdited", ParentType, ContextType, RequireFields<SubscriptionMessageEditedArgs, 'chatId'>>;
   messageDeleted?: SubscriptionResolver<ResolversTypes['Int'], "messageDeleted", ParentType, ContextType, RequireFields<SubscriptionMessageDeletedArgs, 'chatId'>>;
+  userTyping?: SubscriptionResolver<Maybe<ResolversTypes['UserTypingReturn']>, "userTyping", ParentType, ContextType, RequireFields<SubscriptionUserTypingArgs, 'chatId'>>;
+};
+
+export type UserTypingReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserTypingReturn'] = ResolversParentTypes['UserTypingReturn']> = {
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  chatId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type AppFeedbackResolvers<ContextType = any, ParentType extends ResolversParentTypes['AppFeedback'] = ResolversParentTypes['AppFeedback']> = {
@@ -989,6 +1021,7 @@ export type Resolvers<ContextType = any> = {
   GetProfileReturn?: GetProfileReturnResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Subscription?: SubscriptionResolvers<ContextType>;
+  UserTypingReturn?: UserTypingReturnResolvers<ContextType>;
   AppFeedback?: AppFeedbackResolvers<ContextType>;
   Admin?: AdminResolvers<ContextType>;
   NewAdmin?: NewAdminResolvers<ContextType>;

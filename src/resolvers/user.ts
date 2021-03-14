@@ -142,10 +142,10 @@ export const blockUser = async (
 
 	await UserFriends.query()
 		.where({ userId: userId, friendId: otherUserId })
-		.patch({ status: 'BLOCKED' });
+		.patch({ status: 'BLOCKED', blockedBy: userId });
 	await UserFriends.query()
 		.where({ userId: otherUserId, friendId: userId })
-		.patch({ status: 'BLOCKED' });
+		.patch({ status: 'BLOCKED', blockedBy: userId });
 
 	return true;
 };
@@ -161,10 +161,10 @@ export const unblockUser = async (
 
 	await UserFriends.query()
 		.where({ userId: userId, friendId: otherUserId })
-		.patch({ status: 'FRIENDS' });
+		.patch({ status: 'FRIENDS', blockedBy: undefined });
 	await UserFriends.query()
 		.where({ userId: otherUserId, friendId: userId })
-		.patch({ status: 'FRIENDS' });
+		.patch({ status: 'FRIENDS', blockedBy: undefined });
 
 	return true;
 };

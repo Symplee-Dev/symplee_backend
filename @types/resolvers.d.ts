@@ -667,6 +667,7 @@ interface UserFriend {
   friendsSince: Scalars['String'];
   status: Scalars['String'];
   sentBy: Scalars['Int'];
+  blockedBy?: Maybe<Scalars['Int']>;
 }
 
 
@@ -1058,6 +1059,7 @@ export type UserFriendResolvers<ContextType = any, ParentType extends ResolversP
   friendsSince?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sentBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  blockedBy?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

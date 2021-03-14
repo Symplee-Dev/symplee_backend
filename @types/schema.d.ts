@@ -375,6 +375,7 @@ interface UserTypingReturn {
   __typename?: 'UserTypingReturn';
   userId: Scalars['Int'];
   username: Scalars['String'];
+  chatId: Scalars['Int'];
 }
 
 interface SendInviteInput {

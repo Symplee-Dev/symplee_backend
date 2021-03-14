@@ -91,6 +91,7 @@ type Subscription {
 type UserTypingReturn {
 	userId: Int!
 	username: String!
+	chatId: Int!
 }
 
 input SendInviteInput {

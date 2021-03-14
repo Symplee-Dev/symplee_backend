@@ -378,6 +378,7 @@ interface UserTypingReturn {
   __typename?: 'UserTypingReturn';
   userId: Scalars['Int'];
   username: Scalars['String'];
+  chatId: Scalars['Int'];
 }
 
 interface SendInviteInput {
@@ -867,6 +868,7 @@ export type SubscriptionResolvers<ContextType = any, ParentType extends Resolver
 export type UserTypingReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserTypingReturn'] = ResolversParentTypes['UserTypingReturn']> = {
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  chatId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

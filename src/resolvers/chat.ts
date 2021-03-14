@@ -4,6 +4,9 @@ import Chat from '../models/Chat';
 import ChatGroup from '../models/ChatGroup';
 import ChatUsers from '../models/ChatUsers';
 import MessagesChats from '../models/MessagesChats';
+import { pubsub } from '../index';
+import { withFilter } from 'graphql-subscriptions';
+import { logger } from '../utils/logger';
 
 export const hasChat = async (
 	parent: any,
@@ -68,4 +71,32 @@ export const deleteChatChannel = async (
 	} catch (error) {
 		throw new ApolloError(error, '500');
 	}
+};
+
+export const userTyping = async (
+	parent: any,
+	args: Resolvers.MutationUserTypingArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('User typing start');
+
+	pubsub.publish('USER_TYPING', { ...args });
+
+	return true;
+};
+
+export const userTypingSubscription = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('USER_TYPING'),
+		(
+			payload: { chatId: number; userId: number; username: string },
+			variables: Resolvers.SubscriptionUserTypingArgs
+		) => {
+			logger.info('User typing with id ' + payload.userId);
+
+			return payload.chatId === variables.chatId;
+		}
+	),
+	resolve: (value: { chatId: number; userId: number; username: string }) =>
+		value
 };

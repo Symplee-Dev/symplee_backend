@@ -36,6 +36,7 @@ interface Query {
   getProfile: GetProfileReturn;
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
+  getBlockedFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -104,6 +105,11 @@ interface QueryGetAcceptedFriendsArgs {
 
 
 interface QueryGetPendingFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetBlockedFriendsArgs {
   userId: Scalars['Int'];
 }
 
@@ -848,6 +854,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getProfile?: Resolver<ResolversTypes['GetProfileReturn'], ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'userId' | 'otherUserId'>>;
   getAcceptedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetAcceptedFriendsArgs, 'userId'>>;
   getPendingFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetPendingFriendsArgs, 'userId'>>;
+  getBlockedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetBlockedFriendsArgs, 'userId'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {

@@ -52,7 +52,12 @@ import {
 	messageEdited,
 	messageDeleted
 } from './messageChats';
-import { getPendingFriends, getAcceptedFriends, getProfile } from './friends';
+import {
+	getPendingFriends,
+	getAcceptedFriends,
+	getProfile,
+	getBlockedFriends
+} from './friends';
 import {
 	acceptInviteByLink,
 	declineInvite,
@@ -79,6 +84,7 @@ export const resolvers: Resolvers.Resolvers = {
 		test,
 		user,
 		admin,
+		getBlockedFriends,
 		changeLogById,
 		changeLogs,
 		latestChangeLog,

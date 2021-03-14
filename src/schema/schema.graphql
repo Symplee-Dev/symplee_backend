@@ -18,6 +18,7 @@ type Query {
 	getProfile(userId: Int!, otherUserId: Int!): GetProfileReturn!
 	getAcceptedFriends(userId: Int!): [UserFriend]!
 	getPendingFriends(userId: Int!): [UserFriend]!
+	getBlockedFriends(userId: Int!): [UserFriend]!
 }
 
 type GetProfileReturn {

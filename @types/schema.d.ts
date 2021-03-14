@@ -33,6 +33,7 @@ interface Query {
   getProfile: GetProfileReturn;
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
+  getBlockedFriends: Array<Maybe<UserFriend>>;
 }
 
 
@@ -101,6 +102,11 @@ interface QueryGetAcceptedFriendsArgs {
 
 
 interface QueryGetPendingFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetBlockedFriendsArgs {
   userId: Scalars['Int'];
 }
 

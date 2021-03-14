@@ -161,10 +161,10 @@ export const unblockUser = async (
 
 	await UserFriends.query()
 		.where({ userId: userId, friendId: otherUserId })
-		.patch({ status: 'BLOCKED' });
+		.patch({ status: 'FRIENDS' });
 	await UserFriends.query()
 		.where({ userId: otherUserId, friendId: userId })
-		.patch({ status: 'BLOCKED' });
+		.patch({ status: 'FRIENDS' });
 
 	return true;
 };

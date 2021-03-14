@@ -341,4 +341,5 @@ type UserFriend {
 	friendsSince: String!
 	status: String!
 	sentBy: Int!
+	blockedBy: Int
 }

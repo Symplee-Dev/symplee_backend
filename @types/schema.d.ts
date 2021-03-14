@@ -664,6 +664,7 @@ interface UserFriend {
   friendsSince: Scalars['String'];
   status: Scalars['String'];
   sentBy: Scalars['Int'];
+  blockedBy?: Maybe<Scalars['Int']>;
 }
 
 } } export {};

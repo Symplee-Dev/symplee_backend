@@ -214,8 +214,7 @@ export const getBlockedFriends = async (
 	const friends = await UserFriends.query()
 		.where({
 			userId: args.userId,
-			status: 'BLOCKED',
-			sentBy: args.userId
+			status: 'BLOCKED'
 		})
 		.withGraphFetched({ friend: true });
 

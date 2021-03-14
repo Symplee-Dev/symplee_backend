@@ -147,6 +147,10 @@ interface Mutation {
   editMessage: MessagesChats;
   deleteMessage: Scalars['Boolean'];
   userTyping: Scalars['Boolean'];
+  acceptInviteByLink: ErrorCode;
+  inviteByLink: Scalars['Boolean'];
+  blockUser: Scalars['Boolean'];
+  unblockUser: Scalars['Boolean'];
 }
 
 
@@ -319,6 +323,35 @@ interface MutationUserTypingArgs {
   userId: Scalars['Int'];
   username: Scalars['String'];
 }
+
+
+interface MutationAcceptInviteByLinkArgs {
+  token: Scalars['String'];
+}
+
+
+interface MutationInviteByLinkArgs {
+  userId: Scalars['Int'];
+  groupId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+  uses: Scalars['Int'];
+}
+
+
+interface MutationBlockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+
+interface MutationUnblockUserArgs {
+  userId: Scalars['Int'];
+  otherUserId: Scalars['Int'];
+}
+
+type ErrorCode =
+  | 'ALREADY_FAILURE'
+  | 'SUCCESS';
 
 interface DeclineFriendInput {
   userId: Scalars['Int'];
@@ -714,6 +747,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
+  ErrorCode: ErrorCode;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
@@ -855,6 +889,10 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   editMessage?: Resolver<ResolversTypes['MessagesChats'], ParentType, ContextType, RequireFields<MutationEditMessageArgs, 'message'>>;
   deleteMessage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteMessageArgs, 'messageId'>>;
   userTyping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUserTypingArgs, 'chatId' | 'userId' | 'username'>>;
+  acceptInviteByLink?: Resolver<ResolversTypes['ErrorCode'], ParentType, ContextType, RequireFields<MutationAcceptInviteByLinkArgs, 'token'>>;
+  inviteByLink?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationInviteByLinkArgs, 'userId' | 'groupId' | 'otherUserId' | 'uses'>>;
+  blockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationBlockUserArgs, 'userId' | 'otherUserId'>>;
+  unblockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUnblockUserArgs, 'userId' | 'otherUserId'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {

@@ -6,6 +6,10 @@ import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
 import UserFriends from '../models/UserFriends';
 import { toUpper } from 'lodash';
+import { pubsub } from '../index';
+import { withFilter } from 'graphql-subscriptions';
+import { SendMailboxUpdateArgs } from '../utils/sendMailboxUpdate';
+import { logger } from '../utils/logger';
 
 export const userResolvers = {
 	chatGroups: async (
@@ -167,4 +171,19 @@ export const unblockUser = async (
 		.patch({ status: 'FRIENDS', blockedBy: undefined });
 
 	return true;
+};
+
+export const mailboxUpdate = {
+	subscribe: withFilter(
+		() => pubsub.asyncIterator('MAILBOX_UPDATE'),
+		(
+			payload: SendMailboxUpdateArgs & { id: string },
+			variables: Resolvers.SubscriptionMailboxUpdateArgs
+		) => {
+			logger.info('Mailbox update for' + variables.userId);
+
+			return payload.userId === variables.userId;
+		}
+	),
+	resolve: (value: SendMailboxUpdateArgs & { id: string }) => value
 };

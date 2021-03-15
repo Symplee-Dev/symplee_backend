@@ -43,6 +43,7 @@ import {
 	deleteFeedback
 } from './feedback';
 import { sendForgotPasswordEmail } from './sendForgotPasswordEmail';
+import { mailboxUpdate } from './user';
 import {
 	sendMessage,
 	messageSent,
@@ -147,6 +148,7 @@ export const resolvers: Resolvers.Resolvers = {
 		messageSent,
 		messageDeleted,
 		messageEdited,
-		userTyping: userTypingSubscription
+		userTyping: userTypingSubscription,
+		mailboxUpdate
 	}
 };

@@ -383,6 +383,7 @@ interface Subscription {
   messageEdited: MessagesChats;
   messageDeleted: Scalars['Int'];
   userTyping?: Maybe<UserTypingReturn>;
+  mailboxUpdate: UserMailbox;
 }
 
 
@@ -408,6 +409,11 @@ interface SubscriptionMessageDeletedArgs {
 
 interface SubscriptionUserTypingArgs {
   chatId: Scalars['Int'];
+}
+
+
+interface SubscriptionMailboxUpdateArgs {
+  userId: Scalars['Int'];
 }
 
 interface UserTypingReturn {
@@ -665,6 +671,34 @@ interface UserFriend {
   status: Scalars['String'];
   sentBy: Scalars['Int'];
   blockedBy?: Maybe<Scalars['Int']>;
+}
+
+interface UserMailbox {
+  __typename?: 'UserMailbox';
+  id: Scalars['String'];
+  body: Scalars['String'];
+  title: Scalars['String'];
+  goTo: Scalars['String'];
+  userId: Scalars['Int'];
+}
+
+interface UserDm {
+  __typename?: 'UserDM';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  users: Array<Scalars['Int']>;
+  messages: Array<Maybe<UserDmMessages>>;
+}
+
+interface UserDmMessages {
+  __typename?: 'UserDMMessages';
+  id: Scalars['Int'];
+  body: Scalars['String'];
+  authorUsername: Scalars['String'];
+  authorId: Scalars['Int'];
+  author: User;
+  createdAt: Scalars['String'];
+  dmId: Scalars['Int'];
 }
 
 } } export {};

@@ -3,9 +3,7 @@ import Notifications from '../models/Notifications';
 import User from '../models/User';
 import ChatGroup from '../models/ChatGroup';
 import UserGroups from '../models/UserGroups';
-import { QueryBuilder } from 'objection';
 import sendMailboxUpdate from '../utils/sendMailboxUpdate';
-import { MAILBOX_PREFIX } from './messageChats';
 
 export const addFriend = async (
 	parent: any,
@@ -45,8 +43,8 @@ export const addFriend = async (
 	sendMailboxUpdate({
 		title: 'New friend request from ' + username,
 		body: 'Visit your notifications to accept this friend request.',
-		goTo: MAILBOX_PREFIX,
-		userId: context.session?.userId ?? -1
+		goTo: '/',
+		userId: args.friendRequest.friendId
 	});
 
 	return true;
@@ -137,13 +135,7 @@ export const declineFriend = async (
 		id: args.notificationId
 	});
 
-	await UserFriends.query()
-		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
-		.delete();
-
-	await UserFriends.query()
-		.where({ fromId: args.invite.userId, userId: args.invite.fromId })
-		.delete();
+	await UserFriends.query().delete().where({ sentBy: args.invite.fromId });
 
 	const user = await User.query().findById(args.invite.userId);
 

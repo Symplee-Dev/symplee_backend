@@ -34,6 +34,7 @@ interface Query {
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
   getBlockedFriends: Array<Maybe<UserFriend>>;
+  getDMS: Array<Maybe<ChatGroup>>;
 }
 
 
@@ -107,6 +108,11 @@ interface QueryGetPendingFriendsArgs {
 
 
 interface QueryGetBlockedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetDmsArgs {
   userId: Scalars['Int'];
 }
 
@@ -351,6 +357,10 @@ interface MutationUnblockUserArgs {
   userId: Scalars['Int'];
   otherUserId: Scalars['Int'];
 }
+
+type ChatGroupType =
+  | 'CHAT_GROUP'
+  | 'DM';
 
 type ErrorCode =
   | 'ALREADY_FAILURE'
@@ -613,6 +623,7 @@ interface ChatGroup {
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
   members: Array<User>;
+  type?: Maybe<ChatGroupType>;
 }
 
 interface Chat {
@@ -680,25 +691,6 @@ interface UserMailbox {
   title: Scalars['String'];
   goTo: Scalars['String'];
   userId: Scalars['Int'];
-}
-
-interface UserDm {
-  __typename?: 'UserDM';
-  id: Scalars['Int'];
-  userId: Scalars['Int'];
-  users: Array<Scalars['Int']>;
-  messages: Array<Maybe<UserDmMessages>>;
-}
-
-interface UserDmMessages {
-  __typename?: 'UserDMMessages';
-  id: Scalars['Int'];
-  body: Scalars['String'];
-  authorUsername: Scalars['String'];
-  authorId: Scalars['Int'];
-  author: User;
-  createdAt: Scalars['String'];
-  dmId: Scalars['Int'];
 }
 
 } } export {};

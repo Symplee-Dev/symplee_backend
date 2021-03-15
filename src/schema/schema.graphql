@@ -19,6 +19,7 @@ type Query {
 	getAcceptedFriends(userId: Int!): [UserFriend]!
 	getPendingFriends(userId: Int!): [UserFriend]!
 	getBlockedFriends(userId: Int!): [UserFriend]!
+	getDMS(userId: Int!): [ChatGroup]!
 }
 
 type GetProfileReturn {
@@ -68,6 +69,11 @@ type Mutation {
 	): Boolean!
 	blockUser(userId: Int!, otherUserId: Int!): Boolean!
 	unblockUser(userId: Int!, otherUserId: Int!): Boolean!
+}
+
+enum ChatGroupType {
+	CHAT_GROUP
+	DM
 }
 
 enum ErrorCode {
@@ -290,6 +296,7 @@ type ChatGroup {
 	createdBy: Int!
 	avatar: String
 	members: [User!]!
+	type: ChatGroupType
 }
 
 type Chat {
@@ -351,21 +358,4 @@ type UserMailbox {
 	title: String!
 	goTo: String!
 	userId: Int!
-}
-
-type UserDM {
-	id: Int!
-	userId: Int!
-	users: [Int!]!
-	messages: [UserDMMessages]!
-}
-
-type UserDMMessages {
-	id: Int!
-	body: String!
-	authorUsername: String!
-	authorId: Int!
-	author: User!
-	createdAt: String!
-	dmId: Int!
 }

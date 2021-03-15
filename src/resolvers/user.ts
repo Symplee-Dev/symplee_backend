@@ -5,7 +5,7 @@ import { Authentication } from '../Services/Authentication';
 import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
 import UserFriends from '../models/UserFriends';
-import { toUpper } from 'lodash';
+import { gt, toUpper } from 'lodash';
 import { pubsub } from '../index';
 import { withFilter } from 'graphql-subscriptions';
 import { SendMailboxUpdateArgs } from '../utils/sendMailboxUpdate';
@@ -40,7 +40,7 @@ export const userResolvers = {
 			groups.push(group);
 		}
 
-		return groups;
+		return groups.filter(g => g.type !== 'DM');
 	}
 };
 

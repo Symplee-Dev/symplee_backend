@@ -37,6 +37,7 @@ interface Query {
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
   getBlockedFriends: Array<Maybe<UserFriend>>;
+  getDMS: Array<Maybe<ChatGroup>>;
 }
 
 
@@ -110,6 +111,11 @@ interface QueryGetPendingFriendsArgs {
 
 
 interface QueryGetBlockedFriendsArgs {
+  userId: Scalars['Int'];
+}
+
+
+interface QueryGetDmsArgs {
   userId: Scalars['Int'];
 }
 
@@ -354,6 +360,10 @@ interface MutationUnblockUserArgs {
   userId: Scalars['Int'];
   otherUserId: Scalars['Int'];
 }
+
+type ChatGroupType =
+  | 'CHAT_GROUP'
+  | 'DM';
 
 type ErrorCode =
   | 'ALREADY_FAILURE'
@@ -616,6 +626,7 @@ interface ChatGroup {
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
   members: Array<User>;
+  type?: Maybe<ChatGroupType>;
 }
 
 interface Chat {
@@ -683,25 +694,6 @@ interface UserMailbox {
   title: Scalars['String'];
   goTo: Scalars['String'];
   userId: Scalars['Int'];
-}
-
-interface UserDm {
-  __typename?: 'UserDM';
-  id: Scalars['Int'];
-  userId: Scalars['Int'];
-  users: Array<Scalars['Int']>;
-  messages: Array<Maybe<UserDmMessages>>;
-}
-
-interface UserDmMessages {
-  __typename?: 'UserDMMessages';
-  id: Scalars['Int'];
-  body: Scalars['String'];
-  authorUsername: Scalars['String'];
-  authorId: Scalars['Int'];
-  author: User;
-  createdAt: Scalars['String'];
-  dmId: Scalars['Int'];
 }
 
 
@@ -788,6 +780,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
+  ChatGroupType: ChatGroupType;
   ErrorCode: ErrorCode;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
@@ -824,8 +817,6 @@ export type ResolversTypes = {
   Notification: ResolverTypeWrapper<Notification>;
   UserFriend: ResolverTypeWrapper<UserFriend>;
   UserMailbox: ResolverTypeWrapper<UserMailbox>;
-  UserDM: ResolverTypeWrapper<UserDm>;
-  UserDMMessages: ResolverTypeWrapper<UserDmMessages>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -871,8 +862,6 @@ export type ResolversParentTypes = {
   Notification: Notification;
   UserFriend: UserFriend;
   UserMailbox: UserMailbox;
-  UserDM: UserDm;
-  UserDMMessages: UserDmMessages;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -896,6 +885,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getAcceptedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetAcceptedFriendsArgs, 'userId'>>;
   getPendingFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetPendingFriendsArgs, 'userId'>>;
   getBlockedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetBlockedFriendsArgs, 'userId'>>;
+  getDMS?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QueryGetDmsArgs, 'userId'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {
@@ -1043,6 +1033,7 @@ export type ChatGroupResolvers<ContextType = any, ParentType extends ResolversPa
   createdBy?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   members?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['ChatGroupType']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1113,25 +1104,6 @@ export type UserMailboxResolvers<ContextType = any, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserDmResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserDM'] = ResolversParentTypes['UserDM']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  users?: Resolver<Array<ResolversTypes['Int']>, ParentType, ContextType>;
-  messages?: Resolver<Array<Maybe<ResolversTypes['UserDMMessages']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type UserDmMessagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserDMMessages'] = ResolversParentTypes['UserDMMessages']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  authorUsername?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  authorId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  author?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  dmId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   GetProfileReturn?: GetProfileReturnResolvers<ContextType>;
@@ -1152,8 +1124,6 @@ export type Resolvers<ContextType = any> = {
   Notification?: NotificationResolvers<ContextType>;
   UserFriend?: UserFriendResolvers<ContextType>;
   UserMailbox?: UserMailboxResolvers<ContextType>;
-  UserDM?: UserDmResolvers<ContextType>;
-  UserDMMessages?: UserDmMessagesResolvers<ContextType>;
 };
 
 

@@ -678,10 +678,10 @@ interface UserFriend {
 
 interface UserMailbox {
   __typename?: 'UserMailbox';
-  id: Scalars['Int'];
+  id: Scalars['String'];
   body: Scalars['String'];
   title: Scalars['String'];
-  goTo: Array<Maybe<Scalars['String']>>;
+  goTo: Scalars['String'];
   userId: Scalars['Int'];
 }
 
@@ -1105,10 +1105,10 @@ export type UserFriendResolvers<ContextType = any, ParentType extends ResolversP
 };
 
 export type UserMailboxResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserMailbox'] = ResolversParentTypes['UserMailbox']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  goTo?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  goTo?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

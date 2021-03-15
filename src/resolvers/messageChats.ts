@@ -5,9 +5,15 @@ import jwtDecode from 'jwt-decode';
 import { ApolloError, AuthenticationError } from 'apollo-server-errors';
 import UserGroups from '../models/UserGroups';
 import Chat from '../models/Chat';
+import sendMailboxUpdate from '../utils/sendMailboxUpdate';
+import ChatGroup from '../models/ChatGroup';
 const { withFilter } = require('apollo-server');
 
 const MESSAGE_LIST_LIMIT = 50;
+export const MAILBOX_PREFIX =
+	process.env.NODE_ENV === 'production'
+		? 'https://symplee.app/'
+		: 'http://localhost:3000/';
 
 export const sendMessage = async (
 	parent: any,
@@ -32,6 +38,16 @@ export const sendMessage = async (
 	pubsub.publish('MESSAGE_SENT', {
 		chatId: args.message.chatId,
 		message: message
+	});
+
+	const group = await ChatGroup.query().findById(availableChat.chatGroupId);
+
+	sendMailboxUpdate({
+		title: 'New message in ' + `#${availableChat.name} (${group.name})`,
+		body: message.body,
+		goTo:
+			MAILBOX_PREFIX + 'group/' + group.id + '/chat/' + availableChat.id,
+		userId: context.session?.userId ?? -1
 	});
 
 	return true;

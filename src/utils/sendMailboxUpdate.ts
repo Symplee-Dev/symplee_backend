@@ -1,9 +1,9 @@
 import { v4 } from 'uuid';
 import { pubsub } from '../index';
-interface SendMailboxUpdateArgs {
+export interface SendMailboxUpdateArgs {
 	title: string;
 	body: string;
-	goTo: string[];
+	goTo: string;
 	userId: number;
 }
 

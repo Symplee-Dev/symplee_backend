@@ -675,10 +675,10 @@ interface UserFriend {
 
 interface UserMailbox {
   __typename?: 'UserMailbox';
-  id: Scalars['Int'];
+  id: Scalars['String'];
   body: Scalars['String'];
   title: Scalars['String'];
-  goTo: Array<Maybe<Scalars['String']>>;
+  goTo: Scalars['String'];
   userId: Scalars['Int'];
 }
 

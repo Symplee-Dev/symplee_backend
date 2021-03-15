@@ -346,10 +346,10 @@ type UserFriend {
 }
 
 type UserMailbox {
-	id: Int!
+	id: String!
 	body: String!
 	title: String!
-	goTo: [String]!
+	goTo: String!
 	userId: Int!
 }
 

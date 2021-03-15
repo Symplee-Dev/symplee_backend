@@ -3,7 +3,7 @@ import Notifications from '../models/Notifications';
 import User from '../models/User';
 import ChatGroup from '../models/ChatGroup';
 import UserGroups from '../models/UserGroups';
-import { QueryBuilder } from 'objection';
+import sendMailboxUpdate from '../utils/sendMailboxUpdate';
 
 export const addFriend = async (
 	parent: any,
@@ -38,6 +38,13 @@ export const addFriend = async (
 		type: 'FRIEND_REQUEST',
 		fromId: args.friendRequest.userId,
 		createdAt: new Date().toString()
+	});
+
+	sendMailboxUpdate({
+		title: 'New friend request from ' + username,
+		body: 'Visit your notifications to accept this friend request.',
+		goTo: '/',
+		userId: args.friendRequest.friendId
 	});
 
 	return true;
@@ -105,6 +112,15 @@ export const acceptFriend = async (
 			status: 'FRIENDS'
 		});
 
+	const user = await User.query().findById(args.invite.userId);
+
+	sendMailboxUpdate({
+		title: 'Friend request accepted by ' + user.username + '#' + user.key,
+		body: '',
+		goTo: '',
+		userId: args.invite.fromId
+	});
+
 	return true;
 };
 
@@ -119,13 +135,16 @@ export const declineFriend = async (
 		id: args.notificationId
 	});
 
-	await UserFriends.query()
-		.where({ userId: args.invite.userId, fromId: args.invite.fromId })
-		.delete();
+	await UserFriends.query().delete().where({ sentBy: args.invite.fromId });
 
-	await UserFriends.query()
-		.where({ fromId: args.invite.userId, userId: args.invite.fromId })
-		.delete();
+	const user = await User.query().findById(args.invite.userId);
+
+	sendMailboxUpdate({
+		title: 'Friend request rejected by ' + user.username + '#' + user.key,
+		body: '',
+		goTo: '',
+		userId: args.invite.fromId
+	});
 
 	return true;
 };

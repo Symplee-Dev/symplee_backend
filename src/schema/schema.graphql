@@ -101,6 +101,7 @@ type Subscription {
 	messageEdited(chatId: Int!): MessagesChats!
 	messageDeleted(chatId: Int!): Int!
 	userTyping(chatId: Int!): UserTypingReturn
+	mailboxUpdate(userId: Int!): UserMailbox!
 }
 
 type UserTypingReturn {
@@ -342,4 +343,29 @@ type UserFriend {
 	status: String!
 	sentBy: Int!
 	blockedBy: Int
+}
+
+type UserMailbox {
+	id: Int!
+	body: String!
+	title: String!
+	goTo: [String]!
+	userId: Int!
+}
+
+type UserDM {
+	id: Int!
+	userId: Int!
+	users: [Int!]!
+	messages: [UserDMMessages]!
+}
+
+type UserDMMessages {
+	id: Int!
+	body: String!
+	authorUsername: String!
+	authorId: Int!
+	author: User!
+	createdAt: String!
+	dmId: Int!
 }

@@ -133,6 +133,7 @@ interface Mutation {
   verifyEmail: Scalars['Boolean'];
   createChat: Chat;
   createChatGroup: ChatGroup;
+  createDM: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
@@ -206,6 +207,11 @@ interface MutationCreateChatArgs {
 
 interface MutationCreateChatGroupArgs {
   chatGroup: CreateChatGroupInput;
+}
+
+
+interface MutationCreateDmArgs {
+  dm: CreateDmInput;
 }
 
 
@@ -507,6 +513,15 @@ interface CreateChatGroupInput {
   userId: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
   type?: Maybe<ChatGroupType>;
+}
+
+interface CreateDmInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
+  type?: Maybe<ChatGroupType>;
+  includes: Array<Scalars['Int']>;
 }
 
 interface LoginInput {

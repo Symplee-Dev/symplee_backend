@@ -51,7 +51,7 @@ export const getDms = async (
 ) => {
 	context.logger.info('Query user dms');
 
-	const groupsIds = await UserGroups.query().where({ userId: parent.id });
+	const groupsIds = await UserGroups.query().where({ userId: args.userId });
 
 	console.log(groupsIds);
 
@@ -65,7 +65,9 @@ export const getDms = async (
 		groups.push(group);
 	}
 
-	return groups.filter(g => g.type !== 'CHAT_GROUP');
+	const filtered = groups.filter(g => g.type === 'DM');
+
+	return filtered;
 };
 
 export const user = async (

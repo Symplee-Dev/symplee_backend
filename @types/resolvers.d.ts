@@ -136,6 +136,7 @@ interface Mutation {
   verifyEmail: Scalars['Boolean'];
   createChat: Chat;
   createChatGroup: ChatGroup;
+  createDM: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
@@ -209,6 +210,11 @@ interface MutationCreateChatArgs {
 
 interface MutationCreateChatGroupArgs {
   chatGroup: CreateChatGroupInput;
+}
+
+
+interface MutationCreateDmArgs {
+  dm: CreateDmInput;
 }
 
 
@@ -512,6 +518,15 @@ interface CreateChatGroupInput {
   type?: Maybe<ChatGroupType>;
 }
 
+interface CreateDmInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
+  type?: Maybe<ChatGroupType>;
+  includes: Array<Scalars['Int']>;
+}
+
 interface LoginInput {
   username?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -800,6 +815,7 @@ export type ResolversTypes = {
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
+  CreateDMInput: CreateDmInput;
   LoginInput: LoginInput;
   AdminLoginInput: AdminLoginInput;
   Admin: ResolverTypeWrapper<Admin>;
@@ -845,6 +861,7 @@ export type ResolversParentTypes = {
   SendAppFeedbackInput: SendAppFeedbackInput;
   CreateChatInput: CreateChatInput;
   CreateChatGroupInput: CreateChatGroupInput;
+  CreateDMInput: CreateDmInput;
   LoginInput: LoginInput;
   AdminLoginInput: AdminLoginInput;
   Admin: Admin;
@@ -906,6 +923,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   verifyEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationVerifyEmailArgs, 'token'>>;
   createChat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType, RequireFields<MutationCreateChatArgs, 'chat'>>;
   createChatGroup?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateChatGroupArgs, 'chatGroup'>>;
+  createDM?: Resolver<ResolversTypes['ChatGroup'], ParentType, ContextType, RequireFields<MutationCreateDmArgs, 'dm'>>;
   addNewChangeLog?: Resolver<ResolversTypes['ChangeLog'], ParentType, ContextType, RequireFields<MutationAddNewChangeLogArgs, 'newChangeLog'>>;
   editChangeLog?: Resolver<Maybe<ResolversTypes['ChangeLog']>, ParentType, ContextType, RequireFields<MutationEditChangeLogArgs, 'id' | 'changeLogEdit'>>;
   sendFeedback?: Resolver<ResolversTypes['AppFeedback'], ParentType, ContextType, RequireFields<MutationSendFeedbackArgs, 'feedback'>>;

@@ -1,5 +1,7 @@
 import ChatGroup from '../models/ChatGroup';
 import UserGroups from '../models/UserGroups';
+import Chat from '../models/Chat';
+import ChatUsers from '../models/ChatUsers';
 
 export const createChatGroup = async (
 	parent: any,
@@ -60,6 +62,20 @@ export const createDM = async (
 		throw new Error('Could not create group. Try again later.');
 	}
 
+	const createdChat = await Chat.query().insertAndFetch({
+		name: '',
+		isPublic: false,
+		createdById: userId,
+		icon: '',
+		chatGroupId: created.id,
+		mode: 'chat'
+	});
+
+	await ChatUsers.query().insertAndFetch({
+		userId,
+		chatId: createdChat.id
+	});
+
 	for (let i = 0; i < includes.length; i++) {
 		const createdRelation = await UserGroups.query().insertAndFetch({
 			userId: includes[i],
@@ -70,7 +86,16 @@ export const createDM = async (
 			context.logger.err('Error created chatGroup');
 			throw new Error('Could not create group. Try again later.');
 		}
+
+		await ChatUsers.query().insertAndFetch({
+			userId: includes[i],
+			chatId: createdChat.id
+		});
 	}
 
-	return created;
+	const final = await ChatGroup.query()
+		.findById(created.id)
+		.withGraphFetched({ chats: true });
+
+	return { ...final, chats: [final.chats[0]] };
 };

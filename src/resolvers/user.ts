@@ -58,9 +58,9 @@ export const getDms = async (
 	let groups: ChatGroup[] = [];
 
 	for (let i = 0; i < groupsIds.length; i++) {
-		const group = await ChatGroup.query().findById(
-			groupsIds[i].chatGroupId
-		);
+		const group = await ChatGroup.query()
+			.findById(groupsIds[i].chatGroupId)
+			.withGraphFetched({ chats: true });
 
 		groups.push(group);
 	}

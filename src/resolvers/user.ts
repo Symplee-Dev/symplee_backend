@@ -44,6 +44,30 @@ export const userResolvers = {
 	}
 };
 
+export const getDms = async (
+	parent: any,
+	args: Resolvers.QueryGetDmsArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Query user dms');
+
+	const groupsIds = await UserGroups.query().where({ userId: parent.id });
+
+	console.log(groupsIds);
+
+	let groups: ChatGroup[] = [];
+
+	for (let i = 0; i < groupsIds.length; i++) {
+		const group = await ChatGroup.query().findById(
+			groupsIds[i].chatGroupId
+		);
+
+		groups.push(group);
+	}
+
+	return groups.filter(g => g.type !== 'CHAT_GROUP');
+};
+
 export const user = async (
 	parent: any,
 	args: Resolvers.QueryUserArgs,

@@ -41,7 +41,7 @@ export const sendMessage = async (
 		.withGraphFetched({ members: true });
 
 	group.members.forEach(async m => {
-		if ((m.id! += args.message.authorId)) {
+		if ((m.id !== args.message.authorId)) {
 			await sendMailboxUpdate({
 				title:
 					'New message in ' +

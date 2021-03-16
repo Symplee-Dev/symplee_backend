@@ -626,6 +626,7 @@ interface Chat {
   createdById: Scalars['Int'];
   messages: Array<Maybe<MessagesChats>>;
   icon: Scalars['String'];
+  mode: Scalars['String'];
 }
 
 interface MessagesChats {
@@ -1053,6 +1054,7 @@ export type ChatResolvers<ContextType = any, ParentType extends ResolversParentT
   createdById?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   messages?: Resolver<Array<Maybe<ResolversTypes['MessagesChats']>>, ParentType, ContextType>;
   icon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

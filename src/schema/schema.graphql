@@ -299,6 +299,7 @@ type Chat {
 	createdById: Int!
 	messages: [MessagesChats]!
 	icon: String!
+	mode: String!
 }
 
 type MessagesChats {

@@ -498,6 +498,7 @@ interface CreateChatInput {
   userId: Scalars['Int'];
   icon: Scalars['String'];
   chatGroupId: Scalars['Int'];
+  type?: Maybe<Scalars['String']>;
 }
 
 interface CreateChatGroupInput {
@@ -505,6 +506,7 @@ interface CreateChatGroupInput {
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
+  type?: Maybe<ChatGroupType>;
 }
 
 interface LoginInput {

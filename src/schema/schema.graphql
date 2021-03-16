@@ -180,6 +180,7 @@ input CreateChatInput {
 	userId: Int!
 	icon: String!
 	chatGroupId: Int!
+	type: String
 }
 
 input CreateChatGroupInput {
@@ -187,6 +188,7 @@ input CreateChatGroupInput {
 	isPublic: Boolean!
 	userId: Int!
 	avatar: String
+	type: ChatGroupType
 }
 
 input LoginInput {

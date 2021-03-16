@@ -6,7 +6,7 @@ export const createChatGroup = async (
 	args: Resolvers.MutationCreateChatGroupArgs,
 	context: Services.ServerContext
 ): Promise<Resolvers.ChatGroup> => {
-	const { name, isPublic, userId, avatar } = args.chatGroup;
+	const { name, isPublic, userId, avatar, type } = args.chatGroup;
 
 	context.logger.info('Trying to create chat group with name: ' + name);
 
@@ -15,7 +15,8 @@ export const createChatGroup = async (
 		isPublic,
 		createdBy: userId,
 		createdAt: new Date().toString(),
-		avatar
+		avatar,
+		type: type ? type : 'CHAT_GROUP'
 	});
 
 	const createdRelation = await UserGroups.query().insertAndFetch({

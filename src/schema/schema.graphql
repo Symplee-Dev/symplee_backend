@@ -19,6 +19,7 @@ type Query {
 	getAcceptedFriends(userId: Int!): [UserFriend]!
 	getPendingFriends(userId: Int!): [UserFriend]!
 	getBlockedFriends(userId: Int!): [UserFriend]!
+	getDMS(userId: Int!): [ChatGroup]!
 }
 
 type GetProfileReturn {
@@ -36,6 +37,7 @@ type Mutation {
 	verifyEmail(token: String!): Boolean!
 	createChat(chat: CreateChatInput!): Chat!
 	createChatGroup(chatGroup: CreateChatGroupInput!): ChatGroup!
+	createDM(dm: CreateDMInput!): ChatGroup!
 	addNewChangeLog(newChangeLog: NewChangeLogInput!): ChangeLog!
 	editChangeLog(id: Int!, changeLogEdit: NewChangeLogInput!): ChangeLog
 	sendFeedback(feedback: SendAppFeedbackInput!): AppFeedback!
@@ -68,6 +70,11 @@ type Mutation {
 	): Boolean!
 	blockUser(userId: Int!, otherUserId: Int!): Boolean!
 	unblockUser(userId: Int!, otherUserId: Int!): Boolean!
+}
+
+enum ChatGroupType {
+	CHAT_GROUP
+	DM
 }
 
 enum ErrorCode {
@@ -174,6 +181,7 @@ input CreateChatInput {
 	userId: Int!
 	icon: String!
 	chatGroupId: Int!
+	type: String
 }
 
 input CreateChatGroupInput {
@@ -181,6 +189,16 @@ input CreateChatGroupInput {
 	isPublic: Boolean!
 	userId: Int!
 	avatar: String
+	type: ChatGroupType
+}
+
+input CreateDMInput {
+	name: String!
+	isPublic: Boolean!
+	userId: Int!
+	avatar: String
+	type: ChatGroupType
+	includes: [Int!]!
 }
 
 input LoginInput {
@@ -290,6 +308,7 @@ type ChatGroup {
 	createdBy: Int!
 	avatar: String
 	members: [User!]!
+	type: ChatGroupType
 }
 
 type Chat {
@@ -351,21 +370,4 @@ type UserMailbox {
 	title: String!
 	goTo: String!
 	userId: Int!
-}
-
-type UserDM {
-	id: Int!
-	userId: Int!
-	users: [Int!]!
-	messages: [UserDMMessages]!
-}
-
-type UserDMMessages {
-	id: Int!
-	body: String!
-	authorUsername: String!
-	authorId: Int!
-	author: User!
-	createdAt: String!
-	dmId: Int!
 }

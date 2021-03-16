@@ -34,6 +34,7 @@ interface Query {
   getAcceptedFriends: Array<Maybe<UserFriend>>;
   getPendingFriends: Array<Maybe<UserFriend>>;
   getBlockedFriends: Array<Maybe<UserFriend>>;
+  getDMS: Array<Maybe<ChatGroup>>;
 }
 
 
@@ -110,6 +111,11 @@ interface QueryGetBlockedFriendsArgs {
   userId: Scalars['Int'];
 }
 
+
+interface QueryGetDmsArgs {
+  userId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -127,6 +133,7 @@ interface Mutation {
   verifyEmail: Scalars['Boolean'];
   createChat: Chat;
   createChatGroup: ChatGroup;
+  createDM: ChatGroup;
   addNewChangeLog: ChangeLog;
   editChangeLog?: Maybe<ChangeLog>;
   sendFeedback: AppFeedback;
@@ -200,6 +207,11 @@ interface MutationCreateChatArgs {
 
 interface MutationCreateChatGroupArgs {
   chatGroup: CreateChatGroupInput;
+}
+
+
+interface MutationCreateDmArgs {
+  dm: CreateDmInput;
 }
 
 
@@ -352,6 +364,10 @@ interface MutationUnblockUserArgs {
   otherUserId: Scalars['Int'];
 }
 
+type ChatGroupType =
+  | 'CHAT_GROUP'
+  | 'DM';
+
 type ErrorCode =
   | 'ALREADY_FAILURE'
   | 'SUCCESS';
@@ -488,6 +504,7 @@ interface CreateChatInput {
   userId: Scalars['Int'];
   icon: Scalars['String'];
   chatGroupId: Scalars['Int'];
+  type?: Maybe<Scalars['String']>;
 }
 
 interface CreateChatGroupInput {
@@ -495,6 +512,16 @@ interface CreateChatGroupInput {
   isPublic: Scalars['Boolean'];
   userId: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
+  type?: Maybe<ChatGroupType>;
+}
+
+interface CreateDmInput {
+  name: Scalars['String'];
+  isPublic: Scalars['Boolean'];
+  userId: Scalars['Int'];
+  avatar?: Maybe<Scalars['String']>;
+  type?: Maybe<ChatGroupType>;
+  includes: Array<Scalars['Int']>;
 }
 
 interface LoginInput {
@@ -613,6 +640,7 @@ interface ChatGroup {
   createdBy: Scalars['Int'];
   avatar?: Maybe<Scalars['String']>;
   members: Array<User>;
+  type?: Maybe<ChatGroupType>;
 }
 
 interface Chat {
@@ -680,25 +708,6 @@ interface UserMailbox {
   title: Scalars['String'];
   goTo: Scalars['String'];
   userId: Scalars['Int'];
-}
-
-interface UserDm {
-  __typename?: 'UserDM';
-  id: Scalars['Int'];
-  userId: Scalars['Int'];
-  users: Array<Scalars['Int']>;
-  messages: Array<Maybe<UserDmMessages>>;
-}
-
-interface UserDmMessages {
-  __typename?: 'UserDMMessages';
-  id: Scalars['Int'];
-  body: Scalars['String'];
-  authorUsername: Scalars['String'];
-  authorId: Scalars['Int'];
-  author: User;
-  createdAt: Scalars['String'];
-  dmId: Scalars['Int'];
 }
 
 } } export {};

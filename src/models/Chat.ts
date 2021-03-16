@@ -9,6 +9,7 @@ class Chat extends BaseModel {
 	messages!: MessagesChats[];
 	icon!: string;
 	chatGroupId!: number;
+	mode!: string;
 
 	static get tableName() {
 		return 'chats';

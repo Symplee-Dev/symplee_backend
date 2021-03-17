@@ -121,7 +121,7 @@ export const editMessage = async (
 
 	const newMessage = await MessagesChats.query().patchAndFetchById(
 		message.id,
-		{
+		{ 
 			body: message.body
 		}
 	);
@@ -187,7 +187,10 @@ export const messageEdited = {
 			payload: { chatId: number; message: MessagesChats },
 			variable: Resolvers.SubscriptionMessageEditedArgs
 		) => {
-			return payload.chatId === variable.chatId;
+			return (
+				payload.chatId === variable.chatId ||
+				variable.chatId === payload.message.chatId
+			);
 		}
 	),
 	resolve: (value: { chatId: number; message: MessagesChats }) => {

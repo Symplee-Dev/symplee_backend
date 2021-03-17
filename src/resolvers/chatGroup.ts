@@ -67,7 +67,7 @@ export const searchGroups = async (
 	const groups = await ChatGroup.query().where({ isPublic: true }).limit(100);
 
 	const groupsFiltered = groups.filter(
-		g => g.name.search(args.queryString) !== -1
+		g => g.name.toLowerCase().search(args.queryString.toLowerCase()) !== -1
 	);
 
 	return groupsFiltered;

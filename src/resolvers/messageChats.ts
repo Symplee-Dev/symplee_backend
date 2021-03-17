@@ -119,12 +119,11 @@ export const editMessage = async (
 		throw new AuthenticationError('User is not authorized to edit');
 	}
 
-	const newMessage = await MessagesChats.query().patchAndFetchById(
-		message.id,
-		{
+	const newMessage = await MessagesChats.query()
+		.patchAndFetchById(message.id, {
 			body: message.body
-		}
-	);
+		})
+		.withGraphFetched({ author: true });
 
 	pubsub.publish('MESSAGE_EDITED', {
 		chatId: newMessage.chatId,
@@ -187,7 +186,10 @@ export const messageEdited = {
 			payload: { chatId: number; message: MessagesChats },
 			variable: Resolvers.SubscriptionMessageEditedArgs
 		) => {
-			return payload.chatId === variable.chatId;
+			return (
+				payload.chatId === variable.chatId ||
+				variable.chatId === payload.message.chatId
+			);
 		}
 	),
 	resolve: (value: { chatId: number; message: MessagesChats }) => {

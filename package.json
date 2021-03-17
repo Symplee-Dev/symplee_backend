@@ -44,7 +44,7 @@
 		"express": "^4.17.1",
 		"graphql": "^15.5.0",
 		"graphql-redis-subscriptions": "^2.3.1",
-		"husky": "^4.3.7",
+		"husky": "^4.3.8",
 		"ioredis": "^4.23.0",
 		"jsonwebtoken": "^8.5.1",
 		"jwt-decode": "^3.1.2",

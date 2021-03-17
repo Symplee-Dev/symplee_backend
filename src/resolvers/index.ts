@@ -7,10 +7,11 @@ import {
 	updateUser,
 	toggleUserOnline,
 	blockUser,
-	unblockUser
+	unblockUser,
+	getDms
 } from './user';
 import { verifyEmail } from './verifyEmail';
-import { createChatGroup } from './createChatGroup';
+import { createChatGroup, createDM } from './createChatGroup';
 import {
 	chatGroup,
 	updateChatGroup,
@@ -101,7 +102,8 @@ export const resolvers: Resolvers.Resolvers = {
 		searchGroups,
 		getProfile,
 		getPendingFriends,
-		getAcceptedFriends
+		getAcceptedFriends,
+		getDMS: getDms
 	},
 	Mutation: {
 		sendForgotPasswordEmail,
@@ -139,7 +141,8 @@ export const resolvers: Resolvers.Resolvers = {
 		inviteByLink,
 		acceptInviteByLink,
 		blockUser,
-		unblockUser
+		unblockUser,
+		createDM
 	},
 	User: {
 		chatGroups: userResolvers.chatGroups as any

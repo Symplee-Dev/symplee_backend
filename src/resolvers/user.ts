@@ -5,7 +5,7 @@ import { Authentication } from '../Services/Authentication';
 import UserGroups from '../models/UserGroups';
 import ChatGroup from '../models/ChatGroup';
 import UserFriends from '../models/UserFriends';
-import { toUpper } from 'lodash';
+import { gt, toUpper } from 'lodash';
 import { pubsub } from '../index';
 import { withFilter } from 'graphql-subscriptions';
 import { SendMailboxUpdateArgs } from '../utils/sendMailboxUpdate';
@@ -40,8 +40,34 @@ export const userResolvers = {
 			groups.push(group);
 		}
 
-		return groups;
+		return groups.filter(g => g.type !== 'DM');
 	}
+};
+
+export const getDms = async (
+	parent: any,
+	args: Resolvers.QueryGetDmsArgs,
+	context: Services.ServerContext
+) => {
+	context.logger.info('Query user dms');
+
+	const groupsIds = await UserGroups.query().where({ userId: args.userId });
+
+	console.log(groupsIds);
+
+	let groups: ChatGroup[] = [];
+
+	for (let i = 0; i < groupsIds.length; i++) {
+		const group = await ChatGroup.query()
+			.findById(groupsIds[i].chatGroupId)
+			.withGraphFetched({ chats: true });
+
+		groups.push(group);
+	}
+
+	const filtered = groups.filter(g => g.type === 'DM');
+
+	return filtered;
 };
 
 export const user = async (

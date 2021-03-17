@@ -11,6 +11,7 @@ class ChatGroup extends BaseModel {
 	createdBy!: number;
 	avatar?: string;
 	members!: User[];
+	type?: 'CHAT_GROUP' | 'DM';
 
 	static get tableName() {
 		return 'chat_groups';

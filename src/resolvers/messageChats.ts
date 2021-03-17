@@ -119,12 +119,11 @@ export const editMessage = async (
 		throw new AuthenticationError('User is not authorized to edit');
 	}
 
-	const newMessage = await MessagesChats.query().patchAndFetchById(
-		message.id,
-		{ 
+	const newMessage = await MessagesChats.query()
+		.patchAndFetchById(message.id, {
 			body: message.body
-		}
-	);
+		})
+		.withGraphFetched({ author: true });
 
 	pubsub.publish('MESSAGE_EDITED', {
 		chatId: newMessage.chatId,

@@ -651,6 +651,7 @@ interface Chat {
   createdById: Scalars['Int'];
   messages: Array<Maybe<MessagesChats>>;
   icon: Scalars['String'];
+  mode: Scalars['String'];
 }
 
 interface MessagesChats {

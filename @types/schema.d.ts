@@ -35,6 +35,7 @@ interface Query {
   getPendingFriends: Array<Maybe<UserFriend>>;
   getBlockedFriends: Array<Maybe<UserFriend>>;
   getDMS: Array<Maybe<ChatGroup>>;
+  getSettings: Array<Maybe<Settings>>;
 }
 
 
@@ -116,6 +117,11 @@ interface QueryGetDmsArgs {
   userId: Scalars['Int'];
 }
 
+
+interface QueryGetSettingsArgs {
+  userId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -161,6 +167,7 @@ interface Mutation {
   inviteByLink: Scalars['Boolean'];
   blockUser: Scalars['Boolean'];
   unblockUser: Scalars['Boolean'];
+  editOrAddSettings: Scalars['Boolean'];
 }
 
 
@@ -362,6 +369,17 @@ interface MutationBlockUserArgs {
 interface MutationUnblockUserArgs {
   userId: Scalars['Int'];
   otherUserId: Scalars['Int'];
+}
+
+
+interface MutationEditOrAddSettingsArgs {
+  userId: Scalars['Int'];
+  setting: Array<SettingInput>;
+}
+
+interface SettingInput {
+  type: Scalars['String'];
+  value: Scalars['String'];
 }
 
 type ChatGroupType =
@@ -628,6 +646,37 @@ interface User {
   verified: Scalars['Boolean'];
   avatar?: Maybe<Scalars['String']>;
   is_online: Scalars['Boolean'];
+}
+
+type DefaultBoolean =
+  | 'T'
+  | 'F';
+
+type PreferredTheme =
+  | 'Light'
+  | 'Dark';
+
+type FontSize =
+  | 'Small'
+  | 'Medium'
+  | 'Large';
+
+type Language =
+  | 'English';
+
+interface Settings {
+  __typename?: 'Settings';
+  PREFERRED_THEME?: Maybe<PreferredTheme>;
+  FONT_SIZE?: Maybe<FontSize>;
+  LANGUAGE?: Maybe<Language>;
+  DYSLEXIC_FONT?: Maybe<DefaultBoolean>;
+  SEARCHABLE?: Maybe<DefaultBoolean>;
+  RECEIVE_NON_FRIEND_MESSAGES?: Maybe<DefaultBoolean>;
+  HIDE_PROFILE_NON_FRIENDS?: Maybe<DefaultBoolean>;
+  MUTE_ALL?: Maybe<DefaultBoolean>;
+  ONLY_MENTIONS?: Maybe<DefaultBoolean>;
+  MESSAGE_NOTIFICATIONS?: Maybe<DefaultBoolean>;
+  FOCUS_ON_CALL?: Maybe<DefaultBoolean>;
 }
 
 interface ChatGroup {

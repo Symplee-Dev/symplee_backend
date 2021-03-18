@@ -1,13 +1,17 @@
-export enum DefaultSettingsTypeEnum {
-	PREFERRED_THEME = 'PREFERRED_THEME'
-}
+type DefaultBoolean = 'true' | 'false';
 
 export type DefaultSettings = {
 	PREFERRED_THEME: 'Light' | 'Dark';
 	FONT_SIZE: 'Small' | 'Medium' | 'Large';
 	LANGUAGE: 'English';
-	DYSLEXIC_FONT: 'true' | 'false';
-	SEARCHABLE: 'true' | 'false';
+	DYSLEXIC_FONT: DefaultBoolean;
+	SEARCHABLE: DefaultBoolean;
+	RECEIVE_NON_FRIEND_MESSAGES: DefaultBoolean;
+	HIDE_PROFILE_NON_FRIENDS: DefaultBoolean;
+	MUTE_ALL: DefaultBoolean;
+	ONLY_MENTIONS: DefaultBoolean;
+	MESSAGE_NOTIFICATIONS: DefaultBoolean;
+	FOCUS_ON_CALL: DefaultBoolean;
 };
 
 const entries = Object.entries as <T>(
@@ -22,6 +26,12 @@ export class SettingsStore {
 	LANGUAGE?: DefaultSettings['LANGUAGE'] = 'English';
 	DYSLEXIC_FONT?: DefaultSettings['DYSLEXIC_FONT'] = 'false';
 	SEARCHABLE?: DefaultSettings['SEARCHABLE'] = 'true';
+	RECEIVE_NON_FRIEND_MESSAGES?: DefaultBoolean = 'true';
+	HIDE_PROFILE_NON_FRIENDS?: DefaultBoolean = 'false';
+	MUTE_ALL?: DefaultBoolean = 'false';
+	ONLY_MENTIONS?: DefaultBoolean = 'false';
+	MESSAGE_NOTIFICATIONS?: DefaultBoolean = 'true';
+	FOCUS_ON_CALL?: DefaultBoolean = 'true';
 
 	constructor(settings: Partial<DefaultSettings>) {
 		this.userSettings = settings;
@@ -55,13 +65,3 @@ export class SettingsStore {
 		return settings;
 	}
 }
-
-async function test() {
-	const a = new SettingsStore({ PREFERRED_THEME: 'Dark' });
-
-	await a.initialize();
-
-	console.log(a.serialize());
-}
-
-test();

@@ -1,4 +1,4 @@
-type DefaultBoolean = 'true' | 'false';
+type DefaultBoolean = 'T' | 'F';
 
 export type DefaultSettings = {
 	PREFERRED_THEME: 'Light' | 'Dark';
@@ -24,14 +24,14 @@ export class SettingsStore {
 	PREFERRED_THEME?: DefaultSettings['PREFERRED_THEME'] = 'Light';
 	FONT_SIZE?: DefaultSettings['FONT_SIZE'] = 'Medium';
 	LANGUAGE?: DefaultSettings['LANGUAGE'] = 'English';
-	DYSLEXIC_FONT?: DefaultSettings['DYSLEXIC_FONT'] = 'false';
-	SEARCHABLE?: DefaultSettings['SEARCHABLE'] = 'true';
-	RECEIVE_NON_FRIEND_MESSAGES?: DefaultBoolean = 'true';
-	HIDE_PROFILE_NON_FRIENDS?: DefaultBoolean = 'false';
-	MUTE_ALL?: DefaultBoolean = 'false';
-	ONLY_MENTIONS?: DefaultBoolean = 'false';
-	MESSAGE_NOTIFICATIONS?: DefaultBoolean = 'true';
-	FOCUS_ON_CALL?: DefaultBoolean = 'true';
+	DYSLEXIC_FONT?: DefaultSettings['DYSLEXIC_FONT'] = 'F';
+	SEARCHABLE?: DefaultSettings['SEARCHABLE'] = 'T';
+	RECEIVE_NON_FRIEND_MESSAGES?: DefaultBoolean = 'T';
+	HIDE_PROFILE_NON_FRIENDS?: DefaultBoolean = 'F';
+	MUTE_ALL?: DefaultBoolean = 'F';
+	ONLY_MENTIONS?: DefaultBoolean = 'F';
+	MESSAGE_NOTIFICATIONS?: DefaultBoolean = 'T';
+	FOCUS_ON_CALL?: DefaultBoolean = 'T';
 
 	constructor(settings: Partial<DefaultSettings>) {
 		this.userSettings = settings;

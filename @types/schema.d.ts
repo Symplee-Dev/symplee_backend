@@ -35,6 +35,7 @@ interface Query {
   getPendingFriends: Array<Maybe<UserFriend>>;
   getBlockedFriends: Array<Maybe<UserFriend>>;
   getDMS: Array<Maybe<ChatGroup>>;
+  getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
 }
 
 
@@ -114,6 +115,11 @@ interface QueryGetBlockedFriendsArgs {
 
 interface QueryGetDmsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetUsersChatsByGroupIdArgs {
+  groupID: Scalars['Int'];
 }
 
 interface GetProfileReturn {

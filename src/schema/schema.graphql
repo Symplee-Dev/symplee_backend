@@ -20,6 +20,7 @@ type Query {
 	getPendingFriends(userId: Int!): [UserFriend]!
 	getBlockedFriends(userId: Int!): [UserFriend]!
 	getDMS(userId: Int!): [ChatGroup]!
+	getUsersChatsByGroupID(groupID: Int!): [Int]!
 }
 
 type GetProfileReturn {

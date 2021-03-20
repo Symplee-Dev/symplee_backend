@@ -32,7 +32,8 @@ import {
 	hasChat,
 	deleteChatChannel,
 	userTypingSubscription,
-	userTyping
+	userTyping,
+	getUsersChatsByGroupID
 } from './chat';
 import { admin, adminLogin, createAdmin, sendAdminInvite } from './admin';
 
@@ -103,7 +104,8 @@ export const resolvers: Resolvers.Resolvers = {
 		getProfile,
 		getPendingFriends,
 		getAcceptedFriends,
-		getDMS: getDms
+		getDMS: getDms,
+		getUsersChatsByGroupID
 	},
 	Mutation: {
 		sendForgotPasswordEmail,

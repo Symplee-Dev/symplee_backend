@@ -13,25 +13,25 @@ class User extends BaseModel {
 	verified!: boolean;
 	avatar?: string;
 	is_online!: boolean;
-	
+
 	static get tableName() {
 		return 'users';
 	}
 
-	static relationMappings = {
-		// chatGroups: {
-		// 	relation: BaseModel.ManyToManyRelation,
-		// 	modelClass: ChatGroup,
-		// 	join: {
-		// 		from: 'users.id',
-		// 		through: {
-		// 			from: 'user_groups.userId',
-		// 			to: 'user_groups.chatGroupId'
-		// 		},
-		// 		to: 'chat_groups.id'
-		// 	}
-		// }
-	};
+	// static relationMappings = {
+	// 	chatGroups: {
+	// 		relation: BaseModel.,
+	// 		modelClass: ChatGroup,
+	// 		join: {
+	// 			from: 'users.id',
+	// 			through: {
+	// 				from: 'user_groups.userId',
+	// 				to: 'user_groups.chatGroupId'
+	// 			},
+	// 			to: 'chat_groups.id'
+	// 		}
+	// 	}
+	// };
 }
 
 export default User;

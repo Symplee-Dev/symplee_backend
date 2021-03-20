@@ -29,6 +29,34 @@ export const hasChat = async (
 	return true;
 };
 
+export const getUsersChatsByGroupID = async (
+	parent: any,
+	args: Resolvers.QueryGetUsersChatsByGroupIdArgs,
+	context: Services.ServerContext
+): Promise<number[]> => {
+	const groupId = args.groupID;
+	const token = context.token;
+
+	if (!groupId) {
+		throw new ApolloError('No Group Id', '404');
+	}
+
+	if (!token) {
+		throw new AuthenticationError('Not Authorized');
+	}
+
+	const decoded: { userId: number } = jwtDecode(token);
+
+	if (!decoded || !decoded.userId) {
+		throw new AuthenticationError('Not Authorized');
+	}
+
+	const groupChats = await ChatGroup.query().where({ id: groupId });
+
+	context.logger.info('GroupChats >>> ', groupChats);
+	return [1, 2, 3];
+};
+
 export const deleteChatChannel = async (
 	parent: any,
 	args: Resolvers.MutationDeleteChatChannelArgs,

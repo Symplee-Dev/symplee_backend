@@ -21,6 +21,7 @@ type Query {
 	getBlockedFriends(userId: Int!): [UserFriend]!
 	getDMS(userId: Int!): [ChatGroup]!
 	getUsersChatsByGroupID(groupID: Int!): [Int]!
+	getSettings(userId: Int!): [Settings]!
 }
 
 type GetProfileReturn {
@@ -71,6 +72,12 @@ type Mutation {
 	): Boolean!
 	blockUser(userId: Int!, otherUserId: Int!): Boolean!
 	unblockUser(userId: Int!, otherUserId: Int!): Boolean!
+	editOrAddSettings(userId: Int!, setting: [SettingInput!]!): Boolean!
+}
+
+input SettingInput {
+	type: String!
+	value: String!
 }
 
 enum ChatGroupType {
@@ -298,6 +305,40 @@ type User {
 	verified: Boolean!
 	avatar: String
 	is_online: Boolean!
+}
+
+enum DefaultBoolean {
+	T
+	F
+}
+
+enum PreferredTheme {
+	Light
+	Dark
+}
+
+enum FontSize {
+	Small
+	Medium
+	Large
+}
+
+enum Language {
+	English
+}
+
+type Settings {
+	PREFERRED_THEME: PreferredTheme
+	FONT_SIZE: FontSize
+	LANGUAGE: Language
+	DYSLEXIC_FONT: DefaultBoolean
+	SEARCHABLE: DefaultBoolean
+	RECEIVE_NON_FRIEND_MESSAGES: DefaultBoolean
+	HIDE_PROFILE_NON_FRIENDS: DefaultBoolean
+	MUTE_ALL: DefaultBoolean
+	ONLY_MENTIONS: DefaultBoolean
+	MESSAGE_NOTIFICATIONS: DefaultBoolean
+	FOCUS_ON_CALL: DefaultBoolean
 }
 
 type ChatGroup {

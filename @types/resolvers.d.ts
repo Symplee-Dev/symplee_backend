@@ -39,6 +39,7 @@ interface Query {
   getBlockedFriends: Array<Maybe<UserFriend>>;
   getDMS: Array<Maybe<ChatGroup>>;
   getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
+  getSettings: Array<Maybe<Settings>>;
 }
 
 
@@ -125,6 +126,11 @@ interface QueryGetUsersChatsByGroupIdArgs {
   groupID: Scalars['Int'];
 }
 
+
+interface QueryGetSettingsArgs {
+  userId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -170,6 +176,7 @@ interface Mutation {
   inviteByLink: Scalars['Boolean'];
   blockUser: Scalars['Boolean'];
   unblockUser: Scalars['Boolean'];
+  editOrAddSettings: Scalars['Boolean'];
 }
 
 
@@ -371,6 +378,17 @@ interface MutationBlockUserArgs {
 interface MutationUnblockUserArgs {
   userId: Scalars['Int'];
   otherUserId: Scalars['Int'];
+}
+
+
+interface MutationEditOrAddSettingsArgs {
+  userId: Scalars['Int'];
+  setting: Array<SettingInput>;
+}
+
+interface SettingInput {
+  type: Scalars['String'];
+  value: Scalars['String'];
 }
 
 type ChatGroupType =
@@ -639,6 +657,37 @@ interface User {
   is_online: Scalars['Boolean'];
 }
 
+type DefaultBoolean =
+  | 'T'
+  | 'F';
+
+type PreferredTheme =
+  | 'Light'
+  | 'Dark';
+
+type FontSize =
+  | 'Small'
+  | 'Medium'
+  | 'Large';
+
+type Language =
+  | 'English';
+
+interface Settings {
+  __typename?: 'Settings';
+  PREFERRED_THEME?: Maybe<PreferredTheme>;
+  FONT_SIZE?: Maybe<FontSize>;
+  LANGUAGE?: Maybe<Language>;
+  DYSLEXIC_FONT?: Maybe<DefaultBoolean>;
+  SEARCHABLE?: Maybe<DefaultBoolean>;
+  RECEIVE_NON_FRIEND_MESSAGES?: Maybe<DefaultBoolean>;
+  HIDE_PROFILE_NON_FRIENDS?: Maybe<DefaultBoolean>;
+  MUTE_ALL?: Maybe<DefaultBoolean>;
+  ONLY_MENTIONS?: Maybe<DefaultBoolean>;
+  MESSAGE_NOTIFICATIONS?: Maybe<DefaultBoolean>;
+  FOCUS_ON_CALL?: Maybe<DefaultBoolean>;
+}
+
 interface ChatGroup {
   __typename?: 'ChatGroup';
   id: Scalars['Int'];
@@ -804,6 +853,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
+  SettingInput: SettingInput;
   ChatGroupType: ChatGroupType;
   ErrorCode: ErrorCode;
   DeclineFriendInput: DeclineFriendInput;
@@ -835,6 +885,11 @@ export type ResolversTypes = {
   AdminInput: AdminInput;
   schema: ResolverTypeWrapper<Schema>;
   User: ResolverTypeWrapper<User>;
+  DefaultBoolean: DefaultBoolean;
+  PreferredTheme: PreferredTheme;
+  FontSize: FontSize;
+  Language: Language;
+  Settings: ResolverTypeWrapper<Settings>;
   ChatGroup: ResolverTypeWrapper<ChatGroup>;
   Chat: ResolverTypeWrapper<Chat>;
   MessagesChats: ResolverTypeWrapper<MessagesChats>;
@@ -852,6 +907,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   GetProfileReturn: GetProfileReturn;
   Mutation: {};
+  SettingInput: SettingInput;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
   FriendRequestInput: FriendRequestInput;
@@ -881,6 +937,7 @@ export type ResolversParentTypes = {
   AdminInput: AdminInput;
   schema: Schema;
   User: User;
+  Settings: Settings;
   ChatGroup: ChatGroup;
   Chat: Chat;
   MessagesChats: MessagesChats;
@@ -913,6 +970,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getBlockedFriends?: Resolver<Array<Maybe<ResolversTypes['UserFriend']>>, ParentType, ContextType, RequireFields<QueryGetBlockedFriendsArgs, 'userId'>>;
   getDMS?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QueryGetDmsArgs, 'userId'>>;
   getUsersChatsByGroupID?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType, RequireFields<QueryGetUsersChatsByGroupIdArgs, 'groupID'>>;
+  getSettings?: Resolver<Array<Maybe<ResolversTypes['Settings']>>, ParentType, ContextType, RequireFields<QueryGetSettingsArgs, 'userId'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {
@@ -959,6 +1017,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   inviteByLink?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationInviteByLinkArgs, 'userId' | 'groupId' | 'otherUserId' | 'uses'>>;
   blockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationBlockUserArgs, 'userId' | 'otherUserId'>>;
   unblockUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationUnblockUserArgs, 'userId' | 'otherUserId'>>;
+  editOrAddSettings?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationEditOrAddSettingsArgs, 'userId' | 'setting'>>;
 };
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = {
@@ -1049,6 +1108,21 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   verified?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   avatar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   is_online?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SettingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Settings'] = ResolversParentTypes['Settings']> = {
+  PREFERRED_THEME?: Resolver<Maybe<ResolversTypes['PreferredTheme']>, ParentType, ContextType>;
+  FONT_SIZE?: Resolver<Maybe<ResolversTypes['FontSize']>, ParentType, ContextType>;
+  LANGUAGE?: Resolver<Maybe<ResolversTypes['Language']>, ParentType, ContextType>;
+  DYSLEXIC_FONT?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  SEARCHABLE?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  RECEIVE_NON_FRIEND_MESSAGES?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  HIDE_PROFILE_NON_FRIENDS?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  MUTE_ALL?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  ONLY_MENTIONS?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  MESSAGE_NOTIFICATIONS?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
+  FOCUS_ON_CALL?: Resolver<Maybe<ResolversTypes['DefaultBoolean']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1146,6 +1220,7 @@ export type Resolvers<ContextType = any> = {
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
+  Settings?: SettingsResolvers<ContextType>;
   ChatGroup?: ChatGroupResolvers<ContextType>;
   Chat?: ChatResolvers<ContextType>;
   MessagesChats?: MessagesChatsResolvers<ContextType>;

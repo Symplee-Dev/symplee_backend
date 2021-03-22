@@ -525,7 +525,7 @@ interface CreateChatInput {
   userId: Scalars['Int'];
   icon: Scalars['String'];
   chatGroupId: Scalars['Int'];
-  type?: Maybe<Scalars['String']>;
+  mode: Scalars['String'];
 }
 
 interface CreateChatGroupInput {

@@ -36,6 +36,7 @@ interface Query {
   getBlockedFriends: Array<Maybe<UserFriend>>;
   getDMS: Array<Maybe<ChatGroup>>;
   getSettings: Array<Maybe<Settings>>;
+  getCallMembers: Array<User>;
 }
 
 
@@ -120,6 +121,11 @@ interface QueryGetDmsArgs {
 
 interface QueryGetSettingsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetCallMembersArgs {
+  members: Array<Scalars['String']>;
 }
 
 interface GetProfileReturn {

@@ -80,6 +80,7 @@ import {
 	markNotificationAsRead,
 	getNotifications
 } from './invites';
+import { getCallMembers } from './call';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -103,7 +104,8 @@ export const resolvers: Resolvers.Resolvers = {
 		getProfile,
 		getPendingFriends,
 		getAcceptedFriends,
-		getDMS: getDms
+		getDMS: getDms,
+		getCallMembers
 	},
 	Mutation: {
 		sendForgotPasswordEmail,

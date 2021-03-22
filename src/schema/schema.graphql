@@ -188,7 +188,7 @@ input CreateChatInput {
 	userId: Int!
 	icon: String!
 	chatGroupId: Int!
-	type: String
+	mode: String!
 }
 
 input CreateChatGroupInput {

@@ -21,6 +21,7 @@ type Query {
 	getBlockedFriends(userId: Int!): [UserFriend]!
 	getDMS(userId: Int!): [ChatGroup]!
 	getSettings(userId: Int!): [Settings]!
+	getCallMembers(members: [String!]!): [User!]!
 }
 
 type GetProfileReturn {

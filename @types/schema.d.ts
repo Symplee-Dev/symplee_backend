@@ -37,6 +37,7 @@ interface Query {
   getDMS: Array<Maybe<ChatGroup>>;
   getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
   getSettings: Array<Maybe<Settings>>;
+  getCallMembers: Array<User>;
 }
 
 
@@ -126,6 +127,11 @@ interface QueryGetUsersChatsByGroupIdArgs {
 
 interface QueryGetSettingsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetCallMembersArgs {
+  members: Array<Scalars['String']>;
 }
 
 interface GetProfileReturn {
@@ -528,7 +534,7 @@ interface CreateChatInput {
   userId: Scalars['Int'];
   icon: Scalars['String'];
   chatGroupId: Scalars['Int'];
-  type?: Maybe<Scalars['String']>;
+  mode: Scalars['String'];
 }
 
 interface CreateChatGroupInput {

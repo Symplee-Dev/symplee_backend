@@ -6,7 +6,7 @@ export const createChat = async (
 	args: Resolvers.MutationCreateChatArgs,
 	context: Services.ServerContext
 ): Promise<Resolvers.Chat> => {
-	const { name, isPublic, userId, icon, chatGroupId } = args.chat;
+	const { name, isPublic, userId, icon, chatGroupId, mode } = args.chat;
 
 	context.logger.info('Trying to create chat with name: ' + name);
 
@@ -15,7 +15,8 @@ export const createChat = async (
 		isPublic,
 		createdById: userId,
 		icon,
-		chatGroupId
+		chatGroupId,
+		mode
 	});
 
 	const createdRelation = await ChatUsers.query().insertAndFetch({

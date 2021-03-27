@@ -40,6 +40,7 @@ interface Query {
   getDMS: Array<Maybe<ChatGroup>>;
   getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
   getSettings: Array<Maybe<Settings>>;
+  getCallMembers: Array<User>;
 }
 
 
@@ -129,6 +130,11 @@ interface QueryGetUsersChatsByGroupIdArgs {
 
 interface QueryGetSettingsArgs {
   userId: Scalars['Int'];
+}
+
+
+interface QueryGetCallMembersArgs {
+  members: Array<Scalars['String']>;
 }
 
 interface GetProfileReturn {
@@ -531,7 +537,7 @@ interface CreateChatInput {
   userId: Scalars['Int'];
   icon: Scalars['String'];
   chatGroupId: Scalars['Int'];
-  type?: Maybe<Scalars['String']>;
+  mode: Scalars['String'];
 }
 
 interface CreateChatGroupInput {
@@ -971,6 +977,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getDMS?: Resolver<Array<Maybe<ResolversTypes['ChatGroup']>>, ParentType, ContextType, RequireFields<QueryGetDmsArgs, 'userId'>>;
   getUsersChatsByGroupID?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType, RequireFields<QueryGetUsersChatsByGroupIdArgs, 'groupID'>>;
   getSettings?: Resolver<Array<Maybe<ResolversTypes['Settings']>>, ParentType, ContextType, RequireFields<QueryGetSettingsArgs, 'userId'>>;
+  getCallMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetCallMembersArgs, 'members'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {

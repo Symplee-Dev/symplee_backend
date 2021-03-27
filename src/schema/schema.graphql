@@ -22,6 +22,7 @@ type Query {
 	getDMS(userId: Int!): [ChatGroup]!
 	getUsersChatsByGroupID(groupID: Int!): [Int]!
 	getSettings(userId: Int!): [Settings]!
+	getCallMembers(members: [String!]!): [User!]!
 }
 
 type GetProfileReturn {
@@ -189,7 +190,7 @@ input CreateChatInput {
 	userId: Int!
 	icon: String!
 	chatGroupId: Int!
-	type: String
+	mode: String!
 }
 
 input CreateChatGroupInput {

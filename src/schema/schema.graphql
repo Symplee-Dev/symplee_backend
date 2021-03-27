@@ -256,6 +256,16 @@ type ChangeLog {
 	version: String!
 }
 
+type UserRoles {
+	id: Int!
+	userId: Int!
+	groupId: Int!
+	role: String
+	roleIndex: Int
+	user: User
+	group: ChatGroup
+}
+
 type LoginReturn {
 	authenticated: Boolean!
 	token: String!

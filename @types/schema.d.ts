@@ -604,6 +604,17 @@ interface ChangeLog {
   version: Scalars['String'];
 }
 
+interface UserRoles {
+  __typename?: 'UserRoles';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  groupId: Scalars['Int'];
+  role?: Maybe<Scalars['String']>;
+  roleIndex?: Maybe<Scalars['Int']>;
+  user?: Maybe<User>;
+  group?: Maybe<ChatGroup>;
+}
+
 interface LoginReturn {
   __typename?: 'LoginReturn';
   authenticated: Scalars['Boolean'];

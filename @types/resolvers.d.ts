@@ -607,6 +607,17 @@ interface ChangeLog {
   version: Scalars['String'];
 }
 
+interface UserRoles {
+  __typename?: 'UserRoles';
+  id: Scalars['Int'];
+  userId: Scalars['Int'];
+  groupId: Scalars['Int'];
+  role?: Maybe<Scalars['String']>;
+  roleIndex?: Maybe<Scalars['Int']>;
+  user?: Maybe<User>;
+  group?: Maybe<ChatGroup>;
+}
+
 interface LoginReturn {
   __typename?: 'LoginReturn';
   authenticated: Scalars['Boolean'];
@@ -884,6 +895,7 @@ export type ResolversTypes = {
   Admin: ResolverTypeWrapper<Admin>;
   NewAdmin: ResolverTypeWrapper<NewAdmin>;
   ChangeLog: ResolverTypeWrapper<ChangeLog>;
+  UserRoles: ResolverTypeWrapper<UserRoles>;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
@@ -936,6 +948,7 @@ export type ResolversParentTypes = {
   Admin: Admin;
   NewAdmin: NewAdmin;
   ChangeLog: ChangeLog;
+  UserRoles: UserRoles;
   LoginReturn: LoginReturn;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
@@ -1093,6 +1106,17 @@ export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type UserRolesResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRoles'] = ResolversParentTypes['UserRoles']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  groupId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  roleIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+  group?: Resolver<Maybe<ResolversTypes['ChatGroup']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type LoginReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['LoginReturn'] = ResolversParentTypes['LoginReturn']> = {
   authenticated?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -1224,6 +1248,7 @@ export type Resolvers<ContextType = any> = {
   Admin?: AdminResolvers<ContextType>;
   NewAdmin?: NewAdminResolvers<ContextType>;
   ChangeLog?: ChangeLogResolvers<ContextType>;
+  UserRoles?: UserRolesResolvers<ContextType>;
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

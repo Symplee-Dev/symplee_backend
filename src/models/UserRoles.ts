@@ -9,6 +9,8 @@ class UserRoles extends BaseModel {
 	groupId!: number;
 	role!: string;
 	roleIndex!: number;
+	user!: User;
+	chatGroup!: ChatGroup;
 
 	static columnNameMappers = snakeCaseMappers();
 
@@ -16,18 +18,18 @@ class UserRoles extends BaseModel {
 		return 'user_roles';
 	}
 
-	static relationshipMappings = {
+	static relationMappings = {
 		user: {
 			relation: BaseModel.BelongsToOneRelation,
-			model: User,
+			modelClass: User,
 			join: {
 				from: 'user_roles.user_id',
 				to: 'users.id'
 			}
 		},
 		chatGroup: {
-			relation: BaseModel.BelongsToOneRelation,
-			model: ChatGroup,
+			relation: BaseModel.HasOneRelation,
+			modelClass: ChatGroup,
 			join: {
 				from: 'user_roles.group_id',
 				to: 'chat_groups.id'

@@ -82,6 +82,12 @@ import {
 	getNotifications
 } from './invites';
 import { getCallMembers } from './call';
+import {
+	createUserRole,
+	getUserRoles,
+	deleteUserRole,
+	editUserRole
+} from './userRoles';
 
 export const resolvers: Resolvers.Resolvers = {
 	Query: {
@@ -106,9 +112,13 @@ export const resolvers: Resolvers.Resolvers = {
 		getPendingFriends,
 		getAcceptedFriends,
 		getDMS: getDms,
-		getCallMembers
+		getCallMembers,
+		getUserRoles
 	},
 	Mutation: {
+		editUserRole,
+		deleteUserRole,
+		createUserRole,
 		sendForgotPasswordEmail,
 		sendAdminInvite,
 		adminLogin,

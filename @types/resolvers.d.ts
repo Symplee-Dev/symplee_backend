@@ -41,6 +41,7 @@ interface Query {
   getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
   getSettings: Array<Maybe<Settings>>;
   getCallMembers: Array<User>;
+  getUserRoles?: Maybe<Array<Maybe<UserRole>>>;
 }
 
 
@@ -137,6 +138,11 @@ interface QueryGetCallMembersArgs {
   members: Array<Scalars['String']>;
 }
 
+
+interface QueryGetUserRolesArgs {
+  groupId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -145,6 +151,9 @@ interface GetProfileReturn {
 
 interface Mutation {
   __typename?: 'Mutation';
+  editUserRole?: Maybe<UserRole>;
+  deleteUserRole: Scalars['Boolean'];
+  createUserRole?: Maybe<UserRole>;
   sendForgotPasswordEmail: Scalars['Boolean'];
   signup: User;
   login?: Maybe<LoginReturn>;
@@ -183,6 +192,21 @@ interface Mutation {
   blockUser: Scalars['Boolean'];
   unblockUser: Scalars['Boolean'];
   editOrAddSettings: Scalars['Boolean'];
+}
+
+
+interface MutationEditUserRoleArgs {
+  editRole: UserRoleInput;
+}
+
+
+interface MutationDeleteUserRoleArgs {
+  id: Scalars['Int'];
+}
+
+
+interface MutationCreateUserRoleArgs {
+  role: UserRoleInput;
 }
 
 
@@ -390,6 +414,13 @@ interface MutationUnblockUserArgs {
 interface MutationEditOrAddSettingsArgs {
   userId: Scalars['Int'];
   setting: Array<SettingInput>;
+}
+
+interface UserRoleInput {
+  groupId: Scalars['Int'];
+  userId: Scalars['Int'];
+  role: Scalars['String'];
+  roleIndex: Scalars['Int'];
 }
 
 interface SettingInput {
@@ -607,15 +638,15 @@ interface ChangeLog {
   version: Scalars['String'];
 }
 
-interface UserRoles {
-  __typename?: 'UserRoles';
+interface UserRole {
+  __typename?: 'UserRole';
   id: Scalars['Int'];
   userId: Scalars['Int'];
   groupId: Scalars['Int'];
   role?: Maybe<Scalars['String']>;
   roleIndex?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
-  group?: Maybe<ChatGroup>;
+  chatGroup?: Maybe<ChatGroup>;
 }
 
 interface LoginReturn {
@@ -870,6 +901,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   GetProfileReturn: ResolverTypeWrapper<GetProfileReturn>;
   Mutation: ResolverTypeWrapper<{}>;
+  UserRoleInput: UserRoleInput;
   SettingInput: SettingInput;
   ChatGroupType: ChatGroupType;
   ErrorCode: ErrorCode;
@@ -895,7 +927,7 @@ export type ResolversTypes = {
   Admin: ResolverTypeWrapper<Admin>;
   NewAdmin: ResolverTypeWrapper<NewAdmin>;
   ChangeLog: ResolverTypeWrapper<ChangeLog>;
-  UserRoles: ResolverTypeWrapper<UserRoles>;
+  UserRole: ResolverTypeWrapper<UserRole>;
   LoginReturn: ResolverTypeWrapper<LoginReturn>;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
@@ -925,6 +957,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   GetProfileReturn: GetProfileReturn;
   Mutation: {};
+  UserRoleInput: UserRoleInput;
   SettingInput: SettingInput;
   DeclineFriendInput: DeclineFriendInput;
   AcceptFriendInput: AcceptFriendInput;
@@ -948,7 +981,7 @@ export type ResolversParentTypes = {
   Admin: Admin;
   NewAdmin: NewAdmin;
   ChangeLog: ChangeLog;
-  UserRoles: UserRoles;
+  UserRole: UserRole;
   LoginReturn: LoginReturn;
   NewChangeLogInput: NewChangeLogInput;
   UserInput: UserInput;
@@ -991,6 +1024,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUsersChatsByGroupID?: Resolver<Array<Maybe<ResolversTypes['Int']>>, ParentType, ContextType, RequireFields<QueryGetUsersChatsByGroupIdArgs, 'groupID'>>;
   getSettings?: Resolver<Array<Maybe<ResolversTypes['Settings']>>, ParentType, ContextType, RequireFields<QueryGetSettingsArgs, 'userId'>>;
   getCallMembers?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetCallMembersArgs, 'members'>>;
+  getUserRoles?: Resolver<Maybe<Array<Maybe<ResolversTypes['UserRole']>>>, ParentType, ContextType, RequireFields<QueryGetUserRolesArgs, 'groupId'>>;
 };
 
 export type GetProfileReturnResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetProfileReturn'] = ResolversParentTypes['GetProfileReturn']> = {
@@ -1000,6 +1034,9 @@ export type GetProfileReturnResolvers<ContextType = any, ParentType extends Reso
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  editUserRole?: Resolver<Maybe<ResolversTypes['UserRole']>, ParentType, ContextType, RequireFields<MutationEditUserRoleArgs, 'editRole'>>;
+  deleteUserRole?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteUserRoleArgs, 'id'>>;
+  createUserRole?: Resolver<Maybe<ResolversTypes['UserRole']>, ParentType, ContextType, RequireFields<MutationCreateUserRoleArgs, 'role'>>;
   sendForgotPasswordEmail?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationSendForgotPasswordEmailArgs, 'email'>>;
   signup?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationSignupArgs, 'user'>>;
   login?: Resolver<Maybe<ResolversTypes['LoginReturn']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
@@ -1106,14 +1143,14 @@ export type ChangeLogResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserRolesResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRoles'] = ResolversParentTypes['UserRoles']> = {
+export type UserRoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserRole'] = ResolversParentTypes['UserRole']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   groupId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   roleIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  group?: Resolver<Maybe<ResolversTypes['ChatGroup']>, ParentType, ContextType>;
+  chatGroup?: Resolver<Maybe<ResolversTypes['ChatGroup']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1248,7 +1285,7 @@ export type Resolvers<ContextType = any> = {
   Admin?: AdminResolvers<ContextType>;
   NewAdmin?: NewAdminResolvers<ContextType>;
   ChangeLog?: ChangeLogResolvers<ContextType>;
-  UserRoles?: UserRolesResolvers<ContextType>;
+  UserRole?: UserRoleResolvers<ContextType>;
   LoginReturn?: LoginReturnResolvers<ContextType>;
   schema?: SchemaResolvers<ContextType>;
   User?: UserResolvers<ContextType>;

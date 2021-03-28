@@ -23,6 +23,7 @@ type Query {
 	getUsersChatsByGroupID(groupID: Int!): [Int]!
 	getSettings(userId: Int!): [Settings]!
 	getCallMembers(members: [String!]!): [User!]!
+	getUserRoles(groupId: Int!): [UserRole]
 }
 
 type GetProfileReturn {
@@ -31,6 +32,9 @@ type GetProfileReturn {
 }
 
 type Mutation {
+	editUserRole(editRole: UserRoleInput!): UserRole
+	deleteUserRole(id: Int!): Boolean!
+	createUserRole(role: UserRoleInput!): UserRole
 	sendForgotPasswordEmail(email: String!, origin: String): Boolean!
 	signup(user: UserInput!): User!
 	login(credentials: LoginInput!): LoginReturn
@@ -74,6 +78,13 @@ type Mutation {
 	blockUser(userId: Int!, otherUserId: Int!): Boolean!
 	unblockUser(userId: Int!, otherUserId: Int!): Boolean!
 	editOrAddSettings(userId: Int!, setting: [SettingInput!]!): Boolean!
+}
+
+input UserRoleInput {
+	groupId: Int!
+	userId: Int!
+	role: String!
+	roleIndex: Int!
 }
 
 input SettingInput {
@@ -256,14 +267,14 @@ type ChangeLog {
 	version: String!
 }
 
-type UserRoles {
+type UserRole {
 	id: Int!
 	userId: Int!
 	groupId: Int!
 	role: String
 	roleIndex: Int
 	user: User
-	group: ChatGroup
+	chatGroup: ChatGroup
 }
 
 type LoginReturn {

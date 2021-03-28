@@ -2,6 +2,7 @@ import ChatGroup from '../models/ChatGroup';
 import UserGroups from '../models/UserGroups';
 import Chat from '../models/Chat';
 import ChatUsers from '../models/ChatUsers';
+import UserRoles from '../models/UserRoles';
 
 export const createChatGroup = async (
 	parent: any,
@@ -30,6 +31,15 @@ export const createChatGroup = async (
 		context.logger.err('Error created chatGroup');
 		throw new Error('Could not create group. Try again later.');
 	}
+
+	const masterRole = UserRoles.query().insertAndFetch({
+		groupId: created.id,
+		userId,
+		role: 'Owner',
+		roleIndex: 0
+	});
+
+	context.logger.info(masterRole);
 
 	return created;
 };

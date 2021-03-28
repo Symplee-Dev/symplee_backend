@@ -38,6 +38,7 @@ interface Query {
   getUsersChatsByGroupID: Array<Maybe<Scalars['Int']>>;
   getSettings: Array<Maybe<Settings>>;
   getCallMembers: Array<User>;
+  getUserRoles?: Maybe<Array<Maybe<UserRole>>>;
 }
 
 
@@ -134,6 +135,11 @@ interface QueryGetCallMembersArgs {
   members: Array<Scalars['String']>;
 }
 
+
+interface QueryGetUserRolesArgs {
+  groupId: Scalars['Int'];
+}
+
 interface GetProfileReturn {
   __typename?: 'GetProfileReturn';
   user: User;
@@ -142,6 +148,9 @@ interface GetProfileReturn {
 
 interface Mutation {
   __typename?: 'Mutation';
+  editUserRole?: Maybe<UserRole>;
+  deleteUserRole: Scalars['Boolean'];
+  createUserRole?: Maybe<UserRole>;
   sendForgotPasswordEmail: Scalars['Boolean'];
   signup: User;
   login?: Maybe<LoginReturn>;
@@ -180,6 +189,21 @@ interface Mutation {
   blockUser: Scalars['Boolean'];
   unblockUser: Scalars['Boolean'];
   editOrAddSettings: Scalars['Boolean'];
+}
+
+
+interface MutationEditUserRoleArgs {
+  editRole: UserRoleInput;
+}
+
+
+interface MutationDeleteUserRoleArgs {
+  id: Scalars['Int'];
+}
+
+
+interface MutationCreateUserRoleArgs {
+  role: UserRoleInput;
 }
 
 
@@ -387,6 +411,13 @@ interface MutationUnblockUserArgs {
 interface MutationEditOrAddSettingsArgs {
   userId: Scalars['Int'];
   setting: Array<SettingInput>;
+}
+
+interface UserRoleInput {
+  groupId: Scalars['Int'];
+  userId: Scalars['Int'];
+  role: Scalars['String'];
+  roleIndex: Scalars['Int'];
 }
 
 interface SettingInput {
@@ -604,15 +635,15 @@ interface ChangeLog {
   version: Scalars['String'];
 }
 
-interface UserRoles {
-  __typename?: 'UserRoles';
+interface UserRole {
+  __typename?: 'UserRole';
   id: Scalars['Int'];
   userId: Scalars['Int'];
   groupId: Scalars['Int'];
   role?: Maybe<Scalars['String']>;
   roleIndex?: Maybe<Scalars['Int']>;
   user?: Maybe<User>;
-  group?: Maybe<ChatGroup>;
+  chatGroup?: Maybe<ChatGroup>;
 }
 
 interface LoginReturn {

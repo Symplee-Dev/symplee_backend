@@ -40,7 +40,7 @@ export const userResolvers = {
 			groups.push(group);
 		}
 
-		return groups.filter(g => g.type !== 'DM');
+		return groups.filter(g => g && g.type !== 'DM');
 	}
 };
 
